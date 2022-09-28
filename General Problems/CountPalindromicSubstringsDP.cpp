@@ -1,7 +1,7 @@
 #include <bits/stdc++.h> 
 using namespace std;
 
-int countPalindrome( string s){
+int countPalindrome(string s){
 
     int n = s.size(), count = 0;
     bool dp[n][n];
