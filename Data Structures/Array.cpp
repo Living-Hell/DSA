@@ -17,6 +17,20 @@ public:
         return v;
     }
 
+    void MaxMin(vector<int> v){
+
+        int n = v.size();
+        int min = INT_MAX, max = INT_MIN;
+
+        for(int i=0; i<n; i++){
+            if(v[i]>max) max = v[i];
+            if(v[i]<min) min = v[i];
+        }
+
+        cout<<"Minimum value is : "<<min<<endl<<"Maximum value is : "<<max<<endl;
+
+    }
+
     //To print the array
     void print(vector<int> v){
         for(int i=0; i<v.size(); i++) 
@@ -37,6 +51,7 @@ int main(){
 
     Array a;
     //a.print(a.Reversal(v));   
+    a.MaxMin(v);
 
     return 0;
 }
