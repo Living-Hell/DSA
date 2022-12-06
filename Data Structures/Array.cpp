@@ -17,6 +17,7 @@ public:
         return v;
     }
 
+    //Function to find the Minimum and Maximum value in the array
     void MaxMin(vector<int> v){
 
         int n = v.size();
@@ -28,7 +29,18 @@ public:
         }
 
         cout<<"Minimum value is : "<<min<<endl<<"Maximum value is : "<<max<<endl;
+    }
 
+    //To Find the kth smallest element in array
+    int kthSmallest(vector<int> v, int k) {
+        
+        int n = v.size();
+        priority_queue<int, vector<int>, greater<int>> pq;
+
+        for(int i=0; i<n; i++) pq.push(v[i]);
+        while(--k) pq.pop();
+        
+        return pq.top();
     }
 
     //To print the array
@@ -51,7 +63,7 @@ int main(){
 
     Array a;
     //a.print(a.Reversal(v));   
-    a.MaxMin(v);
+    //a.MaxMin(v);
 
     return 0;
 }
