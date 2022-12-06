@@ -16,6 +16,23 @@ public:
         }
     }
 
+    long long int nCr(int n, int r){
+        
+        if(r>n) return -1;
+        
+        vector<vector<long long int>> pascal(1000);
+        pascal[0].push_back(1); pascal[0].push_back(0);
+
+        for(int i=1; i<1000; i++){
+            pascal[i].push_back(1);
+            for(int j=1; j<pascal[i-1].size(); j++){
+                pascal[i].push_back((pascal[i-1][j-1]%mod + pascal[i-1][j]%mod)%mod);
+            }
+            pascal[i].push_back(0);
+        }
+        return pascal[n][r]%mod;
+    }
+
 };
 
 int main(){
