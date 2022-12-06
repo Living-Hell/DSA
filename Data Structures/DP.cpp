@@ -32,6 +32,21 @@ public:
         return pascal[r]%mod;
     }
 
+    long long int coinChange(vector<int> coins, int sum) {
+
+        int n = coins.size();
+        vector<long long int> dp(sum+1,0);
+        dp[0]=1;
+        
+        for(int i=0; i<n; i++){
+            for(int j=coins[i]; j<=sum; j++){
+                dp[j] += dp[j-coins[i]];
+            }
+        }   
+
+        return dp[sum];
+    }
+
 };
 
 int main(){
@@ -40,6 +55,7 @@ int main(){
 
     //cout<<dp.Factorial(13);
     //cout<<dp.nCr(14,3);
+    //cout<<dp.coinChange({1,2,3},4);
 
     return 0;
 }
