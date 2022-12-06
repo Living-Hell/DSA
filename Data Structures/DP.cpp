@@ -18,19 +18,18 @@ public:
 
     long long int nCr(int n, int r){
         
-        if(r>n) return -1;
-        
-        vector<vector<long long int>> pascal(1000);
-        pascal[0].push_back(1); pascal[0].push_back(0);
+        if(r>n) return 0;
 
-        for(int i=1; i<1000; i++){
-            pascal[i].push_back(1);
-            for(int j=1; j<pascal[i-1].size(); j++){
-                pascal[i].push_back((pascal[i-1][j-1]%mod + pascal[i-1][j]%mod)%mod);
+        vector<int> pascal(r+1,0);
+        if(r>(n-r)) r = n-r;
+        pascal[0] = 1;
+
+        for(int i=1; i<=n; i++){
+            for(int j=min(r,i); j>0; j--){
+                pascal[j] = (pascal[j] + pascal[j-1])%mod;
             }
-            pascal[i].push_back(0);
         }
-        return pascal[n][r]%mod;
+        return pascal[r]%mod;
     }
 
 };
