@@ -65,23 +65,21 @@ public:
     int knapSack(int W, vector<int> wt, vector<int> val) 
     { 
         int n = wt.size();
-        vector<vector<int>> vw(n, vector<int> (W+1,0));
+        vector<int> vw(W+1,0);
        
-       for(int i=0; i<=W; i++){
+        for(int i=0; i<=W; i++){
            if(wt[0]<=i)
-            vw[0][i] = val[0];
-       }
+            vw[i] = val[0];
+        }
        
-       for(int i=1; i<n; i++){
-           for(int j=1; j<=W; j++){
+        for(int i=1; i<n; i++){
+           for(int j=W; j>=0; j--){
                 if(wt[i] <= j)
-                   vw[i][j] = max(vw[i-1][j], val[i] + vw[i-1][j-wt[i]]);
-                else
-                    vw[i][j] = vw[i-1][j];
-           }
-       }
+                   vw[j] = max(vw[j], val[i] + vw[j-wt[i]]);
+            }
+        }   
        
-       return vw[n-1][W];
+       return vw[W];
     }
 
 };
@@ -94,7 +92,7 @@ int main(){
     //cout<<dp.nCr(14,3);
     //cout<<dp.coinChange({1,2,3},4);
     //cout<<dp.nPr(15,5);
-    cout<<dp.knapSack(4,{4,5,1},{1,2,3});
+    //cout<<dp.knapSack(4,{4,5,1},{1,2,3});
 
     return 0;
 }
