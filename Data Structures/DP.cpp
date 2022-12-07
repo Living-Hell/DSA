@@ -47,6 +47,21 @@ public:
         return dp[sum];
     }
 
+    long long int nPr(int n, int r){
+        
+        if(r>n) return 0;
+
+        vector<int> coeff(n+1,0);
+        coeff[0] = 1;
+
+        for(int i=1; i<=n; i++){
+            for(int j=min(i,n); j>0; j--){
+                coeff[j] = (coeff[j] + (j*coeff[j-1]))%mod;
+            }
+        }        
+        return coeff[r]%mod;
+    }
+
 };
 
 int main(){
@@ -56,6 +71,7 @@ int main(){
     //cout<<dp.Factorial(13);
     //cout<<dp.nCr(14,3);
     //cout<<dp.coinChange({1,2,3},4);
+    //cout<<dp.nPr(15,5);
 
     return 0;
 }
