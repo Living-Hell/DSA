@@ -5,14 +5,14 @@ class DP{
 public:
     const unsigned int mod = 1000000007;
 
-    long long int Factorial(int n){
-        long long int factorial[n+1] = {0};
+    long long int factorial(int n){
+        long long int fact[n+1] = {0};
         if(n>=0){
-            factorial[0] = 1;
+            fact[0] = 1;
             for(int i=1; i<=n; i++){
-                factorial[i] = ((i%mod)*(factorial[i-1]%mod))%mod;
+                fact[i] = ((i%mod)*(fact[i-1]%mod))%mod;
             }
-            return factorial[n];
+            return fact[n];
         }
     }
 
@@ -82,6 +82,20 @@ public:
        return vw[W];
     }
 
+    int catalan(int n){
+
+        vector<int> catalan(n+1,0);
+        catalan[0] = 1;
+
+        for(int i=1; i<=n; i++){
+            for(int j=0; j<i; j++){
+                catalan[i] += catalan[j]*catalan[i-j-1];
+            }
+        }
+        
+        return catalan[n];
+    }
+
 };
 
 int main(){
@@ -93,6 +107,7 @@ int main(){
     //cout<<dp.coinChange({1,2,3},4);
     //cout<<dp.nPr(15,5);
     //cout<<dp.knapSack(4,{4,5,1},{1,2,3});
+    //cout<<dp.catalan(19);
 
     return 0;
 }
