@@ -114,6 +114,18 @@ public:
         return sum[tsum];
     }
 
+    int countFriendsPairings(int n) 
+    {   
+        //Cn = Cn-2 * (n-1) + Cn-1
+        vector<long long int> pair(n+1);        
+        pair[0] = 1; pair[1] = 1;
+        
+        for(int i=2; i<=n; i++){
+            pair[i] = ((pair[i-2]%mod*(i-1)%mod)%mod + pair[i-1]%mod)%mod;
+        }        
+        return pair[n];
+    }
+
 };
 
 int main(){
@@ -127,6 +139,7 @@ int main(){
     //cout<<dp.knapSack(4,{4,5,1},{1,2,3});
     //cout<<dp.catalan(19);
     //cout<<dp.equalPartition({1,655,43,5,45,32,654,65,54,562,1});
+    //cout<<dp.countFriendsPairings(10000);
 
     return 0;
 }
