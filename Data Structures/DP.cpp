@@ -96,6 +96,24 @@ public:
         return catalan[n];
     }
 
+    int equalPartition(vector<int> nums) {
+        int N = nums.size();
+
+        int tsum = accumulate(nums.begin(),nums.end(), 0);
+        if(tsum%2==1) return 0;
+        
+        tsum/=2;
+        vector<int> sum(tsum+1,0);
+        sum[0] = 1;
+        for(int i=0; i<N; i++){
+            for(int j=tsum; j>=nums[i]; j--){
+                if(sum[j-nums[i]] == 1)
+                    sum[j] = 1;
+            }   
+        }
+        return sum[tsum];
+    }
+
 };
 
 int main(){
@@ -108,6 +126,7 @@ int main(){
     //cout<<dp.nPr(15,5);
     //cout<<dp.knapSack(4,{4,5,1},{1,2,3});
     //cout<<dp.catalan(19);
+    //cout<<dp.equalPartition({1,655,43,5,45,32,654,65,54,562,1});
 
     return 0;
 }
