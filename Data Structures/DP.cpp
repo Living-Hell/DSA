@@ -150,6 +150,27 @@ public:
         return ans;
     }
 
+    int maximumPath(vector<vector<int>> Matrix)
+    {   
+        int N = Matrix.size();
+
+        for(int i=N-2; i>=0; i--){
+            for(int j=0; j<N; j++){
+                int down = 0, rdown = 0, ldown = 0;
+
+                if(j>0) ldown = Matrix[i+1][j-1];
+                if(j<N-1) rdown = Matrix[i+1][j+1];
+                down = Matrix[i+1][j];
+
+                Matrix[i][j] += max(max(rdown,ldown),down);
+            }
+        }
+                
+        int ans=0;
+        for(int i=0; i<N; i++) ans = max(ans, Matrix[0][i]);
+        return ans;
+    }
+
 };
 
 int main(){
@@ -165,6 +186,7 @@ int main(){
     //cout<<dp.equalPartition({1,655,43,5,45,32,654,65,54,562,1});
     //cout<<dp.countFriendsPairings(10000);
     //cout<<dp.maxGold({{1, 3, 1, 5},{2, 2, 4, 1},{5, 0, 2, 3},{0, 6, 1, 2}});
+    //cout<<dp.maximumPath({{348, 391},{618, 193}});
 
     return 0;
 }
