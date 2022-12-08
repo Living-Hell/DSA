@@ -126,6 +126,30 @@ public:
         return pair[n];
     }
 
+    int maxGold(vector<vector<int>> M)
+    {   
+        int n = M.size(), m = M[0].size();
+
+        for(int j=m-2; j>=0; j--){
+            for(int i=0; i<n; i++){
+                
+                int rup = 0;
+                if(i>0) rup = M[i-1][j+1];
+                
+                int r = M[i][j+1];
+                
+                int rdwn = 0;
+                if(i<n-1) rdwn = M[i+1][j+1];
+                
+                M[i][j] += max(max(r,rdwn),rup);
+            }
+        }
+
+        int ans=0;
+        for(int i=0; i<n; i++) ans = max(ans, M[i][0]);
+        return ans;
+    }
+
 };
 
 int main(){
@@ -140,6 +164,7 @@ int main(){
     //cout<<dp.catalan(19);
     //cout<<dp.equalPartition({1,655,43,5,45,32,654,65,54,562,1});
     //cout<<dp.countFriendsPairings(10000);
+    //cout<<dp.maxGold({{1, 3, 1, 5},{2, 2, 4, 1},{5, 0, 2, 3},{0, 6, 1, 2}});
 
     return 0;
 }
