@@ -84,6 +84,7 @@ public:
 
     int catalan(int n){
 
+        //Cn = sum[i=0:n](Ci*Cn-i)
         vector<int> catalan(n+1,0);
         catalan[0] = 1;
 
@@ -171,6 +172,31 @@ public:
         return ans;
     }
 
+    int editDistance(string s, string t) {
+        
+        int slen = s.size(), tlen = t.size();
+        vector<vector<int>> v(slen+1, vector<int> (tlen+1,0));
+        
+        for(int i=0; i<=slen; i++) v[i][0] = i;
+        for(int i=0; i<=tlen; i++) v[0][i] = i;
+        
+        for(int i=1; i<=slen; i++){
+            for(int j=1; j<=tlen; j++){
+                
+                if(s[i-1] == t[j-1]) v[i][j] = v[i-1][j-1];
+                
+                else if(s[i-1] != t[j-1]){
+                    int top = v[i-1][j];
+                    int left = v[i][j-1];
+                    int tleft = v[i-1][j-1];
+                    v[i][j] = min(min(top,left),tleft) + 1;
+                
+                } 
+            }
+        }        
+        return v[slen][tlen];
+    }
+
 };
 
 int main(){
@@ -187,6 +213,7 @@ int main(){
     //cout<<dp.countFriendsPairings(10000);
     //cout<<dp.maxGold({{1, 3, 1, 5},{2, 2, 4, 1},{5, 0, 2, 3},{0, 6, 1, 2}});
     //cout<<dp.maximumPath({{348, 391},{618, 193}});
+    //cout<<dp.editDistance("geek", "gesek");
 
     return 0;
 }
