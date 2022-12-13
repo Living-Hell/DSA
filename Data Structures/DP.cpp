@@ -217,6 +217,20 @@ public:
         return v[1][n-1];
     }
 
+    long long countWays(int n, int k){
+        vector<vector<long long>> ways(3,vector<long long> (n,0));
+        ways[0][0] = ways[1][0] = ways[2][0] = k;
+        
+        for(int i=1; i<n; i++){
+            long long prevd = ways[1][i-1]%mod;
+            long long prevt = ways[2][i-1]%mod;
+            ways[0][i] = prevd;
+            ways[1][i] = (prevt * (k-1))%mod;
+            ways[2][i] = (ways[0][i] + ways[1][i])%mod;
+        }        
+        return ways[2][n-1];
+    }
+
 };
 
 int main(){
@@ -235,6 +249,7 @@ int main(){
     //cout<<dp.maximumPath({{348, 391},{618, 193}});
     //cout<<dp.editDistance("geek", "gesek");
     //cout<<dp.matrixChainMultiplication({1, 2, 3, 4, 3});
+    cout<<dp.countWays(5000,100);
 
     return 0;
 }
