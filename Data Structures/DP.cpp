@@ -209,7 +209,8 @@ public:
                     continue;
                 }
                 for(int k=j; k<i+j; k++){
-                    v[j][i+j] = min(v[j][i+j],(v[j][k] + v[k+1][i+j] + dim[j-1]*dim[k]*dim[i+j]));
+                    v[j][i+j] = min(v[j][i+j],
+                                    (v[j][k] + v[k+1][i+j] + dim[j-1]*dim[k]*dim[i+j]));
                 }
             }
         }
