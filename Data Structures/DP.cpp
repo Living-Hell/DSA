@@ -197,6 +197,25 @@ public:
         return v[slen][tlen];
     }
 
+    int matrixChainMultiplication(vector<int> dim){
+        int n = dim.size();
+        vector<vector<int>> v(n,vector<int> (n,INT_MAX));
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){ 
+                if((i+j)>=n) continue;
+                if(i==0){
+                    v[j][i+j] = 0;
+                    continue;
+                }
+                for(int k=j; k<i+j; k++){
+                    v[j][i+j] = min(v[j][i+j],(v[j][k] + v[k+1][i+j] + dim[j-1]*dim[k]*dim[i+j]));
+                }
+            }
+        }
+        return v[1][n-1];
+    }
+
 };
 
 int main(){
@@ -214,6 +233,7 @@ int main(){
     //cout<<dp.maxGold({{1, 3, 1, 5},{2, 2, 4, 1},{5, 0, 2, 3},{0, 6, 1, 2}});
     //cout<<dp.maximumPath({{348, 391},{618, 193}});
     //cout<<dp.editDistance("geek", "gesek");
+    //cout<<dp.matrixChainMultiplication({1, 2, 3, 4, 3});
 
     return 0;
 }
