@@ -231,6 +231,29 @@ public:
         return ways[2][n-1];
     }
 
+    //Function to find the maximum number of cuts.
+    int helper(int sum, int x, int y, int z, int s[]){      
+
+        if(sum==0) return 0;            
+        if(s[sum] != -1) return s[sum];   
+
+        int t1=INT_MIN,t2=INT_MIN,t3=INT_MIN;
+        
+        if(sum>=x) t1 = helper(sum-x, x,y,z,s);
+        if(sum>=y) t2 = helper(sum-y, x,y,z,s);
+        if(sum>=z) t3 = helper(sum-z, x,y,z,s);
+
+        return s[sum] = 1+max(max(t1,t2),t3);        
+    }
+    int maximizeTheCuts(int n, int x, int y, int z)
+    {   
+        int s[10005];
+        memset(s,-1,sizeof(s));
+        int ret = helper(n,x,y,z,s);
+        if(ret <0 ) return 0;
+        return ret;
+    }
+
 };
 
 int main(){
@@ -249,7 +272,8 @@ int main(){
     //cout<<dp.maximumPath({{348, 391},{618, 193}});
     //cout<<dp.editDistance("geek", "gesek");
     //cout<<dp.matrixChainMultiplication({1, 2, 3, 4, 3});
-    cout<<dp.countWays(5000,100);
+    //cout<<dp.countWays(5000,100);
+    //cout<<dp.maximizeTheCuts(4,2,2,1);
 
     return 0;
 }
