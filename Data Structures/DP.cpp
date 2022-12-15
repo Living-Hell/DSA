@@ -272,7 +272,8 @@ public:
         return dp[x][y];
     }
 
-    int LongestRepeatingSubsequence(string s){
+    int LongestRepeatingSubsequence(string s)
+    {
         int n = s.size();
         vector<vector<int>> dp(n+1,vector<int>(n+1,0));
         
@@ -287,6 +288,20 @@ public:
             }
         }
         return dp[n][n];
+    }
+
+    int lengthOfLIS(vector<int> nums) 
+    {
+        int n = nums.size();
+        vector<int> dp(n,1);
+        
+        for(int i=1; i<n; i++){
+            for(int j=0; j<i; j++){
+                if(nums[i]>nums[j])
+                    dp[i] = max(dp[i], dp[j]+1);
+            }
+        }
+        return *max_element(dp.begin(),dp.end()); 
     }
 
 };
@@ -310,7 +325,8 @@ int main(){
     //cout<<dp.countWays(5000,100);
     //cout<<dp.maximizeTheCuts(4,2,2,1);
     //cout<<dp.lcs("ABCDGH", "AEDFHR");
-    cout<<dp.LongestRepeatingSubsequence("jdzkvjkzcnvkjxcvnkjzczvjk");
+    //cout<<dp.LongestRepeatingSubsequence("jdzkvjkzcnvkjxcvnkjzczvjk");
+    cout<<dp.lengthOfLIS({5,2,3,5,4,5,4,4,5,22,1,5,6,2});
 
     return 0;
 }
