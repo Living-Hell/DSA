@@ -338,6 +338,20 @@ public:
         return dp[n1][n2][n3];
     }
 
+    int longestSubsequence(vector<int> nums) 
+    {
+        int n = nums.size();
+        vector<int> dp(n,1);
+        
+        for(int i=1; i<n; i++){
+            for(int j=0; j<i; j++){
+                if(abs(nums[i]-nums[j])==1)
+                    dp[i] = max(dp[i], dp[j]+1);
+            }
+        }
+        return *max_element(dp.begin(),dp.end());
+    }
+
 };
 
 int main(){
@@ -363,6 +377,7 @@ int main(){
     //cout<<dp.lengthOfLIS({5,2,3,5,4,5,4,4,5,22,1,5,6,2});
     //cout<<dp.maxSumIS({52, 12, 656, 65, 121, 1233, 48});
     //cout<<dp.LCSof3("geeks", "geeksfor", "geeksforgeeks", 5, 8, 13);
+    cout<<dp.longestSubsequence({10, 9, 4, 5, 4, 8, 6});
 
     return 0;
 }
