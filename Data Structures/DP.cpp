@@ -304,6 +304,21 @@ public:
         return *max_element(dp.begin(),dp.end()); 
     }
 
+    int maxSumIS(vector<int> arr)  
+	{  
+        int n = arr.size();
+        vector<int> dp(n);
+        for(int i=0; i<n; i++) dp[i] = arr[i];
+        
+        for(int i=0; i<n; i++){
+            for(int j=0; j<i; j++){
+                if(arr[i]>arr[j])
+                    dp[i] = max(dp[i], dp[j]+arr[i]);
+            }
+        }
+        return *max_element(dp.begin(),dp.end()); 
+	}
+
 };
 
 int main(){
@@ -326,7 +341,8 @@ int main(){
     //cout<<dp.maximizeTheCuts(4,2,2,1);
     //cout<<dp.lcs("ABCDGH", "AEDFHR");
     //cout<<dp.LongestRepeatingSubsequence("jdzkvjkzcnvkjxcvnkjzczvjk");
-    cout<<dp.lengthOfLIS({5,2,3,5,4,5,4,4,5,22,1,5,6,2});
+    //cout<<dp.lengthOfLIS({5,2,3,5,4,5,4,4,5,22,1,5,6,2});
+    cout<<dp.maxSumIS({52, 12, 656, 65, 121, 1233, 48});
 
     return 0;
 }
