@@ -376,6 +376,19 @@ public:
         return dp[n][k];
     }
 
+    int maxSumWO3Consec(vector<int> arr)
+    {
+        int n = arr.size();
+        vector<int> dp(n,0);
+        if(n>=1) dp[0] = arr[0];
+        if(n>=2) dp[1] = arr[0] + arr[1];
+        if(n>2) dp[2] = max(max(dp[1], dp[0] + arr[2]), arr[1] + arr[2]);
+        for(int i=3; i<n; i++){
+            dp[i] = max(dp[i-1],max(dp[i-2] + arr[i], dp[i-3] + arr[i] + arr[i-1]));
+        }
+        return dp[n-1];
+    }
+
 };
 
 int main(){
@@ -403,6 +416,7 @@ int main(){
     //cout<<dp.LCSof3("geeks", "geeksfor", "geeksforgeeks", 5, 8, 13);
     //cout<<dp.longestSubsequence({10, 9, 4, 5, 4, 8, 6});
     //cout<<dp.eggDrop(3,7);
+    //cout<<dp.maxSumWO3Consec({3000, 2000, 1000, 3, 10});
 
     return 0;
 }
