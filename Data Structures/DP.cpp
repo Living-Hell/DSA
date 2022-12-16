@@ -319,7 +319,7 @@ public:
         return *max_element(dp.begin(),dp.end()); 
 	}
 
-    int LCSof3 (string A, string B, string C, int n1, int n2, int n3)
+    int LCSof3(string A, string B, string C, int n1, int n2, int n3)
     {
         vector<vector<vector<int>>> dp(n1+1,vector<vector<int>>(n2+1,vector<int>(n3+1,0)));
         
@@ -352,6 +352,30 @@ public:
         return *max_element(dp.begin(),dp.end());
     }
 
+    int eggDrop(int n, int k) 
+    {
+        vector<vector<int>> dp(n+1,vector<int> (k+1,0));
+
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=k; j++){
+
+                if(j==1)
+                    dp[i][j] = 1;                    
+                else if(i==1)
+                    dp[i][j] = j;                    
+                else{
+                    int tmax, tmin = INT_MAX;
+                    for(int l=0; l<=j; l++){
+                        tmax = max(dp[i-1][l],dp[i][j-l-1]);
+                        tmin = min(tmin, tmax);
+                    }
+                    dp[i][j] = tmin+1;
+                }
+            }
+        }
+        return dp[n][k];
+    }
+
 };
 
 int main(){
@@ -377,7 +401,8 @@ int main(){
     //cout<<dp.lengthOfLIS({5,2,3,5,4,5,4,4,5,22,1,5,6,2});
     //cout<<dp.maxSumIS({52, 12, 656, 65, 121, 1233, 48});
     //cout<<dp.LCSof3("geeks", "geeksfor", "geeksforgeeks", 5, 8, 13);
-    cout<<dp.longestSubsequence({10, 9, 4, 5, 4, 8, 6});
+    //cout<<dp.longestSubsequence({10, 9, 4, 5, 4, 8, 6});
+    //cout<<dp.eggDrop(3,7);
 
     return 0;
 }
