@@ -396,17 +396,17 @@ public:
     }
     int maxChainLen(vector<pair<int,int>> p){
         
-        int n = p.size();
+        int n = p.size();    
         sort(p.begin(), p.end(), lambda);
-        int ans=0, curr_as=INT_MIN;
+        vector<int> dp(n,1);
         
-        for(int i=0; i<n; i++){
-            if(curr_as<p[i].first){
-                ans++;
-                curr_as = p[i].second;
+        for(int i=1; i<n; i++){
+            for(int j=0; j<i; j++){
+                if(p[i].first>p[j].second)
+                    dp[i] = max(dp[i],dp[j]+1);
             }
         }
-        return ans;
+        return *max_element(dp.begin(),dp.end());
     }
 
 };
@@ -437,7 +437,7 @@ int main(){
     //cout<<dp.longestSubsequence({10, 9, 4, 5, 4, 8, 6});
     //cout<<dp.eggDrop(3,7);
     //cout<<dp.maxSumWO3Consec({3000, 2000, 1000, 3, 10});
-    cout<<dp.maxChainLen({{5, 24} ,{39, 60} , {15, 28} ,{ 27, 40} , {50, 90}});
+    //cout<<dp.maxChainLen({{5, 24} ,{39, 60} , {15, 28} ,{ 27, 40} , {50, 90}});
 
     return 0;
 }
