@@ -389,6 +389,26 @@ public:
         return dp[n-1];
     }
 
+    static bool lambda(const pair<int,int>& a, const pair<int,int>& b){
+        int as = a.second;
+        int bf = b.second;
+        return(as<bf);
+    }
+    int maxChainLen(vector<pair<int,int>> p){
+        
+        int n = p.size();
+        sort(p.begin(), p.end(), lambda);
+        int ans=0, curr_as=INT_MIN;
+        
+        for(int i=0; i<n; i++){
+            if(curr_as<p[i].first){
+                ans++;
+                curr_as = p[i].second;
+            }
+        }
+        return ans;
+    }
+
 };
 
 int main(){
@@ -417,6 +437,7 @@ int main(){
     //cout<<dp.longestSubsequence({10, 9, 4, 5, 4, 8, 6});
     //cout<<dp.eggDrop(3,7);
     //cout<<dp.maxSumWO3Consec({3000, 2000, 1000, 3, 10});
+    cout<<dp.maxChainLen({{5, 24} ,{39, 60} , {15, 28} ,{ 27, 40} , {50, 90}});
 
     return 0;
 }
