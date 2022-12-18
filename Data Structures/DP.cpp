@@ -409,6 +409,24 @@ public:
         return *max_element(dp.begin(),dp.end());
     }
 
+    int maxSquare(vector<vector<int>> mat){
+        int n = mat.size(), m = mat[0].size();
+        int ans=INT_MIN;
+        vector<vector<int>> dp(n,vector<int> (m,0));
+
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(mat[i][j]>0 && i>0 &&j>0){
+                    dp[i][j] = min(dp[i-1][j], min(dp[i-1][j-1], dp[i][j-1]))+1;
+                }
+                else
+                    dp[i][j] = mat[i][j];
+                ans = max(ans,dp[i][j]);
+            }
+        }
+        return ans;
+    }
+
 };
 
 int main(){
@@ -438,6 +456,6 @@ int main(){
     //cout<<dp.eggDrop(3,7);
     //cout<<dp.maxSumWO3Consec({3000, 2000, 1000, 3, 10});
     //cout<<dp.maxChainLen({{5, 24} ,{39, 60} , {15, 28} ,{ 27, 40} , {50, 90}});
-
+    //cout<<dp.maxSquare({{1,0,1,0,0},{1,0,1,1,1},{1,1,1,1,1},{1,0,0,1,0}});
     return 0;
 }
