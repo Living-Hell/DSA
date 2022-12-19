@@ -62,7 +62,21 @@ public:
         return arr;
     }
 
-
+    //To find Pairs with specific difference
+    int maxSumPairWithDifferenceLessThanK(int arr[], int n, int k)
+    {
+        int ans = 0;
+        sort(arr, arr+n, greater<int>());
+        
+        for(int i=1; i<n; i++){
+            if(arr[i-1] - arr[i] < k){
+                ans+= arr[i] + arr[i-1];
+                i++;
+            }
+        }
+        
+        return ans;
+    }
 
     //To print the array
     void print(vector<int> v){
