@@ -463,6 +463,18 @@ public:
 	    return ans;
 	}
 
+    int minJumps(vector<int> arr){
+        int n = arr.size();
+        vector<int> dp(n,1e7);
+        dp[0] = 0;
+        for(int i=0; i<n; i++){
+            for(int j=i; j<min(n,arr[i]+i+1); j++)
+                dp[j] = min(dp[j], dp[i] + 1);
+        }
+        if(dp[n-1] == 1e7) return -1;
+        return dp[n-1];
+    }
+
 };
 
 int main(){
@@ -495,6 +507,7 @@ int main(){
     //cout<<dp.maxSquare({{1,0,1,0,0},{1,0,1,1,1},{1,1,1,1,1},{1,0,0,1,0}});
     //cout<<dp.maxSumPairWithDifferenceLessThanK({3,5,10,15,17,12,9},4);
     //cout<<dp.maxSubstring("11000010001");
+    //cout<<dp.minJumps({1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9});
 
     return 0;
 }
