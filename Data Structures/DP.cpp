@@ -427,6 +427,25 @@ public:
         return ans;
     }
 
+    int maxSumPairWithDifferenceLessThanK(vector<int> arr, int k)
+    {   
+        int n = arr.size();
+        vector<int> dp(n);
+        sort(arr.begin(), arr.end());
+        dp[0] = 0;
+        
+        for(int i=1; i<n; i++){
+            dp[i] = dp[i-1];
+            if(abs(arr[i-1] - arr[i]) <k){
+                if(i==1)
+                    dp[i] = max(dp[i], arr[i-1] + arr[i]);
+                else
+                    dp[i] = max(dp[i], dp[i-2] + arr[i-1] + arr[i]);
+            }
+        }
+        return dp[n-1];
+    }
+
 };
 
 int main(){
@@ -457,5 +476,7 @@ int main(){
     //cout<<dp.maxSumWO3Consec({3000, 2000, 1000, 3, 10});
     //cout<<dp.maxChainLen({{5, 24} ,{39, 60} , {15, 28} ,{ 27, 40} , {50, 90}});
     //cout<<dp.maxSquare({{1,0,1,0,0},{1,0,1,1,1},{1,1,1,1,1},{1,0,0,1,0}});
+    //cout<<dp.maxSumPairWithDifferenceLessThanK({3,5,10,15,17,12,9},4);
+
     return 0;
 }
