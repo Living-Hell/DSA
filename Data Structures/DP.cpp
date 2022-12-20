@@ -446,6 +446,23 @@ public:
         return dp[n-1];
     }
 
+    int maxSubstring(string S)
+	{
+	    int curr_sum=0, ans=0;
+	    int n = S.size();
+	    
+	    for(int i=0; i<n; i++){
+	        if(S[i] == '0')
+	            curr_sum++;
+	        else 
+	            curr_sum--;
+	        if(curr_sum<0) curr_sum=0;
+	        ans = max(ans,curr_sum);
+	    }
+	    if(ans==0) return -1;
+	    return ans;
+	}
+
 };
 
 int main(){
@@ -477,6 +494,7 @@ int main(){
     //cout<<dp.maxChainLen({{5, 24} ,{39, 60} , {15, 28} ,{ 27, 40} , {50, 90}});
     //cout<<dp.maxSquare({{1,0,1,0,0},{1,0,1,1,1},{1,1,1,1,1},{1,0,0,1,0}});
     //cout<<dp.maxSumPairWithDifferenceLessThanK({3,5,10,15,17,12,9},4);
+    //cout<<dp.maxSubstring("11000010001");
 
     return 0;
 }
