@@ -491,6 +491,23 @@ public:
         return dp[w] == INT_MAX? -1 : dp[w];
 	} 
 
+    int longestCommonSubstr(string s1, string s2)
+    {
+        int n = s1.size(), m = s2.size();
+        vector<vector<int>> dp(n+1, vector<int> (m+1, 0));
+        int ans=0;
+        
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=m; j++){
+                if(s1[i-1] == s2[j-1]){
+                    dp[i][j] = max(dp[i][j], dp[i-1][j-1]+1);
+                    ans = max(ans,dp[i][j]);
+                }
+            }
+        }
+        return ans;
+    }
+
 };
 
 int main(){
@@ -525,6 +542,7 @@ int main(){
     //cout<<dp.maxSubstring("11000010001");
     //cout<<dp.minJumps({1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9});
     //cout<<dp.minimumCost({20,10,4,50,100},5);
+    //cout<<dp.longestCommonSubstr("ABCSDDF","ADVDFVBCBF");
 
     return 0;
 }
