@@ -508,6 +508,20 @@ public:
         return ans;
     }
 
+    long long int reachScore(long long int n)
+    {
+        vector<long long int> dp(n+1,0);
+        int scores[3] = {3,5,10};
+        dp[0] = 1;
+        
+        for(int i=0; i<=2; i++){
+            for(int j=scores[i]; j<=n; j++){
+                dp[j] += dp[j-scores[i]]; 
+            }
+        }        
+        return dp[n];
+    }
+
 };
 
 int main(){
@@ -543,6 +557,7 @@ int main(){
     //cout<<dp.minJumps({1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9});
     //cout<<dp.minimumCost({20,10,4,50,100},5);
     //cout<<dp.longestCommonSubstr("ABCSDDF","ADVDFVBCBF");
+    //cout<<dp.reachScore(20);
 
     return 0;
 }
