@@ -475,6 +475,22 @@ public:
         return dp[n-1];
     }
 
+    int minimumCost(vector<int> cost, int w) 
+	{ 
+        int n = cost.size();
+        vector<int> dp(w+1,INT_MAX);
+        dp[0]=0;
+        
+        for(int i=1; i<=w; i++){
+            for(int j=0; j<min(n,i); j++){
+                if(cost[j] != -1 && dp[i-j-1] != INT_MAX){
+                    dp[i] = min(dp[i], cost[j]+dp[i-j-1]);
+                }
+            }
+        }
+        return dp[w] == INT_MAX? -1 : dp[w];
+	} 
+
 };
 
 int main(){
@@ -508,6 +524,7 @@ int main(){
     //cout<<dp.maxSumPairWithDifferenceLessThanK({3,5,10,15,17,12,9},4);
     //cout<<dp.maxSubstring("11000010001");
     //cout<<dp.minJumps({1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9});
+    //cout<<dp.minimumCost({20,10,4,50,100},5);
 
     return 0;
 }
