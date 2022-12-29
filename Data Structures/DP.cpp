@@ -522,13 +522,27 @@ public:
         return dp[n];
     }
 
-    long long int countBT(int h) { 
+    long long int countBT(int h) 
+    { 
         long long int dp[h+1];
         dp[0] = 1; dp[1] = 1;
         for(int i=2; i<=h; i++){
             dp[i] = (dp[i-1] * (dp[i-1] + 2*dp[i-2]))%mod;
         }
         return dp[h];
+    }
+
+    long long maxSubarraySum(vector<int> arr)
+    {    
+        int n = arr.size();    
+        long long int ans = arr[0], curr_sum=0;
+        
+        for(int i=0; i<n; i++){
+            curr_sum += arr[i];
+            ans = max(ans,curr_sum);
+            if(curr_sum<0) curr_sum=0;
+        }
+        return ans;
     }
 
 };
@@ -568,6 +582,7 @@ int main(){
     //cout<<dp.longestCommonSubstr("ABCSDDF","ADVDFVBCBF");
     //cout<<dp.reachScore(20);
     //cout<<dp.countBT(6);
+    //cout<<dp.maxSubarraySum({-1,-2,5,4,-6,2});
 
     return 0;
 }
