@@ -522,6 +522,15 @@ public:
         return dp[n];
     }
 
+    long long int countBT(int h) { 
+        long long int dp[h+1];
+        dp[0] = 1; dp[1] = 1;
+        for(int i=2; i<=h; i++){
+            dp[i] = (dp[i-1] * (dp[i-1] + 2*dp[i-2]))%mod;
+        }
+        return dp[h];
+    }
+
 };
 
 int main(){
@@ -558,6 +567,7 @@ int main(){
     //cout<<dp.minimumCost({20,10,4,50,100},5);
     //cout<<dp.longestCommonSubstr("ABCSDDF","ADVDFVBCBF");
     //cout<<dp.reachScore(20);
+    //cout<<dp.countBT(6);
 
     return 0;
 }
