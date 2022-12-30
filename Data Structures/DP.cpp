@@ -62,7 +62,7 @@ public:
         return coeff[r]%mod;
     }
 
-    int knapSack(int W, vector<int> wt, vector<int> val) 
+    int knapSack01(int W, vector<int> wt, vector<int> val) 
     { 
         int n = wt.size();
         vector<int> vw(W+1,0);
@@ -545,6 +545,21 @@ public:
         return ans;
     }
 
+    int knapSackUnbounded(int w, vector<int> val, vector<int> wt)
+    {
+        int n = val.size();
+        vector<int> dp(w+1,0);
+        dp[0]=0;
+        
+        for(int i=1; i<=w; i++){
+            for(int j=0; j<n; j++){
+                if(wt[j]<=i)
+                    dp[i] = max(dp[i], dp[i-wt[j]] + val[j]);
+            }
+        }
+        return dp[w];
+    }
+
 };
 
 int main(){
@@ -583,6 +598,7 @@ int main(){
     //cout<<dp.reachScore(20);
     //cout<<dp.countBT(6);
     //cout<<dp.maxSubarraySum({-1,-2,5,4,-6,2});
+    //cout<<dp.knapSackUnbounded(8,{1, 4, 5, 7},{1, 3, 4, 5});
 
     return 0;
 }
