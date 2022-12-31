@@ -560,6 +560,22 @@ public:
         return dp[w];
     }
 
+    int wordBreak(string a, vector<string> b) {
+        int n = a.size();
+        vector<int> dp(n+1, 0);
+        dp[0]=1;
+        
+        for(int i=1; i<=n; i++){
+            for(int j=0; j<i; j++){
+                string sub1 = a.substr(j,i-j);
+                if(find(b.begin(),b.end(),sub1)!=b.end() && dp[j]==1){
+                    dp[i]=1;
+                }
+            }
+        }
+        return dp[n];
+    }
+
 };
 
 int main(){
@@ -599,6 +615,7 @@ int main(){
     //cout<<dp.countBT(6);
     //cout<<dp.maxSubarraySum({-1,-2,5,4,-6,2});
     //cout<<dp.knapSackUnbounded(8,{1, 4, 5, 7},{1, 3, 4, 5});
+    cout<<dp.wordBreak("vvdiidtlrvwngfexqdkkpfyjteqkvdbocfexqdkkpfvvdiidtlejacyjteqkvdbo", {"rvwng", "lben", "tztspyafeu", "ejac", "fexqdkkpf", "yjteqkvdbo", "ffbwkmzaw", "vvdiidtl", "c", "zhw"});
 
     return 0;
 }
