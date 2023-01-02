@@ -43,7 +43,6 @@ public:
                 dp[j] += dp[j-coins[i]];
             }
         }   
-
         return dp[sum];
     }
 
@@ -78,8 +77,7 @@ public:
                    vw[j] = max(vw[j], val[i] + vw[j-wt[i]]);
             }
         }   
-       
-       return vw[W];
+        return vw[W];
     }
 
     int catalan(int n){
@@ -93,7 +91,6 @@ public:
                 catalan[i] += catalan[j]*catalan[i-j-1];
             }
         }
-        
         return catalan[n];
     }
 
@@ -576,6 +573,28 @@ public:
         return dp[n];
     }
 
+    long long int countPS(string str)
+    {
+        int n= str.size();
+        vector<vector<long long int>> dp(n, vector<long long int> (n,0));
+        long long int ans=0;
+        
+        for(int i=0; i<n; i++)
+                dp[i][i] = 1;
+        
+        for(int i=1; i<n; i++){
+            for(int j=0; i+j<n; j++){
+                if(str[j] == str[j+i]){
+                   dp[j][i+j] = (1 + dp[j][i+j-1] + dp[j+1][i+j])%mod; 
+                }
+                else{
+                    dp[j][i+j] = (mod + dp[j][i+j-1] + dp[j+1][i+j] - dp[j+1][i+j-1])%mod; 
+                }
+            }
+        }  
+        return dp[0][n-1]%mod;       
+    }
+
 };
 
 int main(){
@@ -615,7 +634,8 @@ int main(){
     //cout<<dp.countBT(6);
     //cout<<dp.maxSubarraySum({-1,-2,5,4,-6,2});
     //cout<<dp.knapSackUnbounded(8,{1, 4, 5, 7},{1, 3, 4, 5});
-    cout<<dp.wordBreak("vvdiidtlrvwngfexqdkkpfyjteqkvdbocfexqdkkpfvvdiidtlejacyjteqkvdbo", {"rvwng", "lben", "tztspyafeu", "ejac", "fexqdkkpf", "yjteqkvdbo", "ffbwkmzaw", "vvdiidtl", "c", "zhw"});
+    //cout<<dp.wordBreak("vvdiidtlrvwngfexqdkkpfyjteqkvdbocfexqdkkpfvvdiidtlejacyjteqkvdbo", {"rvwng", "lben", "tztspyafeu", "ejac", "fexqdkkpf", "yjteqkvdbo", "ffbwkmzaw", "vvdiidtl", "c", "zhw"});
+    //cout<<dp.countPS("abccbc");
 
     return 0;
 }
