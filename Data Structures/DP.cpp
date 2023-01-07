@@ -595,6 +595,19 @@ public:
         return dp[0][n-1]%mod;       
     }
 
+    int AlternatingaMaxLength(vector<int> nums){
+        int n = nums.size();
+        int incr = 1, decr = 1;
+        
+        for(int i=1; i<n; i++){
+            if(nums[i]>nums[i-1])
+                incr = decr + 1;
+            else if(nums[i]<nums[i-1])
+                decr = incr + 1;
+        }
+        return max(incr,decr);
+	}
+
 };
 
 int main(){
@@ -636,6 +649,7 @@ int main(){
     //cout<<dp.knapSackUnbounded(8,{1, 4, 5, 7},{1, 3, 4, 5});
     //cout<<dp.wordBreak("vvdiidtlrvwngfexqdkkpfyjteqkvdbocfexqdkkpfvvdiidtlejacyjteqkvdbo", {"rvwng", "lben", "tztspyafeu", "ejac", "fexqdkkpf", "yjteqkvdbo", "ffbwkmzaw", "vvdiidtl", "c", "zhw"});
     //cout<<dp.countPS("abccbc");
+    //cout<<dp.AlternatingaMaxLength({1,17,5,10,13,15,10,5,16,8});
 
     return 0;
 }
