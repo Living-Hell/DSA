@@ -1,6 +1,13 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+struct Job 
+{ 
+    int id;	 // Job Id 
+    int dead; // Deadline of job 
+    int profit; // Profit if job is over before or on deadline 
+};
+
 class DP{
 public:
     const unsigned int mod = 1000000007;
@@ -650,6 +657,25 @@ public:
         return {count,ans};
     } 
 
+    long long maximumAmount(vector<int> arr){
+        int n = arr.size();
+        vector<vector<long long>> dp(n,vector<long long>(n,0));
+        
+        for(int i=0; i<n; i++){
+            dp[i][i] = arr[i];
+            dp[i][i+1] = max(arr[i],arr[i+1]);
+        }
+        
+        for(int gap=2; gap<n; gap++){
+            for(int i=0, j=gap; j<n; j++,i++){
+                long long front = arr[j] + min(dp[i+1][j-1], dp[i][j-2]);
+                long long back = arr[i] + min(dp[i+1][j-1], dp[i+2][j]);
+                dp[i][j] = max(front,back);
+            }
+        }        
+        return dp[0][n-1];
+    }
+
 };
 
 int main(){
@@ -692,6 +718,7 @@ int main(){
     //cout<<dp.wordBreak("vvdiidtlrvwngfexqdkkpfyjteqkvdbocfexqdkkpfvvdiidtlejacyjteqkvdbo", {"rvwng", "lben", "tztspyafeu", "ejac", "fexqdkkpf", "yjteqkvdbo", "ffbwkmzaw", "vvdiidtl", "c", "zhw"});
     //cout<<dp.countPS("abccbc");
     //cout<<dp.AlternatingaMaxLength({1,17,5,10,13,15,10,5,16,8});
+    //cout<<dp.maximumAmount({6335,2103,3929,7359,587,1551,3341,1060});
 
     return 0;
 }
