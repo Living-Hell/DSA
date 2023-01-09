@@ -608,6 +608,48 @@ public:
         return max(incr,decr);
 	}
 
+    //Gives TLE after 100(/110) test cases
+    /*int AlternatingaMaxLength(vector<int>&nums){
+        int n = nums.size();
+        vector<vector<int>> dp (n, vector<int> (2,1));
+        int ans=1;
+        
+        for(int i=1; i<n; i++){
+            for(int j=0; j<i; j++){
+                if(nums[i]>nums[j])
+                    dp[i][1] = max(dp[j][0]+1, dp[i][1]);
+                else if(nums[i]<nums[j])
+                    dp[i][0] = max(dp[j][1]+1, dp[i][0]);
+                ans = max(ans,max(dp[i][1],dp[i][0]));
+            }
+            ans = max(ans,max(dp[i][1],dp[i][0]));
+        }
+        return ans;
+    }*/
+
+    vector<int> JobScheduling(Job arr[], int n) 
+    { 
+        sort(arr, arr+n, [] (Job a, Job b) {return a.profit>b.profit;});
+        vector<int> greedy(n,0);
+        
+        for(int i=0; i<n; i++){
+            for(int j = arr[i].dead-1; j>=0; j--){
+                if(greedy[j] == 0){
+                    greedy[j] = arr[i].profit;
+                    break;
+                }
+            }
+        }  
+        int count=0 , ans=0;
+        for(int i=0; i<n; i++){
+            if(greedy[i]!=0){
+                count++;
+                ans+=greedy[i];
+            }
+        } 
+        return {count,ans};
+    } 
+
 };
 
 int main(){
