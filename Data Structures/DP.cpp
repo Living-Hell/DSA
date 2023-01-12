@@ -676,6 +676,53 @@ public:
         return dp[0][n-1];
     }
 
+    int palindromicPartition(string str)
+    {
+        int n = str.size();
+        vector<vector<int>> dp(n, vector<int> (n,0));
+        
+        for(int gap=0; gap<n; gap++){
+            for(int i=0, j=gap; j<n; j++, i++){
+                if(gap==0) 
+                    dp[i][j]=1;
+                else if(gap==1){
+                    if(str[j] == str[j-1])
+                        dp[i][j] = 1;
+                    else
+                        dp[i][j]=0;
+                }
+                else{
+                    if(str[j] == str[i])
+                        dp[i][j] = dp[i+1][j-1];
+                    else{
+                        dp[i][j] = 0;
+                    }
+                }
+            }
+        }
+        
+        vector<int> cuts(n,0);
+        cuts[0] = 0;
+        
+        if(str[1] == str[0]) cuts[1] = 0;
+        else cuts[1] = 1;
+        
+        for(int i=2; i<n; i++){
+            if(dp[0][i]){
+                cuts[i] = 0;
+                continue;
+            }
+            int ans=INT_MAX;
+            for(int j=0; j<=i; j++){
+                if(dp[j][i]){
+                    ans = min(ans,1 + cuts[j-1]);
+                }
+            }
+            cuts[i] = ans;
+        }
+        return cuts[n-1];
+    }
+
 };
 
 int main(){
@@ -719,6 +766,7 @@ int main(){
     //cout<<dp.countPS("abccbc");
     //cout<<dp.AlternatingaMaxLength({1,17,5,10,13,15,10,5,16,8});
     //cout<<dp.maximumAmount({6335,2103,3929,7359,587,1551,3341,1060});
+    //cout<<dp.palindromicPartition("ababbbabbababa");
 
     return 0;
 }
