@@ -723,6 +723,40 @@ public:
         return cuts[n-1];
     }
 
+    int solveWordWrap(vector<int>nums, int k) 
+    { 
+        int n = nums.size();
+        vector<int> dp(n+1,INT_MAX);
+        int ans=INT_MAX, last_sentence=0;
+        
+        dp[0] = 0;
+        dp[1] = pow((k-nums[0]),2);
+        
+        
+        for(int i=2; i<=n; i++){
+            int sum = 0, count=0;
+            for(int j=i; j>=1; j--){
+                count++;
+                sum+= nums[j-1];
+                if(count>1) sum++;
+                if(sum>k) break;
+                int cost = dp[j-1] + pow((k-sum),2);
+                dp[i] = min(dp[i], cost);
+            }
+        }
+        
+        int sum = 0, count=0;
+        for(int j=n; j>=1; j--){
+                count++;
+                sum+= nums[j-1];
+                if(count>1) sum++;
+                if(sum>k) break;
+                int cost = dp[j-1];
+                ans = min(ans, cost);
+            }
+        return ans;
+    } 
+
 };
 
 int main(){
@@ -767,6 +801,7 @@ int main(){
     //cout<<dp.AlternatingaMaxLength({1,17,5,10,13,15,10,5,16,8});
     //cout<<dp.maximumAmount({6335,2103,3929,7359,587,1551,3341,1060});
     //cout<<dp.palindromicPartition("ababbbabbababa");
+    //cout<<dp.solveWordWrap({3,2,2,5},6);
 
     return 0;
 }
