@@ -757,6 +757,48 @@ public:
         return ans;
     } 
 
+    int booleanParenthesis(string s){
+        int n = s.size();
+        int m = (n+1)/2;
+        vector<vector<int>> dpt(m, vector<int>(m,0)), dpf(m, vector<int>(m,0));
+        
+        for(int g=0; g<m; g++){
+            for(int i=0, j=g; j<m; i++, j++){
+                if(g==0){
+                    if(s[j*2] == 'T'){ 
+                        dpt[i][j] = 1;
+                        dpf[i][j] = 0;
+                    }
+                    else if(s[j*2] == 'F'){ 
+                        dpf[i][j] = 1;
+                        dpt[i][j] = 0;
+                    }
+                }
+                else{
+                    for(int k=i; k<j; k++){
+                        if(s[(2*k)+1] == '&'){
+                        dpt[i][j] += (dpt[i][k] * dpt[k+1][j])%1003;
+                        dpf[i][j] += (dpf[i][k] * (dpf[k+1][j] + dpt[k+1][j]))%1003;
+                        dpf[i][j] += (dpt[i][k] * dpf[k+1][j])%1003;
+                        }
+                        else if(s[(2*k)+1] == '|'){ 
+                            dpt[i][j] += (dpt[i][k] * (dpt[k+1][j] + dpf[k+1][j]))%1003;
+                            dpt[i][j] += (dpf[i][k] * dpt[k+1][j])%1003;
+                            dpf[i][j] += (dpf[i][k] * dpf[k+1][j])%1003; 
+                        }
+                        else if(s[(2*k)+1] == '^'){
+                            dpt[i][j] += (dpt[i][k] * dpf[k+1][j])%1003;
+                            dpf[i][j] += (dpt[i][k] * dpt[k+1][j])%1003;
+                            dpt[i][j] += (dpf[i][k] * dpt[k+1][j])%1003; 
+                            dpf[i][j] += (dpf[i][k] * dpf[k+1][j])%1003;
+                        }
+                    }
+                }
+            }
+        }
+        return dpt[0][m-1]%1003;
+    }
+
 };
 
 int main(){
@@ -802,6 +844,7 @@ int main(){
     //cout<<dp.maximumAmount({6335,2103,3929,7359,587,1551,3341,1060});
     //cout<<dp.palindromicPartition("ababbbabbababa");
     //cout<<dp.solveWordWrap({3,2,2,5},6);
+    //cout<<dp.booleanParenthesis("T&T|F|F^F^T^T^T&T^F^T&F|F^F^F&F&F|F|F^F^T|T&T");
 
     return 0;
 }
