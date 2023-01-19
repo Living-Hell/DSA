@@ -799,6 +799,38 @@ public:
         return dpt[0][m-1]%1003;
     }
 
+    long long helperMobileKeypad(int i, int j, int n, vector<vector<long long>> &dp, vector<vector<int>> v){
+        if(i<0 || j<0 || i>=4 || j>=3 || v[i][j] == -1) return 0;
+        if(n==0){
+            return 1;
+        }
+        
+        if(dp[v[i][j]][n]>0) return dp[v[i][j]][n];
+        long long temp=0;
+        temp+= helperMobileKeypad(i-1,j,n-1,dp,v);
+        temp+= helperMobileKeypad(i+1,j,n-1,dp,v);
+        temp+= helperMobileKeypad(i,j-1,n-1,dp,v);
+        temp+= helperMobileKeypad(i,j+1,n-1,dp,v);
+        temp+= helperMobileKeypad(i,j,n-1,dp,v);
+        
+        return dp[v[i][j]][n] = temp;
+    }
+	long long getCountMNK(int n)
+	{   
+	    vector<vector<int>> v = {{1,2,3},{4,5,6},{7,8,9},{-1,0,-1}};
+	    vector<vector<long long>> dp(12,vector<long long>(n,0));
+        long long ans=0;
+	    
+		for(int i=0; i<4; i++){
+		    for(int j=0; j<3; j++){
+		        if(v[i][j]==-1) continue;
+                ans+= helperMobileKeypad(i,j,n-1, dp, v);
+		    }
+		}
+		return ans;
+	}
+
+
 };
 
 int main(){
@@ -845,6 +877,7 @@ int main(){
     //cout<<dp.palindromicPartition("ababbbabbababa");
     //cout<<dp.solveWordWrap({3,2,2,5},6);
     //cout<<dp.booleanParenthesis("T&T|F|F^F^T^T^T&T^F^T&F|F^F^F&F&F|F|F^F^T|T&T");
+    //cout<<dp.getCountMNK(4);
 
     return 0;
 }
