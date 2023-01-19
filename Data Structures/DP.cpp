@@ -855,6 +855,31 @@ public:
         return ans;
     }
 
+    int dpIS[101][101];
+    int helperIS(string a, string b, string c, int i, int j, int k){
+        if(k==c.size()) return true;
+        if(dpIS[i][j] != -1) return dpIS[i][j];
+        
+        bool flag1 = false, flag2 = false;
+        
+        if(i<a.size()){
+            if(c[k] == a[i])
+                flag1 = helperIS(a,b,c,i+1,j,k+1);
+        }
+        if(j<b.size()){
+            if(c[k] == b[j])
+                flag2 = helperIS(a,b,c,i,j+1,k+1);
+        }
+        return dpIS[i][j] = flag1 | flag2;
+    }    
+    bool isInterleave(string A, string B, string C) 
+    {
+        if(C.size() != B.size() + A.size()) 
+            return false;
+        memset(dpIS,-1,sizeof(dpIS));
+        return helperIS(A,B,C,0,0,0) == 1;
+    }
+
 
 };
 
@@ -904,6 +929,7 @@ int main(){
     //cout<<dp.booleanParenthesis("T&T|F|F^F^T^T^T&T^F^T&F|F^F^F&F&F|F|F^F^T|T&T");
     //cout<<dp.getCountMNK(4);
     //cout<<dp.maximumSumRectangle({{1,2,-1,-4,-20},{-8,-3,4,2,1},{3,8,10,1,3},{-4,-1,1,7,-6}});
+    //cout<<dp.isInterleave("XY", "X", "XYX");
 
     return 0;
 }
