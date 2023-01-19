@@ -830,6 +830,31 @@ public:
 		return ans;
 	}
 
+    int kadaneAlgo(vector<int> v){
+        int curr_sum=v[0], max_sum=v[0];
+        for(int i=1; i<v.size(); i++){
+            if(curr_sum<=0) curr_sum = v[i];
+            else curr_sum += v[i];
+            if(curr_sum>max_sum) max_sum = curr_sum;
+        }
+        return max_sum;
+    }
+    int maximumSumRectangle(vector<vector<int>> m) {
+        int r = m.size(), c = m[0].size();
+        int ans=INT_MIN;
+        for(int k=0; k<r; k++){
+            vector<int>  temp(c,0);
+            for(int i=k; i<r; i++){
+                for(int j=0; j<c; j++){
+                    temp[j] += m[i][j];
+                }
+                int t_sum = kadaneAlgo(temp);
+                ans = max(ans,t_sum);
+            }
+        }
+        return ans;
+    }
+
 
 };
 
@@ -878,6 +903,7 @@ int main(){
     //cout<<dp.solveWordWrap({3,2,2,5},6);
     //cout<<dp.booleanParenthesis("T&T|F|F^F^T^T^T&T^F^T&F|F^F^F&F&F|F|F^F^T|T&T");
     //cout<<dp.getCountMNK(4);
+    //cout<<dp.maximumSumRectangle({{1,2,-1,-4,-20},{-8,-3,4,2,1},{3,8,10,1,3},{-4,-1,1,7,-6}});
 
     return 0;
 }
