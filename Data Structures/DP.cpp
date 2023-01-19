@@ -880,6 +880,20 @@ public:
         return helperIS(A,B,C,0,0,0) == 1;
     }
 
+    int maxProfit(int k, vector<int> a) {
+        int n = a.size();
+        vector<vector<int>> dp(k+1, vector<int>(n,0));
+        
+        for(int i=1; i<=k; i++){
+            int mx = INT_MIN;
+            for(int j=1; j<n; j++){
+                mx = max(mx, dp[i-1][j-1] - a[j-1]);
+                dp[i][j] = max(mx+a[j], dp[i][j-1]);
+            }
+        }
+        return dp[k][n-1];
+    }
+
 
 };
 
@@ -930,6 +944,7 @@ int main(){
     //cout<<dp.getCountMNK(4);
     //cout<<dp.maximumSumRectangle({{1,2,-1,-4,-20},{-8,-3,4,2,1},{3,8,10,1,3},{-4,-1,1,7,-6}});
     //cout<<dp.isInterleave("XY", "X", "XYX");
+    //cout<<dp.maxProfit(2,{10,22,5,75,65,80});
 
     return 0;
 }
