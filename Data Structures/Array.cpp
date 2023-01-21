@@ -78,6 +78,23 @@ public:
         return ans;
     }
 
+    //To fin the immediate smallest number on left
+    vector<int> leftSmaller(vector<int> a){
+        int n = a.size();
+        stack<int> st;
+        vector<int> left(n,0);
+        left[0] = -1;
+        st.push(a[0]);
+        
+        for(int i=1; i<n; i++){
+            while(!st.empty() && st.top() >= a[i]) st.pop();
+            if(st.empty()) left[i] = -1;
+            else left[i] = st.top();
+            st.push(a[i]);
+        }
+        return left;
+    }
+
     //To print the array
     void print(vector<int> v){
         for(int i=0; i<v.size(); i++) 
@@ -89,16 +106,11 @@ public:
 
 int main(){
 
-    cout<<"Size : ";
-    int n; cin>>n;
-
-    cout<<"Array : ";
-    vector<int> v(n);
-    for(int i=0; i<n; i++) cin>>v[i];
-
     Array a;
-    //a.print(a.Reversal(v));   
-    //a.MaxMin(v);
+
+    //a.print(a.Reversal({1, 5, 0, 3, 4, 5}));   
+    //a.MaxMin({1, 5, 0, 3, 4, 5});
+    //a.print(a.leftSmaller({1, 5, 0, 3, 4, 5}));
 
     return 0;
 }
