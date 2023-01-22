@@ -894,6 +894,40 @@ public:
         return dp[k][n-1];
     }
 
+    int maximalRectangle(vector<vector<int>> matrix) {
+        int m = matrix.size(), n = matrix[0].size();
+        vector<int> dp(n,0), left(n,0), right(n,n);
+        int ans = INT_MIN;
+
+        for(int i=0; i<m; i++){
+            int curr_left=0, curr_right=n;
+            for(int j=0; j<n; j++){
+                if(matrix[i][j] == 1) dp[j]++;
+                else dp[j] = 0;
+            }            
+            for(int j=0; j<n; j++){
+                if(matrix[i][j] == 1) left[j] = max(curr_left, left[j]);
+                else {
+                    curr_left = j+1;
+                    left[j] = 0;
+                }
+            }            
+            for(int j=n-1; j>=0; j--){
+                if(matrix[i][j] == 1) right[j] = min(curr_right, right[j]);
+                else {
+                    curr_right = j;
+                    right[j] = n;
+                }
+            }
+            int temp=INT_MIN;
+            for(int j=0; j<n; j++){
+                temp = max(temp, dp[j] * (right[j] - left[j]));
+            }
+            ans = max(ans,temp);
+        }
+        return ans;
+    }
+
 
 };
 
@@ -945,6 +979,7 @@ int main(){
     //cout<<dp.maximumSumRectangle({{1,2,-1,-4,-20},{-8,-3,4,2,1},{3,8,10,1,3},{-4,-1,1,7,-6}});
     //cout<<dp.isInterleave("XY", "X", "XYX");
     //cout<<dp.maxProfit(2,{10,22,5,75,65,80});
+    //cout<<dp.maximalRectangle({{0, 1, 1, 0},{1, 1, 1, 1},{1, 1, 1, 1},{1, 1, 0, 0}});
 
     return 0;
 }
