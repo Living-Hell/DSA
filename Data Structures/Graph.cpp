@@ -23,7 +23,27 @@ public:
 
     bool CycleDetection(){}
     
-    vector<int> BFS(){}
+    vector<int> BFS(int v, vector<vector<int>> adj) {
+        vector<int> bfs;
+        vector<bool> visited(v,0);
+        queue<int> q;
+        
+        q.push(0);
+        visited[0] = 1;
+        
+        while(!q.empty()){
+            int top = q.front();
+            q.pop();
+            for(int i:adj[top]){
+                if(!visited[i]){
+                    q.push(i);
+                    visited[i] = 1;
+                }
+            }
+            bfs.push_back(top);
+        }
+        return bfs;
+    }
 
     vector<int> DFS(){}
 
