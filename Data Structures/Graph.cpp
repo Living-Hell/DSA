@@ -23,7 +23,7 @@ public:
 
     bool CycleDetection(){}
     
-    vector<int> BFS(int v, vector<vector<int>> adj) {
+    vector<int> BFSTraversal(int v, vector<vector<int>> adj) {
         vector<int> bfs;
         vector<bool> visited(v,0);
         queue<int> q;
@@ -45,7 +45,31 @@ public:
         return bfs;
     }
 
-    vector<int> DFS(){}
+    vector<int> DFSTraversal(int v, vector<vector<int>> adj) {
+        vector<int> dfs;
+        vector<bool> visited(v,0);
+        stack<int> st;
+        st.push(0);
+        
+        while(!st.empty()){
+            int top = st.top();
+            st.pop();
+
+            if(!visited[top]){
+                visited[top]=1;
+                dfs.push_back(top);
+            }
+            else 
+                continue;    
+
+            for(int i=adj[top].size()-1; i>=0; i--){
+                if(!visited[adj[top][i]]){
+                    st.push(adj[top][i]);
+                }
+            }
+        }
+        return dfs;
+    }
 
 };
 
