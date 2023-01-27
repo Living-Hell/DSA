@@ -74,23 +74,49 @@ public:
     }
     
     // Function to detect cycle in an undirected graph using DFS.
-    bool DFSCycle(int node, int parent, vector<bool> &visited, vector<int> adj[]){
+    bool DFSCycleUndirected(int node, int parent, vector<bool> &visited, vector<int> adj[]){
         visited[node] = 1;        
         for(int i:adj[node]){
             if(i!=parent && visited[i]) return true;
-            if(!visited[i]) if(DFSCycle(i,node,visited,adj)) return true;
+            if(!visited[i]) if(DFSCycleUndirected(i,node,visited,adj)) return true;
         }
         return false;
     }
-    bool isCycleDirected(int v, vector<int> adj[]) {
+    bool isCycleUndirected(int v, vector<int> adj[]) {
         vector<bool> visited(v,0);        
         for(int i=0; i<v; i++){
             if(!visited[i]){
-                if(DFSCycle(i,-1, visited, adj)) 
+                if(DFSCycleUndirected(i,-1, visited, adj)) 
                     return 1;
             }
         }
         return 0;
+    }
+
+    // Function to detect cycle in a directed graph using DFS.
+    bool dfsCycleDirected(int node, vector<bool> &visited, vector<bool> &dfsVisited, vector<int> adj[]){
+        dfsVisited[node] = visited[node] = 1;
+        for(int i:adj[node]){
+            if(!visited[i]){
+                if(dfsCycleDirected(i,visited,dfsVisited, adj))
+                    return true;
+            }
+            else if(visited[i] && dfsVisited[i])
+                return true;
+            else if(visited[i] && !dfsVisited[i])
+                continue;
+        }
+        dfsVisited[node] = 0;
+        return false;
+    }
+    bool isCyclicDirected(int v, vector<int> adj[]) {
+        vector<bool> visited(v,0), dfsVisited(v,0);
+        for(int i=0; i<v; i++){
+            if(!visited[i])
+                if(dfsCycleDirected(i,visited,dfsVisited,adj))
+                    return true;
+        }
+        return false;
     }
 
 };
