@@ -119,6 +119,34 @@ public:
         return false;
     }
 
+    // Function to detect cycle in a directed graph using BFS - Kahn's Algorithm
+    bool isCyclicDirectedKA(int v, vector<int> adj[]) {
+        vector<int> indegree(v,0),ans;
+	    queue<int> q;	    
+	    for(int i=0; i<v; i++){
+	        for(int j:adj[i]){
+	            indegree[j]++;
+	        }
+	    }
+	    for(int i=0; i<v; i++){
+	        if(indegree[i] == 0)
+	            q.push(i);
+	    }
+	    int count=0;
+	    while(!q.empty()){
+	        int top = q.front();
+	        q.pop();
+	        ans.push_back(top);
+	        count++;	        
+	        for(int i:adj[top]){
+	            indegree[i]--;
+	            if(indegree[i] == 0)
+	                q.push(i);
+	        }
+	    }
+	    return !(count==v);
+    }
+
 };
 
 int main()

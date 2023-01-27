@@ -10,6 +10,7 @@ vector<int> topoSort(int v, vector<int> adj[]) {
             indegree[j]++;
         }
     }
+    
     for(int i=0; i<v; i++){
         if(indegree[i] == 0)
             q.push(i);
