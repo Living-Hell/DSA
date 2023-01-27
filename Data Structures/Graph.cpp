@@ -5,12 +5,14 @@ class Graph{
 public:
     unordered_map<int, list<pair<int,int>>> adjlist;
 
+    // Function to add an edge in a Grpah
     void addEdge(int u, int v, int dist, bool undirected = 1){
         adjlist[u].push_back(make_pair(v,dist));
         if(undirected)
             adjlist[v].push_back(make_pair(u,dist));
     }
 
+    //Function to print the adjacency list of Graph
     void print_adj(){
         for(auto i : adjlist){
             cout<<i.first<<" : ";
@@ -20,9 +22,8 @@ public:
             cout<<endl;
         }
     }
-
-    bool CycleDetection(){}
     
+    // Function for BFS Traversal of a Graph
     vector<int> BFSTraversal(int v, vector<vector<int>> adj) {
         vector<int> bfs;
         vector<bool> visited(v,0);
@@ -45,6 +46,7 @@ public:
         return bfs;
     }
 
+    // Function for DFS Traversal of a Graph
     vector<int> DFSTraversal(int v, vector<vector<int>> adj) {
         vector<int> dfs;
         vector<bool> visited(v,0);
@@ -69,6 +71,26 @@ public:
             }
         }
         return dfs;
+    }
+    
+    // Function to detect cycle in an undirected graph using DFS.
+    bool DFSCycle(int node, int parent, vector<bool> &visited, vector<int> adj[]){
+        visited[node] = 1;        
+        for(int i:adj[node]){
+            if(i!=parent && visited[i]) return true;
+            if(!visited[i]) if(DFSCycle(i,node,visited,adj)) return true;
+        }
+        return false;
+    }
+    bool isCycleDirected(int v, vector<int> adj[]) {
+        vector<bool> visited(v,0);        
+        for(int i=0; i<v; i++){
+            if(!visited[i]){
+                if(DFSCycle(i,-1, visited, adj)) 
+                    return 1;
+            }
+        }
+        return 0;
     }
 
 };
