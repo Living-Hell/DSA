@@ -120,7 +120,7 @@ public:
     }
 
     // Function to detect cycle in a directed graph using BFS - Kahn's Algorithm
-    bool isCyclicDirectedKA(int v, vector<int> adj[]) {
+    bool isCyclicDirectedBFS(int v, vector<int> adj[]) {
         vector<int> indegree(v,0),ans;
 	    queue<int> q;	    
 	    for(int i=0; i<v; i++){
