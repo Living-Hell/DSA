@@ -147,6 +147,39 @@ public:
 	    return !(count==v);
     }
 
+    //To find out the minimum steps a Knight will take to reach the target position in a square chessboard.
+    int minStepToReachTarget(vector<int>&KnightPos,vector<int>&TargetPos,int n)
+	{   
+	    if(KnightPos == TargetPos) return 0;
+
+	    vector<pair<int,int>> moves = {{-1,-2},{-1,2},{1,-2},{1,2},{-2,-1},{-2,1},{2,-1},{2,1}};
+	    int indi = KnightPos[0]-1 , indj = KnightPos[1]-1,  tari = TargetPos[0]-1, tarj = TargetPos[1]-1;
+	    
+        queue<vector<int>> q;
+	    vector<vector<bool>> vis(n,vector<bool>(n,0));
+	    int ans=INT_MAX;
+	    
+	    q.push({indi,indj,0});
+	    vis[indi][indj]=1;
+	    
+	    while(!q.empty()){
+	        auto top = q.front();
+	        q.pop();
+            if(top[0] == tari && top[1] == tarj)
+                ans = min(ans,top[2]);
+	        for(auto m:moves){
+	            int x = top[0]+m.first, y = top[1]+m.second;
+	            if(x>=0 && x<n && y>=0 && y<n){
+    	            if(!vis[x][y]){
+                        vis[x][y]=1;
+                        q.push({x,y,top[2]+1});
+    	            }
+	            }
+	        }
+	    }
+	    return ans;
+	}
+
 };
 
 int main()
