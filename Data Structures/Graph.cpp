@@ -3,6 +3,23 @@ using namespace std;
 
 class Graph{
 public:
+    struct Node {
+        int val;
+        vector<Node*> neighbors;
+        Node() {
+            val = 0;
+            neighbors = vector<Node*>();
+        }
+        Node(int _val) {
+            val = _val;
+            neighbors = vector<Node*>();
+        }
+        Node(int _val, vector<Node*> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    };
+
     unordered_map<int, list<pair<int,int>>> adjlist;
 
     // Function to add an edge in a Grpah
@@ -148,7 +165,7 @@ public:
     }
 
     //To find out the minimum steps a Knight will take to reach the target position in a square chessboard.
-    int minStepToReachTarget(vector<int>&KnightPos,vector<int>&TargetPos,int n)
+    int minStepToReachTarget(vector<int>KnightPos,vector<int>TargetPos,int n)
 	{   
 	    if(KnightPos == TargetPos) return 0;
 
@@ -180,6 +197,27 @@ public:
 	    return ans;
 	}
 
+    Node* cloneGraph(Node* node) {
+        if(node == NULL) return node;
+        unordered_map<Node*,Node*> mp;
+        stack<Node*> st;
+        st.push(node);
+        mp[node] = new Node(node->val);
+
+        while(!st.empty()){
+            Node* top = st.top();
+            st.pop();
+            for(auto i:top->neighbors){
+                if(mp.find(i) == mp.end()){
+                    st.push(i);
+                    mp[i] = new Node(i->val);
+                }
+                mp[top]->neighbors.push_back(mp[i]);
+            }
+        }
+        return mp[node];
+    }
+
 };
 
 int main()
@@ -200,6 +238,8 @@ int main()
 	// g.addEdge(5, 4,10, 0);
 	// g.addEdge(7, 6,1, 0);
 	// g.print_adj();
+
+    //cout<<g.minStepToReachTarget({1,1},{4,5},5);
 	
 	return 0;
 }
