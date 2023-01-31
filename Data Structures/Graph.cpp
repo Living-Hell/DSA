@@ -3,6 +3,8 @@ using namespace std;
 
 class Graph{
 public:
+    unordered_map<int, list<pair<int,int>>> adjlist;
+
     struct Node {
         int val;
         vector<Node*> neighbors;
@@ -19,8 +21,6 @@ public:
             neighbors = _neighbors;
         }
     };
-
-    unordered_map<int, list<pair<int,int>>> adjlist;
 
     // Function to add an edge in a Grpah
     void addEdge(int u, int v, int dist, bool undirected = 1){
