@@ -2,8 +2,9 @@
 using namespace std;
 
 class DisjointSet{
-    vector<int> size, rank, parent;
 public:
+    vector<int> size, rank, parent;
+    
     DisjointSet(int n){
         size.resize(n+1,1);
         rank.resize(n+1,0);
