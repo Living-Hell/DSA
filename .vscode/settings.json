@@ -4,6 +4,12 @@
         "ostream": "cpp",
         "*.tcc": "cpp",
         "list": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "initializer_list": "cpp",
+        "regex": "cpp",
+        "utility": "cpp",
+        "valarray": "cpp"
     }
 }
