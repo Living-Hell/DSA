@@ -347,6 +347,27 @@ public:
         return 0;
     }
 
+    //Function to find the shortest distance of all the vertices from the source vertex S.
+    vector <int> dijkstra(int v, vector<vector<int>> adj[], int s){
+        queue<int> q;
+        vector<int> dist(v,INT_MAX);        
+        q.push(s);
+        dist[s] = 0;
+        
+        while(!q.empty()){
+            int top = q.front();
+            q.pop();
+            
+            for(auto i:adj[top]){
+                if(dist[i[0]] > dist[top] + i[1]){
+                    dist[i[0]] = dist[top] + i[1];
+                    q.push(i[0]);
+                }
+            }
+        }
+        return dist;
+    }
+
 };
 
 int main()
