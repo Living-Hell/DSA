@@ -93,6 +93,7 @@ public:
     }
 
     //Find any Topological Sorting of the Directed Acyclic Graph (DAG) with V vertices and E edges.
+    //Using Kahn's Algorithm
     vector<int> topoSort(int v, vector<int> adj[]) {
 	    vector<int> indegree(v,0),ans;
 	    queue<int> q;
@@ -399,35 +400,65 @@ public:
 
     //To find the minimum time taken by each job to be completed given by a Directed Acyclic Graph
     vector<int> minimumTime(int n,vector<vector<int>> &edges,int m){
-            vector<int> indegree(n,0), ans(n,0);
-            queue<int> q;
-            vector<vector<int>> adj(n, vector<int>());
-             
-            for(auto i:edges){
-                indegree[i[1]-1]++;
-                adj[i[0]-1].push_back(i[1]-1);
-            }
+        vector<int> indegree(n,0), ans(n,0);
+        queue<int> q;
+        vector<vector<int>> adj(n, vector<int>());
             
-            for(int i=0; i<n; i++){
-                if(indegree[i] == 0){
-                    q.push(i);
-                    ans[i] = 1;
-                }
-            }
-            
-            while(!q.empty()){
-                int top = q.front();
-                q.pop();
-                for(int i:adj[top]){
-                    indegree[i]--;
-                    if(indegree[i]==0){
-                        q.push(i);
-                        ans[i] = ans[top]+1;
-                    }
-                }
-            }
-            return ans;
+        for(auto i:edges){
+            indegree[i[1]-1]++;
+            adj[i[0]-1].push_back(i[1]-1);
         }
+        
+        for(int i=0; i<n; i++){
+            if(indegree[i] == 0){
+                q.push(i);
+                ans[i] = 1;
+            }
+        }
+        
+        while(!q.empty()){
+            int top = q.front();
+            q.pop();
+            for(int i:adj[top]){
+                indegree[i]--;
+                if(indegree[i]==0){
+                    q.push(i);
+                    ans[i] = ans[top]+1;
+                }
+            }
+        }
+        return ans;
+    }
+
+    //Is it possible to finish all tasksGiven the total number of tasks N and a list of prerequisite pairs P
+    bool prerequisiteTasks(int n, vector<pair<int, int> >& prerequisites) {
+	    vector<int> indegree(n,0);
+	    queue<int> q;
+	    vector<int> topo;
+	    vector<vector<int>> adj(n,vector<int>());
+	    
+	    for(auto i:prerequisites){
+	        indegree[i.first]++;
+	        adj[i.second].push_back(i.first);
+	    }
+	    
+	    for(int i=0; i<n; i++)
+	        if(!indegree[i])
+	            q.push(i);
+	   
+	    while(!q.empty()){
+	        int top = q.front();
+	        q.pop();
+	        topo.push_back(top);
+	        
+	        for(int i:adj[top]){
+	            indegree[i]--;
+	            if(indegree[i] == 0)
+	                q.push(i);
+	        }
+	    }	    
+	    return topo.size() == n;
+	}
 
 };
 
