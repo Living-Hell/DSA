@@ -460,6 +460,40 @@ public:
 	    return topo.size() == n;
 	}
 
+    //Given a grid of size n*m consisting of '0's (Water) and '1's(Land),ind the number of islands.
+    int numIslands(vector<vector<char>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<bool>> visited(m,vector<bool>(n,0));
+        vector<pair<int,int>> dir{{-1,0},{1,0},{0,-1},{0,1},{-1,-1},{-1,1},{1,1},{1,-1}};
+        int count=0;
+        queue<pair<int,int>> q;
+        
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(!visited[i][j] && grid[i][j] == '1'){
+                    q.push({i,j});
+                    visited[i][j]=1;
+                    count++;
+                    while(!q.empty()){
+                        auto top = q.front();
+                        q.pop();
+                        int x = top.first, y = top.second;
+                        for(auto i:dir){
+                            int row = x + i.first, col = y + i.second;
+                            if(row>=0 && row<m && col>=0 && col<n ){
+                                if(!visited[row][col] && grid[row][col]=='1'){
+                                    visited[row][col]=1;
+                                    q.push({row,col});
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return count;
+    }
+
 };
 
 int main()
