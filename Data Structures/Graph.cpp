@@ -397,6 +397,38 @@ public:
         return dist;
     }
 
+    //To find the minimum time taken by each job to be completed given by a Directed Acyclic Graph
+    vector<int> minimumTime(int n,vector<vector<int>> &edges,int m){
+            vector<int> indegree(n,0), ans(n,0);
+            queue<int> q;
+            vector<vector<int>> adj(n, vector<int>());
+             
+            for(auto i:edges){
+                indegree[i[1]-1]++;
+                adj[i[0]-1].push_back(i[1]-1);
+            }
+            
+            for(int i=0; i<n; i++){
+                if(indegree[i] == 0){
+                    q.push(i);
+                    ans[i] = 1;
+                }
+            }
+            
+            while(!q.empty()){
+                int top = q.front();
+                q.pop();
+                for(int i:adj[top]){
+                    indegree[i]--;
+                    if(indegree[i]==0){
+                        q.push(i);
+                        ans[i] = ans[top]+1;
+                    }
+                }
+            }
+            return ans;
+        }
+
 };
 
 int main()
