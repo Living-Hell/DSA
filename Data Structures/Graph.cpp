@@ -94,7 +94,7 @@ public:
 
     //Find any Topological Sorting of the Directed Acyclic Graph (DAG) with V vertices and E edges.
     //Using Kahn's Algorithm
-    vector<int> topoSort(int v, vector<int> adj[]) {
+    vector<int> topoSort(int v, vector<vector<int>> adj) {
 	    vector<int> indegree(v,0),ans;
 	    queue<int> q;
 	    
@@ -492,6 +492,29 @@ public:
             }
         }
         return count;
+    }
+
+    //Given a sorted dictionary of an alien language having N words and k starting alphabets of standard dictionary. 
+    //Find the order of characters in the alien language.
+    string findOrderAlienDict(string dict[], int n, int k) {
+        vector<vector<int>> adj(k,vector<int>());
+        string ans="";
+        
+        for(int i=0; i<n-1; i++){            
+            if(dict[i][0] != dict[i+1][0]){
+                adj[dict[i][0]-'a'].push_back(dict[i+1][0]-'a');
+                continue;
+            }            
+            for(int j=1; j<min(dict[i].size(), dict[i+1].size()); j++){
+                if(dict[i][j] != dict[i+1][j]){
+                    adj[dict[i][j]-'a'].push_back(dict[i+1][j]-'a');
+                    break;
+                }
+            }
+        }
+        vector<int> topo = topoSort(k,adj);
+        for(int i:topo) ans+= char(i+'a');    
+        return ans;
     }
 
 };
