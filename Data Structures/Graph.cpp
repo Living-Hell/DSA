@@ -517,6 +517,43 @@ public:
         return ans;
     }
 
+    //Given a weighted, undirected and connected graph, find the Minimum Spanning Tree and sum of the weights of the edges.
+    //Using Prim's Algorithm
+    vector<pair<int,int>> primSpanningTree(int v, vector<vector<vector<int>>> adj)
+    {
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
+        vector<bool> visited(v,0);
+        vector<pair<int,int>> MST;
+        int sum=0;
+        
+        pq.push({0,0,-1});
+        
+        while(!pq.empty()){
+            auto top = pq.top();
+            pq.pop();
+            
+            int node = top[1];
+            int wt = top[0];
+            int par = top[2];
+            
+            if(visited[node]) continue;
+            
+            visited[node]=1;
+            sum+= wt;
+            if(par != -1) MST.push_back({node,par});
+            
+            for(auto i:adj[node]){
+                int adj_node = i[0];
+                int adj_wt = i[1];
+                if(!visited[adj_node])
+                    pq.push({adj_wt, adj_node, node});
+            }
+        }
+        cout<<"Sum: "<<sum<<endl;
+        // return sum;
+        return MST;
+    }
+
 };
 
 int main()
@@ -539,6 +576,10 @@ int main()
 	// g.print_adj();
 
     //cout<<g.minStepToReachTarget({1,1},{4,5},5);
-	
+
+    // vector<pair<int,int>> PMST = g.primSpanningTree(5, {{{1,2},{2,1}},{{0,2},{2,1}},{{0,1},{1,1},{4,2},{3,2}},{{2,2},{4,1}},{{2,2},{3,1}}});
+	// for(int i=0; i<PMST.size(); i++)
+    //  cout<<PMST[i].first<<" "<<PMST[i].second<<endl;
+
 	return 0;
 }
