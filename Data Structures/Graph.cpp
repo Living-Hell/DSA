@@ -549,8 +549,38 @@ public:
                     pq.push({adj_wt, adj_node, node});
             }
         }
-        cout<<"Sum: "<<sum<<endl;
+        cout<<"Sum of edges: "<<sum<<endl;
         // return sum;
+        return MST;
+    }
+
+    //Given a weighted, undirected and connected graph, find the Minimum Spanning Tree and sum of the weights of the edges.
+    //Using Kruskal's Algorithm
+    vector<pair<int,int>> kruskalSpanningTree(int v, vector<vector<vector<int>>> adj)
+    {
+        vector<vector<int>> edges(v,vector<int>(3));
+        
+        for(int i=0; i<v; i++){
+            for(auto edg:adj[i]){
+                edges.push_back({edg[1],i,edg[0]});
+            }
+        }
+        
+        sort(edges.begin(), edges.end());
+        
+        vector<pair<int,int>> MST;
+        DisjointSet ds(v);
+        int MST_Wt=0;        
+        
+        for(auto i: edges){
+            if(ds.findPar(i[1]) != ds.findPar(i[2])){
+                ds.UnionBySize(i[1],i[2]);
+                MST_Wt += i[0];
+                MST.push_back({i[1],i[2]});
+            }
+        }
+        cout<<"Sum of edges: "<<MST_Wt<<endl;
+        // return MST_Wt;
         return MST;
     }
 
