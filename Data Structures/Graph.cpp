@@ -584,6 +584,7 @@ public:
         return MST;
     }
 
+    //Find the shortest distances between every pair of vertices in a given edge-weighted directed graph
     void FloydWarshall_shortest_distance(vector<vector<int>>&matrix){
 	    int n = matrix.size();
 	    for(int i=0; i<n; i++){
@@ -605,6 +606,32 @@ public:
                     matrix[i][j] = -1;
             }
         }
+	}
+
+    //Given a weighted directed graph with n nodes check if it contains a negative weight cycle or not.
+    bool isNegativeWeightCycle(int n, vector<vector<int>>edges){
+	    vector<vector<int>> cost(n,vector<int>(n,1e9));
+	    
+	    for(auto i:edges)
+	        cost[i[0]][i[1]] = i[2];
+	        
+	    for(int i=0; i<n; i++)
+	        cost[i][i] = 0;
+	       
+	    for(int via=0; via<n; via++){
+	        for(int i=0; i<n; i++){
+	            for(int j=0; j<n; j++){
+	                cost[i][j] = min(cost[i][j], cost[i][via] + cost[via][j]);
+	            }
+	        }
+	    }
+	    
+	    for(int i=0; i<n; i++){
+	        if(cost[i][i]<0)
+	            return 1;
+	    }
+	    
+	    return 0;
 	}
 
 };
