@@ -609,7 +609,8 @@ public:
 	}
 
     //Given a weighted directed graph with n nodes check if it contains a negative weight cycle or not.
-    bool isNegativeWeightCycle(int n, vector<vector<int>>edges){
+    //Using Floyd Warshall Algorithm
+    bool isNegativeWeightCycleFW(int n, vector<vector<int>>edges){
 	    vector<vector<int>> cost(n,vector<int>(n,1e9));
 	    
 	    for(auto i:edges)
@@ -631,6 +632,27 @@ public:
 	    }	    
 	    return 0;
 	}
+
+    //Given a weighted directed graph with n nodes check if it contains a negative weight cycle or not.
+    //Using Bellman Ford Algorithm
+    int isNegativeWeightCycleBF(int n, vector<vector<int>>edges){
+	    vector<int> dist(n,1e9);
+	    dist[0] = 0;
+	    for(int i=0; i<n-1; i++){
+	        for(auto e:edges){
+	            if(dist[e[0]]<1e9){
+	                dist[e[1]] = min(dist[e[1]], dist[e[0]] + e[2]);
+	            }
+	        }
+	    }
+	    for(auto e:edges){
+            if(dist[e[1]] > dist[e[0]] + e[2]){
+                return 1;
+            }
+        }
+        return 0;
+	}
+};
 
     //Given a weighted, directed and connected graph, find the shortest distance of all the vertex's from the source vertex S.
     vector<int> bellman_ford(int n, vector<vector<int>>& edges, int S) {
