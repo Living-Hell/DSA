@@ -613,11 +613,11 @@ public:
 	    vector<vector<int>> cost(n,vector<int>(n,1e9));
 	    
 	    for(auto i:edges)
-	        cost[i[0]][i[1]] = i[2];
-	        
+	        cost[i[0]][i[1]] = i[2];	        
+
 	    for(int i=0; i<n; i++)
-	        cost[i][i] = 0;
-	       
+	        cost[i][i] = 0;	       
+            
 	    for(int via=0; via<n; via++){
 	        for(int i=0; i<n; i++){
 	            for(int j=0; j<n; j++){
@@ -625,14 +625,31 @@ public:
 	            }
 	        }
 	    }
-	    
 	    for(int i=0; i<n; i++){
 	        if(cost[i][i]<0)
 	            return 1;
-	    }
-	    
+	    }	    
 	    return 0;
 	}
+
+    //Given a weighted, directed and connected graph, find the shortest distance of all the vertex's from the source vertex S.
+    vector<int> bellman_ford(int n, vector<vector<int>>& edges, int S) {
+        vector<int> dist(n,1e8);
+	    dist[S] = 0;
+	    for(int i=0; i<n-1; i++){
+	        for(auto e:edges){
+	            if(dist[e[0]]<1e9){
+	                dist[e[1]] = min(dist[e[1]], dist[e[0]] + e[2]);
+	            }
+	        }
+	    }
+	    for(auto e:edges){
+            if(dist[e[1]] > dist[e[0]] + e[2]){
+                return {-1};
+            }
+        }
+        return dist;
+    }
 
 };
 
