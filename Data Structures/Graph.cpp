@@ -652,7 +652,6 @@ public:
         }
         return 0;
 	}
-};
 
     //Given a weighted, directed and connected graph, find the shortest distance of all the vertex's from the source vertex S.
     vector<int> bellman_ford(int n, vector<vector<int>>& edges, int S) {
@@ -671,6 +670,32 @@ public:
             }
         }
         return dist;
+    }
+
+    //Given a matrix cost of size n complete a tour from the city 0 to all other cities such that you 
+    //visit each city atmost once and then at the end come back to city 0 in min cost.
+    int all_visited;
+    vector<vector<int>> dp_tsp;
+    int TSP(int mask, int pos, vector<vector<int>>cost){
+        if(mask == all_visited) return cost[pos][0];        
+        if(dp_tsp[mask][pos]!= -1) return dp_tsp[mask][pos];
+        
+        int ans = INT_MAX;
+        
+        for(int i=0; i<cost.size(); i++){
+            if((mask & (1<<i)) == 0){
+                int new_ans = cost[pos][i] + TSP(mask|(1<<i),i,cost);
+                ans = min(ans,new_ans);
+            }
+        }
+        return dp_tsp[mask][pos] = ans;
+    }
+    
+    int total_cost(vector<vector<int>>cost){
+        int n = cost.size();        
+        dp_tsp.resize(pow(2,n),vector<int>(n,-1));
+        all_visited = (1<<n)-1;        
+        return TSP(1,0,cost);
     }
 
 };
