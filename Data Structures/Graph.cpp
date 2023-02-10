@@ -699,7 +699,7 @@ public:
 
     //Function to to color a graph such that no two adjacent vertices of graph are coloured with same colour.
     //**Doesn't use the optimal/minimum no. of color required.
-    vector<int> graphColoring(bool graph[101][101], int m, int n) {
+    vector<int> graphColoringF(bool graph[101][101], int m, int n) {
         vector<int> color(n,-1);
         queue<int> q;
         q.push(0);        
@@ -725,6 +725,34 @@ public:
             }
         }
         return color;
+    }
+
+    //Given an undirected graph determine if the graph can be colored with at most M colors 
+    //such that no two adjacent vertices of the graph are colored with the same color.
+    vector<int> color;
+    bool possible(int node, int col, bool graph[101][101]){
+        for(int i=0; i<101; i++){
+            if(graph[node][i] && color[i]==col)
+                return 0;
+        }
+        return 1;
+    }
+    bool coloring(int node, int m, int n, bool graph[101][101]){
+        if(node==n) return 1;
+        
+        for(int col=0; col<m; col++){
+            if(possible(node,col, graph)){
+                color[node] = col;
+                if(coloring(node+1, m ,n, graph))
+                    return 1;
+                color[node] = -1;
+            }
+        }
+        return 0;
+    }
+    bool graphMColoring(bool graph[101][101], int m, int n) {
+        color.resize(n,-1);
+        return coloring(0,m,n,graph);
     }
 
 };
