@@ -689,13 +689,42 @@ public:
             }
         }
         return dp_tsp[mask][pos] = ans;
-    }
-    
-    int total_cost(vector<vector<int>>cost){
+    }    
+    int travellingSalesmanProblem(vector<vector<int>>cost){
         int n = cost.size();        
         dp_tsp.resize(pow(2,n),vector<int>(n,-1));
         all_visited = (1<<n)-1;        
         return TSP(1,0,cost);
+    }
+
+    //Function to to color a graph such that no two adjacent vertices of graph are coloured with same colour.
+    //**Doesn't use the optimal/minimum no. of color required.
+    vector<int> graphColoring(bool graph[101][101], int m, int n) {
+        vector<int> color(n,-1);
+        queue<int> q;
+        q.push(0);        
+        while(!q.empty()){
+            int front = q.front();
+            q.pop();
+            for(int j=0; j<m; j++){
+                int flag=1;
+                for(int k=0; k<101; k++){
+                    if(graph[front][k]){
+                        if(color[k] == j){
+                            flag=0;
+                            break;
+                        }                        
+                        else if(color[k] == -1)
+                            q.push(k);                        
+                    }
+                }
+                if(flag){ 
+                    color[front] = j;
+                    break;
+                }
+            }
+        }
+        return color;
     }
 
 };
