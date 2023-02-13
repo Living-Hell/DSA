@@ -739,7 +739,6 @@ public:
     }
     bool coloring(int node, int m, int n, bool graph[101][101]){
         if(node==n) return 1;
-        
         for(int col=0; col<m; col++){
             if(possible(node,col, graph)){
                 color[node] = col;
@@ -753,6 +752,39 @@ public:
     bool graphMColoring(bool graph[101][101], int m, int n) {
         color.resize(n,-1);
         return coloring(0,m,n,graph);
+    }
+
+    //Given an integer matrix board where the cells are labeled from 1 to n2 in a Boustrophedon style starting from the bottom left of the board and alternating direction each row.
+    //Find the least number of moves required to reach the square n2 or -1 if not possible.
+    int snakesAndLadders(vector<vector<int>>& board) {
+        int n = board.size();
+        queue<pair<int,int>> q;
+        vector<bool> visited(n*n+1,0);
+        q.push({1,0});
+        
+        while(!q.empty()){
+            auto top = q.front();
+            q.pop();
+            int score = top.first, moves = top.second;
+            if(score == n*n) return moves;
+
+            for(int i=score+1; i<=min(score+6, n*n); i++){
+                int r = (i-1)/n;
+                int c;
+                if(r&1) c = n - (i-1)%n -1;
+                else c = (i-1)%n;
+                r  = n-1-r;
+                if(board[r][c]!= -1 && !visited[board[r][c]]){
+                    q.push({board[r][c],moves+1});
+                    visited[board[r][c]] = 1;
+                }
+                else if(board[r][c] == -1 && !visited[i]){
+                    visited[i]=1;
+                    q.push({i,moves+1});
+                }
+            }
+        }
+        return -1;
     }
 
 };
