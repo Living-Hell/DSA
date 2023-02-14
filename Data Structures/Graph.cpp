@@ -787,6 +787,30 @@ public:
         return -1;
     }
 
+    //Function to find if the given edge is a bridge in graph.
+    int isBridge(int v, vector<int> adj[], int c, int d){
+        vector<bool> visited(v,0);
+        stack<int> q;
+        
+        adj[c].erase(remove(adj[c].begin(), adj[c].end(),d),adj[c].end());
+        adj[d].erase(remove(adj[d].begin(), adj[d].end(),c),adj[d].end());
+        q.push(c);
+        visited[c]=1;
+        
+        while(!q.empty()){
+            int top = q.top();
+            q.pop();
+            
+            for(int i : adj[top]){
+                if(!visited[i]){
+                    q.push(i);
+                    visited[i]=1;
+                }
+            }
+        }
+        return !visited[d];
+    }
+
 };
 
 int main()
