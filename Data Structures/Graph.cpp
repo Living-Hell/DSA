@@ -727,8 +727,8 @@ public:
         return color;
     }
 
-    //Given an undirected graph determine if the graph can be colored with at most M colors 
-    //such that no two adjacent vertices of the graph are colored with the same color.
+    // Function to determine if graph can be coloured with at most M colours such
+    // that no two adjacent vertices of graph are coloured with same colour.
     vector<int> color;
     bool possible(int node, int col, bool graph[101][101]){
         for(int i=0; i<101; i++){
@@ -809,6 +809,50 @@ public:
             }
         }
         return !visited[d];
+    }
+    
+	//Function to find number of strongly connected components in the graph.
+    void dfsKosaraju(vector<vector<int>> &adj, int node, stack<int> &st, vector<bool> &visited){
+	    visited[node]=1;
+	    for(int i:adj[node]){
+	        if(!visited[i]){
+	            dfsKosaraju(adj,i,st,visited);
+	        }
+	    }
+	    st.push(node);
+	}
+	void dfsaKosaraju(vector<vector<int>> &adj, int node, vector<bool> &visited){
+	    visited[node]=1;
+	    for(int i:adj[node]){
+	        if(!visited[i]){
+	            dfsaKosaraju(adj,i,visited);
+	        }
+	    }
+	}
+    int kosaraju(int v, vector<vector<int>>& adj){
+        vector<vector<int>> adjRev(v,vector<int>());
+    	stack<int> st;
+    	vector<bool> visited(v,0);        
+        for(int i=0;i<v;i++){
+            if(!visited[i])
+                dfsKosaraju(adj,i,st,visited);
+        }        
+        for(int i=0; i<v; i++){
+            visited[i]=0;
+            for(int j:adj[i]){
+                adjRev[j].push_back(i);
+            }
+        }
+        int count=0;        
+        while(!st.empty()){
+            int top = st.top();
+            st.pop();
+            if(!visited[top]){
+                count++;
+                dfsaKosaraju(adjRev,top,visited);
+            }
+        }
+        return count;
     }
 
 };
