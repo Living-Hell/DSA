@@ -855,6 +855,27 @@ public:
         return count;
     }
 
+    //To check whether the graph is bipartite or not i.e. can be colored in two colors
+    bool coloringBipartite(int node, int col, vector<int>adj[], vector<int> &color){
+        color[node] = col;
+        for(int i:adj[node]){
+            if(color[i] == col) return 0;
+            else if(color[i] == -1){
+                if(!coloringBipartite(i,!col,adj,color))
+                    return 0;
+            }
+        }
+        return 1;
+    }
+	bool isBipartite(int v, vector<int>adj[]){
+	    vector<int> color(v,-1);
+	    for(int i=0; i<v; i++){
+    	    if(color[i] == -1 && !coloringBipartite(i,0,adj,color)) 
+    	        return 0;
+	    }
+    	return 1;
+	}
+
 };
 
 int main()
