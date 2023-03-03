@@ -878,27 +878,49 @@ public:
 
     //Given a Weighted DAG and source vertex s, find the longest distances from s to all other vertices in the given graph.
     vector <int> maximumDistance(vector<vector<int>> edges,int v,int e,int src){                
-        vector<vector<pair<int,int>>> adj(v,vector<pair<int,int>>());        
+        vector<vector<pair<int,int>>> adj(v,vector<pair<int,int>>());            
         for(auto i:edges){
             adj[i[0]].push_back({i[1],i[2]});
         }
         
-        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+        queue<int> q;
         vector<int> dist(v,INT_MIN);        
-        pq.push({0,src});
+        q.push(src);
         dist[src] = 0;
         
-        while(!pq.empty()){
-            auto top = pq.top().second;
-            pq.pop();            
+        while(!q.empty()){
+            int top = q.front();
+            q.pop();            
             for(auto i:adj[top]){
                 if(dist[i.first] < (dist[top] + i.second)){
                     dist[i.first] = dist[top] + i.second;
-                    pq.push({dist[i.first],i.first});
+                    q.push(i.first);
                 }
             }
         }
         return dist;
+    }
+
+    //To Determine how many pairs of astronauts from different countries they can choose from where each pair is made of astronauts from the same country. 
+    //*SHOWING SOME ERROR ON HACKERRANK...CAN'T UNDERSTAND*
+    long long journeyToMoon(int n, vector<vector<int>> astronaut) {
+        long long ans = n/2*(n-1);
+        DisjointSet ds(n);
+        
+        for(auto i:astronaut){
+            if(ds.findPar(i[0]) != ds.findPar(i[1]))
+                ds.UnionBySize(i[0], i[1]);
+        }
+        
+        vector<int> comp(n,0);
+        for(int i:ds.parent) comp[i]++;
+        
+        for(int i:comp){
+            if(i!=0){
+                ans-= i*(i-1)/2;
+            }
+        }        
+        return ans;
     }
 
 };
