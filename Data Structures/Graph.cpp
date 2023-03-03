@@ -876,6 +876,31 @@ public:
     	return 1;
 	}
 
+    //Given a Weighted DAG and source vertex s, find the longest distances from s to all other vertices in the given graph.
+    vector <int> maximumDistance(vector<vector<int>> edges,int v,int e,int src){                
+        vector<vector<pair<int,int>>> adj(v,vector<pair<int,int>>());        
+        for(auto i:edges){
+            adj[i[0]].push_back({i[1],i[2]});
+        }
+        
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+        vector<int> dist(v,INT_MIN);        
+        pq.push({0,src});
+        dist[src] = 0;
+        
+        while(!pq.empty()){
+            auto top = pq.top().second;
+            pq.pop();            
+            for(auto i:adj[top]){
+                if(dist[i.first] < (dist[top] + i.second)){
+                    dist[i.first] = dist[top] + i.second;
+                    pq.push({dist[i.first],i.first});
+                }
+            }
+        }
+        return dist;
+    }
+
 };
 
 int main()
@@ -902,6 +927,9 @@ int main()
     // vector<pair<int,int>> PMST = g.primSpanningTree(5, {{{1,2},{2,1}},{{0,2},{2,1}},{{0,1},{1,1},{4,2},{3,2}},{{2,2},{4,1}},{{2,2},{3,1}}});
 	// for(int i=0; i<PMST.size(); i++)
     //  cout<<PMST[i].first<<" "<<PMST[i].second<<endl;
+
+    // vector<int> dista = g.maximumDistance({{0,1,5},{0,2,3},{1,3,6},{1,2,2},{2,4,4},{2,5,2},{2,3,7},{3,5,1},{3,4,-1},{4,5,-2}},6,10,1);
+    // for(int i:dista) cout<<i<<" ";cout<<endl;
 
 	return 0;
 }
