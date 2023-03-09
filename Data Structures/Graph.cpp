@@ -956,6 +956,30 @@ public:
         return dist[dst];  
     }
 
+    //Find if there is a simple path (without any cycle) starting from 0 and ending at any other 
+    //vertex such that the distance from source to that vertex is atleast ‘k’ length.
+    int dfsPMTK(vector<vector<pair<int,int>>> adj, int k, vector<bool> &visited, int node){
+        if(k<=0) return 1;        
+        for(auto i:adj[node]){
+            if(!visited[i.first]){
+                visited[i.first]=1;
+                if (dfsPMTK(adj,k-i.second,visited,i.first)) return 1;
+                visited[i.first]=0;
+            }
+        }
+        return 0;
+    }
+    bool pathMoreThanK(int V, int E, int k, int *a){ 
+       vector<vector<pair<int,int>>> adj(V,vector<pair<int,int>>());       
+       for(int i=0; i<3*E; i+=3){
+           adj[a[i]].push_back({a[i+1],a[i+2]});
+           adj[a[i+1]].push_back({a[i],a[i+2]});
+       }
+       vector<bool> visited(V,0);
+        visited[0]=1;       
+       return dfsPMTK(adj,k,visited,0);
+    } 
+
 };
 
 int main()
