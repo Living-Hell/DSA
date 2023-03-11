@@ -980,6 +980,32 @@ public:
        return dfsPMTK(adj,k,visited,0);
     } 
 
+    //Find how many edges we need to reverse in order to make at least 1 path from the source node to the destination node.
+    int minimumEdgeReversal(vector<vector<int>> &edges,int n,int src,int dst){
+        vector<vector<pair<int,int>>> adj(n+1,vector<pair<int,int>>());
+        for(auto i:edges){
+            adj[i[0]].push_back({i[1],0});
+            adj[i[1]].push_back({i[0],1});
+        }
+        
+        queue<int> q;
+        vector<int> dist(n+1,INT_MAX);
+        q.push(src);
+        dist[src]=0;
+        
+        while(!q.empty()){
+            int top = q.front();
+            q.pop();
+            for(auto i:adj[top]){
+                if(dist[i.first]>dist[top]+i.second){
+                    q.push(i.first);
+                    dist[i.first]=dist[top]+i.second;
+                }
+            }
+        }
+        return dist[dst]==INT_MAX?-1:dist[dst];
+    }
+
 };
 
 int main()
