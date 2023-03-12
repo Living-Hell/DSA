@@ -1006,6 +1006,39 @@ public:
         return dist[dst]==INT_MAX?-1:dist[dst];
     }
 
+    //To find that there exists the Euler Path or circuit or none in given undirected graph with V vertices and adjacency list adj.
+    void dfsEuler(int v, vector<int>adj[], int node, vector<bool> &visited){
+        visited[node]=1;
+        for(int i:adj[node])
+            if(!visited[i])
+                dfsEuler(v,adj,i,visited);
+    }    
+    bool connectedGraph(int v, vector<int>adj[]){
+        int node=-1;
+        for(int i=0; i<v; i++){
+            if(adj[i].size()>0){
+                node=i;
+                break;
+            }
+        }
+        if(node==-1) return 0;
+        vector<bool> visited(v,0);
+        dfsEuler(v, adj, node, visited);
+        for(int i=0;i<v; i++)
+            if(!visited[i] && adj[i].size()>0)
+                return 0;
+        return 1;
+    }    
+	int isEularCircuitOrPath(int v, vector<int>adj[]){
+	    if(!connectedGraph(v,adj)) return 0;
+	    int odd=0;
+        for(int i=0; i<v; i++)
+            if(adj[i].size()&1)
+                odd++;
+        if(odd>2) return 0;
+        else return odd==2?1:2;
+	}
+
 };
 
 int main()
