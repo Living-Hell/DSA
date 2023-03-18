@@ -56,7 +56,7 @@ class BinaryTree{
         return ans;
     }
 
-    //Function to find the height of a binary tree.
+    //Function to find the height of a binary tree (using iteration)
     int heightOfBT(struct Node* node){
         queue<pair<Node*,int>> q;
         int ans=0;
@@ -72,6 +72,28 @@ class BinaryTree{
         }
         return ans;
     }
+    //Function to find the height of a binary tree (using recursion)
+    int heightofBT(struct Node* node){
+        if(!node) return 0;
+        return max(heightofBT(node->left),heightofBT(node->right))+1;
+    }
+
+    // Function to return the diameter of a Binary Tree.
+    int findDia(Node* root, int &ans){
+        if(!root) return 0;
+        int lh = findDia(root->left,ans);
+        int rh = findDia(root->right,ans);
+        ans = max(ans,lh+rh+1);
+        return 1+max(lh,rh);
+    }
+    int diameterofBT(Node* root) {
+        if(!root) return 0;
+        int ans=0;
+        findDia(root,ans);
+        return ans;
+    }
+
+
 
 };
 
