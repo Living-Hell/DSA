@@ -96,9 +96,22 @@ class BinaryTree{
     // Function to convert a binary tree into its mirror tree.
     void mirror(Node* node) {
         if(!node)return;
+        swap(node->left,node->right);
         mirror(node->left);
         mirror(node->right);
-        swap(node->left,node->right);
+    }
+
+    // Function to return a list containing the inorder traversal of the tree using Recursion.
+    void IO(Node* root, vector<int> &ans){
+        if(!root) return;
+        IO(root->left,ans);
+        ans.push_back(root->data);
+        IO(root->right,ans);
+    }
+    vector<int> inOrderRec(Node* root) {
+        vector<int> ans;
+        IO(root,ans);
+        return ans;
     }
 
 };
