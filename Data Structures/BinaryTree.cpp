@@ -114,6 +114,26 @@ class BinaryTree{
         return ans;
     }
 
+    // Function to return a list containing the inorder traversal of the tree using Iteration.
+    vector<int> inOrderItr(Node* root){
+        vector<int> ans;
+        stack<Node*> st;
+        while(1){
+            if(root != NULL){
+                st.push(root);
+                root = root->left;
+            }
+            else{
+                if(st.empty()) return ans;
+                root = st.top();
+                st.pop();
+                ans.push_back(root->data);
+                root=root->right;
+            }
+        }
+        return ans;
+    }
+
 };
 
 int main(){
