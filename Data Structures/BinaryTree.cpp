@@ -33,7 +33,29 @@ class BinaryTree{
       }
       return ans;
     }
-    
+
+    //Function to find its reverse level order traversal. ie- the traversal must begin from the last level. 
+    vector<int> reverseLevelOrder(Node *root)
+    {
+        vector<int> ans;
+        if(!root) return ans;
+        queue<Node*> q;
+        stack<int> st;
+        q.push(root);
+        while(!q.empty()){
+            Node* top = q.front();
+            q.pop();
+            st.push(top->data);
+            if(top->right) q.push(top->right);
+            if(top->left)q.push(top->left);
+        }
+        while(!st.empty()){
+            ans.push_back(st.top());
+            st.pop();
+        }
+        return ans;
+    }
+
 };
 
 int main(){
