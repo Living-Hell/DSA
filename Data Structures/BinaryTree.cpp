@@ -168,6 +168,49 @@ class BinaryTree{
         return ans;
     }
 
+    //Function to return a list containing the postorder traversal of the tree using Recursion.
+    void Postorder(Node* root, vector<int> &ans){
+        if(!root) return;
+        Postorder(root->left,ans);
+        Postorder(root->right,ans);
+        ans.push_back(root->data);
+    }
+    vector <int> postOrder(Node* root)
+    {
+    vector<int> ans;
+    Postorder(root,ans);
+    return ans;
+    }
+
+    //Function to return a list containing the postorder traversal of the tree using Iteration.
+    vector<int> PostOrder(Node* node) {
+        stack<Node*> st;
+        vector<int> ans;
+        while(node!= NULL || !st.empty()){
+            if(node != NULL){
+                st.push(node);
+                node = node->left;
+            }
+            else{
+                Node* temp = st.top()->right;
+                if(temp==NULL){
+                    temp = st.top();
+                    st.pop();
+                    ans.push_back(temp->data);
+                    while(!st.empty() && temp == st.top()->right){
+                        temp = st.top(); 
+                        st.pop();
+                        ans.push_back(temp->data);
+                    }
+                }
+                else
+                    node = temp;
+            }
+        }
+        return ans;
+    }
+
+
 };
 
 int main(){
