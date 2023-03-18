@@ -56,6 +56,23 @@ class BinaryTree{
         return ans;
     }
 
+    //Function to find the height of a binary tree.
+    int heightOfBT(struct Node* node){
+        queue<pair<Node*,int>> q;
+        int ans=0;
+        if(!node) return ans;
+        q.push({node,1});
+        while(!q.empty()){
+            auto top = q.front(); q.pop();
+            int lvl = top.second;
+            Node* root = top.first;
+            ans = max(ans,lvl);
+            if(root->left) q.push({root->left,lvl+1});
+            if(root->right) q.push({root->right,lvl+1});
+        }
+        return ans;
+    }
+
 };
 
 int main(){
