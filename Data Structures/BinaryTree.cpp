@@ -276,6 +276,22 @@ class BinaryTree{
         return ans;
     }
 
+    //Function to check whether a binary tree is balanced or not.
+    int balanced(Node *root){
+        if(!root) return 0;
+        int lh = balanced(root->left);
+        if(lh==-1) return -1;
+        int rh = balanced(root->right);
+        if(rh==-1) return -1;
+        if(abs(lh-rh)>1) return -1;
+        else return max(lh,rh)+1;
+    }
+    bool isBalanced(Node *root)
+    {
+        if(!root) return true;
+        return balanced(root)==-1?false:true;
+    }
+
 };
 
 int main(){
