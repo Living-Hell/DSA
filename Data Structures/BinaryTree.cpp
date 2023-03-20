@@ -210,6 +210,19 @@ class BinaryTree{
         return ans;
     }
 
+    //Function to return a list containing elements of left view of the binary tree.
+    void leftV(Node *root, int lvl, vector<int> &ans){
+        if(!root) return;
+        if(lvl == ans.size()) ans.push_back(root->data);
+        leftV(root->left,lvl+1,ans);
+        leftV(root->right,lvl+1,ans);
+    }
+    vector<int> leftView(Node *root){
+        vector<int> ans;
+        leftV(root,0,ans);
+        return ans;
+    }
+
 
 };
 
