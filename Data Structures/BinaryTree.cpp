@@ -256,6 +256,26 @@ class BinaryTree{
         return ans;
     }
 
+    //Function to return a list containing the bottom view of the given tree.
+    vector <int> bottomView(Node *root) {
+        map<int,int> mp;
+        queue<pair<int,Node*>> q;
+        q.push({0,root});
+        
+        while(!q.empty()){
+            auto top = q.front();q.pop();
+            int line = top.first;
+            Node *node = top.second;
+            mp[line]=node->data;
+            if(node->left) q.push({line-1,node->left});
+            if(node->right) q.push({line+1,node->right});
+        }
+        
+        vector<int> ans;
+        for(auto i:mp) ans.push_back(i.second);
+        return ans;
+    }
+
 };
 
 int main(){
