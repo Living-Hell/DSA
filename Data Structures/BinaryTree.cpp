@@ -223,6 +223,19 @@ class BinaryTree{
         return ans;
     }
 
+    //Function to return list containing elements of right view of binary tree.
+    void rightV(Node *root, int lvl, vector<int> &ans){
+        if(!root) return;
+        if(lvl == ans.size()) ans.push_back(root->data);
+        rightV(root->right, lvl+1, ans);
+        rightV(root->left, lvl+1, ans);
+    }
+    vector<int> rightView(Node *root){
+       vector<int> ans;
+       rightV(root,0,ans);
+       return ans;
+    }
+
 
 };
 
