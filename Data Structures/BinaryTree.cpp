@@ -377,6 +377,26 @@ class BinaryTree{
         return ans;
     }
 
+    //Given a Binary Tree, check if all leaves are at same level or not.
+    bool sameLevelLeaf(Node *root){
+        if(!root  || isLeaf(root)) return true;        
+        queue<pair<Node*,int>> q;
+        q.push({root,0});
+        unordered_set<int> st;
+        
+        while(!q.empty()){
+            auto top = q.front();
+            q.pop();
+            Node *node = top.first;
+            int lvl = top.second;
+            if(isLeaf(node)) st.insert(lvl);
+            if(st.size()>1) return false;
+            if(node->left) q.push({node->left,lvl+1});
+            if(node->right) q.push({node->right,lvl+1});
+        }
+        return true;
+    }
+
 };
 
 int main(){
