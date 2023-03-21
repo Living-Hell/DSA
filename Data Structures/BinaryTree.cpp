@@ -316,21 +316,65 @@ class BinaryTree{
 
     //Function to store the diagonal order traversal of tree in a list.
     vector<int> diagonalTraversal(Node *root){
-    queue<Node*> q;
-    q.push(root);
-    vector<int> ans;
-    
-    while(!q.empty()){
-        auto top = q.front();
-        q.pop();
+        queue<Node*> q;
+        q.push(root);
+        vector<int> ans;
         
-        while(top){
-            if(top->left) q.push(top->left);
-            ans.push_back(top->data);
-            top = top->right;
+        while(!q.empty()){
+            auto top = q.front();
+            q.pop();
+            
+            while(top){
+                if(top->left) q.push(top->left);
+                ans.push_back(top->data);
+                top = top->right;
+            }
         }
+        return ans;
     }
-    return ans;
+
+    //Function to store the boundary order traversal of tree in a list.
+    bool isLeaf(Node *root){
+        return (root->left == NULL && root->right == NULL);
+    }
+    void leftNodes(Node* root, vector<int> &left){
+        if(!root) return;
+        if(!isLeaf(root)) left.push_back(root->data);
+        if(root->left) leftNodes(root->left, left);
+        else leftNodes(root->right, left);
+    }
+    void leafNodes(Node* root, vector<int> &leaf){
+        if(!root) return;
+        leafNodes(root->left, leaf);
+        if(isLeaf(root)){
+            leaf.push_back(root->data);
+            return;
+        }
+        leafNodes(root->right, leaf);
+    }
+    void rightNodes(Node* root, vector<int> &right){
+        if(!root) return;
+        if(!isLeaf(root))  right.push_back(root->data);
+        if(root->right) rightNodes(root->right, right);
+        else rightNodes(root->left, right);
+    }
+    vector <int> boundaryTraversal(Node *root){
+        vector<int> ans,left,right,leaf;
+        if(!root) return ans;
+        ans.push_back(root->data);
+        if(isLeaf(root)) return ans;
+        
+        leftNodes(root->left, left);
+        ans.insert(ans.end(),left.begin(),left.end());
+        
+        leafNodes(root, leaf);
+        ans.insert(ans.end(),leaf.begin(),leaf.end());
+        
+        rightNodes(root->right, right);
+        reverse(right.begin(),right.end());
+        ans.insert(ans.end(),right.begin(),right.end());
+        
+        return ans;
     }
 
 };
