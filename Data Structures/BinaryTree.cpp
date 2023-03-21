@@ -286,10 +286,32 @@ class BinaryTree{
         if(abs(lh-rh)>1) return -1;
         else return max(lh,rh)+1;
     }
-    bool isBalanced(Node *root)
-    {
+    bool isBalanced(Node *root){
         if(!root) return true;
         return balanced(root)==-1?false:true;
+    }
+
+    //Function to store the zig zag order traversal of tree in a list.
+    vector <int> zigZagTraversal(Node* root){
+    	queue<pair<Node *,int>> q;
+    	q.push({root,1});
+    	vector<int> ans,temp;
+    	
+    	while(!q.empty()){
+    	    auto top = q.front();
+    	    q.pop();
+    	    int lvl = top.second;
+    	    Node *node = top.first;
+    	    temp.push_back(node->data);
+    	    if(lvl!=q.front().second || q.empty()){
+    	        if(lvl%2==0) reverse(temp.begin(),temp.end());
+    	        for(int i:temp) ans.push_back(i);
+    	        temp.clear();
+    	    }
+    	    if(node->left) q.push({node->left, lvl+1});
+    	    if(node->right) q.push({node->right, lvl+1});
+    	}
+    	return ans;
     }
 
 };
