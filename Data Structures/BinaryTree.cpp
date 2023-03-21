@@ -314,6 +314,25 @@ class BinaryTree{
     	return ans;
     }
 
+    //Function to store the diagonal order traversal of tree in a list.
+    vector<int> diagonalTraversal(Node *root){
+    queue<Node*> q;
+    q.push(root);
+    vector<int> ans;
+    
+    while(!q.empty()){
+        auto top = q.front();
+        q.pop();
+        
+        while(top){
+            if(top->left) q.push(top->left);
+            ans.push_back(top->data);
+            top = top->right;
+        }
+    }
+    return ans;
+    }
+
 };
 
 int main(){
