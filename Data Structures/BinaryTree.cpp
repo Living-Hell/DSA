@@ -397,6 +397,34 @@ class BinaryTree{
         return true;
     }
 
+    //Function to construct tree from string consisting of parenthesis and integers
+    Node* construct(string str, int st, int end){
+        if(st>end) return NULL;
+        int num=0;
+        while(st<=end && isdigit(str[st])){
+            num = num*10 + str[st]-'0';
+            st++;
+        }
+        Node * node = new Node(num);
+        int brackets=0, ind=st;
+        for(int i=st; i<=end; i++){
+            if(str[i]=='(') brackets++;
+            else if(str[i] == ')'){ 
+                brackets--;
+                if(brackets==0){
+                    ind = i;
+                    break;
+                }
+            }
+        }
+        node->left = construct(str, st+1, ind-1);
+        node->right = construct(str, ind+2,end-1);
+        return node;
+    }
+    Node *treeFromString(string str){
+        return construct(str, 0, str.size()-1);
+    }
+
 };
 
 int main(){
