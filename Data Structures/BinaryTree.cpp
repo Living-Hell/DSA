@@ -425,6 +425,18 @@ class BinaryTree{
         return construct(str, 0, str.size()-1);
     }
 
+    // Convert a given tree to a tree where every node contains sum of values of
+    // nodes in left and right subtrees in the original tree.
+    int sumT(Node *node){
+        if(!node) return 0;        
+        int temp1 = node->data;
+        node->data = sumT(node->left) + sumT(node->right) ;
+        return temp1 + node->data;        
+    }
+    void toSumTree(Node *node){
+        sumT(node);
+    }
+
 };
 
 int main(){
