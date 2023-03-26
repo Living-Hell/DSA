@@ -437,6 +437,31 @@ class BinaryTree{
         sumT(node);
     }
 
+    //Function to convert binary tree to doubly linked list and return it.
+    void inorderBTtoDLL(queue<Node*> &q, Node* root){
+        if(!root) return;
+        inorderBTtoDLL(q,root->left);
+        if(root != NULL) q.push(root);
+        inorderBTtoDLL(q,root->right);
+        
+    }
+    Node* bToDLL(Node *root){
+        queue<Node*> q;
+        inorderBTtoDLL(q,root);
+        auto i = q.front(); q.pop();
+        Node* ans = new Node(i->data);
+        Node* curr = ans;
+        while(!q.empty()){
+            auto i = q.front(); 
+            q.pop();
+            curr->right = i;
+            Node *temp = curr;
+            curr = curr->right;
+            curr->left = temp;
+        }
+        return ans;
+    }
+
 };
 
 int main(){
