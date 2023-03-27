@@ -482,6 +482,26 @@ class BinaryTree{
         return buildingTree(in, pre, n, 0, n-1, 0);
     }
 
+    //Should return true if tree is Sum Tree, else false
+    bool issumtree=1;
+    int IsSumTree(Node *root){
+        if(!root) return 0;
+        if(isLeaf(root)) return root->data; 
+        
+        int lt = IsSumTree(root->left);
+        int rt = IsSumTree(root->right);
+        
+        if(lt + rt != root->data){
+            issumtree=0;
+            return 0;
+        }
+        return root->data + lt + rt;
+    }
+    bool isSumTree(Node* root){
+         IsSumTree(root);
+         return issumtree;
+    }
+
 };
 
 int main(){
