@@ -462,6 +462,26 @@ class BinaryTree{
         return ans;
     }
 
+    //Function to construct a tree and print the Postorder traversal from given 2 Arrays of Inorder and preorder traversal.
+    Node* buildingTree(int in[], int pre[], int n, int ist, int iend, int pst){
+        if(ist<0 || iend>=n || ist>iend || pst>=n) 
+            return NULL;        
+        Node* root = new Node(pre[pst]);        
+        int ind;
+        for(int i=ist; i<=iend; i++){
+            if(in[i] == pre[pst]){
+                ind = i;
+                break;
+            }
+        }
+        root->left = buildingTree(in, pre, n, ist, ind-1, pst+1);
+        root->right = buildingTree(in, pre, n, ind+1, iend, pst + (ind-ist+1));
+        return root;
+    }
+    Node* buildTree(int in[],int pre[], int n){
+        return buildingTree(in, pre, n, 0, n-1, 0);
+    }
+
 };
 
 int main(){
