@@ -502,6 +502,35 @@ class BinaryTree{
          return issumtree;
     }
 
+    //Function to find the minimum number of swaps required to convert Binary Tree into a Binary Search Tree
+    void inorderTree(vector<int> a, int ind, vector<int> &io){
+        if(ind>=a.size()) return;
+        inorderTree(a, ind*2 + 1, io);
+        io.push_back(a[ind]);
+        inorderTree(a, ind*2 + 2, io);
+    }
+    int swapsReq(vector<pair<int,int>> inord){
+        int swaps=0;
+        for(int i=0; i<inord.size(); i++){
+            while(i != inord[i].second){
+                swap(inord[inord[i].second], inord[i]);
+                swaps++;
+            }
+        }
+        return swaps;
+    }
+    int minSwaps(vector<int>&a, int n){
+        vector<int> io;
+        inorderTree(a,0,io);
+
+        vector<pair<int,int>> inord;
+        for(int i=0; i<io.size(); i++)
+            inord.push_back({io[i],i});
+        sort(inord.begin(),inord.end());
+        
+        return swapsReq(inord);
+    }
+
 };
 
 int main(){
