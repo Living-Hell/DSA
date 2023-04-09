@@ -1053,6 +1053,34 @@ public:
         return count/3;
     }
 
+    //Given a number of friends who have to give or take some amount of money from one another. 
+    //Design an algorithm by which the total cash flow among all the friends is minimized. 
+    void minCash(vector<vector<int>> &transaction, vector<int> &amount){
+        int minInd = min_element(amount.begin(),amount.end()) - amount.begin();
+        int maxInd = max_element(amount.begin(),amount.end()) - amount.begin();
+        
+        if(amount[minInd] == 0 || amount[maxInd] == 0) return;        
+        int minm = min(abs(amount[minInd]),amount[maxInd]);
+        
+        amount[minInd] += minm;
+        amount[maxInd] -= minm;
+        transaction[minInd][maxInd] = minm;
+        minCash(transaction,amount);
+        
+    }    
+    vector<vector<int>> minCashFlow(vector<vector<int>> &transaction, int n){
+        vector<int> amount(n,0);        
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                amount[i]-= transaction[i][j];
+                amount[j]+= transaction[i][j];
+                transaction[i][j]=0;
+            }
+        }        
+        minCash(transaction, amount);        
+        return transaction;
+    }
+
 };
 
 int main()
