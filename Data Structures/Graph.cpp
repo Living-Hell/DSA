@@ -1039,6 +1039,20 @@ public:
         else return odd==2?1:2;
 	}
 
+    //Given a 2D matrix g contains only 1 and 0, count the number of triangles in it.
+    int numberOfTriangles(vector<vector<int>> &g,int n){
+        int count=0;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                for(int k=0; k<n; k++){
+                    if(i!=j && j!=k && i!=k && g[i][j] && g[j][k] && g[k][i])
+                        count++;
+                }
+            }
+        }
+        return count/3;
+    }
+
 };
 
 int main()
