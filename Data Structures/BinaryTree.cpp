@@ -531,6 +531,25 @@ class BinaryTree{
         return swapsReq(inord);
     }
 
+    //Given two n-ary trees. Check if they are mirror images of each other or not.
+    int checkMirrorTree(int n, int e, int a[], int b[]) {
+        unordered_map<int,vector<int>> mpa, mpb;
+        unordered_set<int> st;
+        
+        for(int i=0; i<2*e-1; i+=2){
+            mpa[a[i]].push_back(a[i+1]);
+            mpb[b[i]].push_back(b[i+1]);
+            st.insert(a[i]);
+        }
+        
+        for(int i:st){
+            reverse(mpa[i].begin(),mpa[i].end());
+            if(mpa[i] != mpb[i])
+                return 0;
+        }
+        return 1;
+    }
+
 };
 
 int main(){
