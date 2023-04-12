@@ -550,6 +550,30 @@ class BinaryTree{
         return 1;
     }
 
+    /*This function returns true if the tree contains a duplicate subtree of size 2 or more else returns false*/
+    bool duplicate=0;
+    string duplicateSub(Node* root, unordered_set<string> &st){
+        if(!root) return "%";
+        if(root->left == NULL and root->right == NULL) return to_string(root->data);
+        
+        string s = "#";
+        s += to_string(root->data);
+        string l = duplicateSub(root->left,st);
+        s+= "L" + l;
+        string r = duplicateSub(root->right,st);
+        s+= "R" + r;
+        
+        if(st.find(s)!=st.end()) ans = 1;
+        else st.insert(s);
+        
+        return s;
+    }
+    int dupSub(Node *root) {
+        unordered_set<string> st;
+        duplicateSub(root,st);
+        return duplicate;
+    }
+
 };
 
 int main(){
