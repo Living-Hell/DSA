@@ -563,7 +563,7 @@ class BinaryTree{
         string r = duplicateSub(root->right,st);
         s+= "R" + r;
         
-        if(st.find(s)!=st.end()) ans = 1;
+        if(st.find(s)!=st.end()) duplicate = 1;
         else st.insert(s);
         
         return s;
@@ -572,6 +572,31 @@ class BinaryTree{
         unordered_set<string> st;
         duplicateSub(root,st);
         return duplicate;
+    }
+
+    //Given a binary tree of size N find the sum of all nodes on the longest path from root to leaf node.
+    int sumRtoL=0, lvlRtoL=0;
+    void preorder(Node *root, int curr_sum, int curr_lvl){
+        if(!root) return;
+        
+        curr_sum+= root->data;
+        
+        if(root->left == NULL and root->right == NULL){
+            if(curr_lvl>lvlRtoL){ 
+                sumRtoL = curr_sum; 
+                lvlRtoL = curr_lvl;
+            }
+            else if(curr_lvl == lvlRtoL){
+                sumRtoL = max(sumRtoL,curr_sum);
+            }
+        }
+            
+        preorder(root->left,curr_sum,curr_lvl+1);
+        preorder(root->right,curr_sum,curr_lvl+1);
+    }
+    int sumOfLongRootToLeafPath(Node *root){
+        preorder(root,0,0);
+        return sumRtoL;
     }
 
 };
