@@ -599,6 +599,29 @@ class BinaryTree{
         return sumRtoL;
     }
 
+    // Function to return a vector of Node which contains all the duplicate sub-tree
+    vector<Node*> duplicates;
+    string preorder(Node* root, unordered_map<string,int> &st){
+            if(!root) return "%";
+            
+            string s = "#";
+            s += to_string(root->data);
+            string l = preorder(root->left,st);
+            s+= "L" + l;
+            string r = preorder(root->right,st);
+            s+= "R" + r;
+            
+            if(st[s] == 1) duplicates.push_back(root);
+            st[s]++;
+            
+            return s;
+        }
+    vector<Node*> printAllDups(Node* root){
+        unordered_map<string,int> st;
+        preorder(root,st);
+        return duplicates;
+    }
+
 };
 
 int main(){
