@@ -662,6 +662,30 @@ class BinaryTree{
         return countKSum;
     }
 
+    //Function to return the maximum sum of non-adjacent nodes.
+    unordered_map<Node*,int> MaxSum;
+    int getMaxSum(Node *root) {
+        if(!root) return 0;
+        if(MaxSum.find(root) != MaxSum.end()) return MaxSum[root];
+        
+        int inc = root->data, exc=0;
+        
+        if(root->left){
+            inc += getMaxSum(root->left->left);
+            inc += getMaxSum(root->left->right);
+        }
+        if(root->right){
+            inc += getMaxSum(root->right->left);
+            inc += getMaxSum(root->right->right);
+        }
+        
+        exc += getMaxSum(root->left);
+        exc += getMaxSum(root->right);
+        
+        int ans = max(inc,exc);
+        return MaxSum[root] = ans;
+    }
+
 };
 
 int main(){
