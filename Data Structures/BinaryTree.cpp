@@ -702,6 +702,21 @@ class BinaryTree{
         return NULL;
     }
 
+    /* Should return minimum distance between a and b in a tree with given root*/
+    int distance(Node *root, int n, int dist){
+        if(!root) return -1;
+        if(root->data == n) return dist;
+        int left =  distance(root->left,n,dist+1);
+        if(left!= -1) return left;
+        return distance(root->right,n,dist+1);
+    }
+    int findDist(Node* root, int a, int b) {
+        Node *temp = lca(root,a,b);
+        int dista = distance(temp,a,0);
+        int distb = distance(temp,b,0);
+        return dista+distb;
+    }
+
 };
 
 int main(){
