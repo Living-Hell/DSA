@@ -622,6 +622,25 @@ class BinaryTree{
         return duplicates;
     }
 
+    // Function to find largest subtree sum.
+    int largestSum(Node *root, int &sum){
+        if(!root) return 0;
+        
+        int curr_sum = root->data;
+        
+        int lsum = largestSum(root->left, sum);
+        int rsum = largestSum(root->right, sum);
+        
+        curr_sum = curr_sum+lsum+rsum;
+        sum = max(sum,curr_sum);
+        return curr_sum;
+    }
+    int findLargestSubtreeSum(Node* root){
+        int lsum = INT_MIN;
+        largestSum(root, lsum);
+        return lsum;
+    }
+
 };
 
 int main(){
