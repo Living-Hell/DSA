@@ -641,6 +641,27 @@ class BinaryTree{
         return lsum;
     }
 
+    //Find the number of paths in the tree which have their sum equal to K.
+    int countKSum=0;
+    void Ksum(Node *root, int k, unordered_map<int,int> &mp, int curr_sum){
+        if(!root) return;
+        
+        curr_sum += root->data;
+        if(curr_sum==k) countKSum++;
+        countKSum+= mp[curr_sum-k];
+        
+        mp[curr_sum]++;
+        Ksum(root->left, k, mp, curr_sum);
+        Ksum(root->right, k, mp, curr_sum);
+        mp[curr_sum]--;
+        
+    }
+    int sumK(Node *root,int k){
+        unordered_map<int,int> mp;
+        Ksum(root,k,mp,0);
+        return countKSum;
+    }
+
 };
 
 int main(){
