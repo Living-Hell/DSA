@@ -727,6 +727,31 @@ class BinaryTree{
                 (isIsomorphic(root1->right, root2->left) || isIsomorphic(root1->right, root2->right));
     }
 
+    // Find the kth ancestor of the given node in the binary tree. 
+    int parNode;
+    void parents(Node *root, int node, unordered_map<int,int> &par){
+        if(!root) return;
+        if(root->data == node){
+            parNode = par[node];
+            return;
+        }
+        if(root->left) par[root->left->data] = root->data;
+        if(root->right) par[root->right->data] = root->data;
+        parents(root->left,node,par);
+        parents(root->right,node,par);
+    }
+    int kthAncestor(Node *root, int k, int node){
+        if(root->data == node) return -1;
+        unordered_map<int,int> par;
+        parents(root,node,par);
+        while(k>1){
+            if(par.find(parNode)==par.end()) return -1;
+            parNode = par[parNode];
+            k--;
+        }
+        return parNode;
+    }
+
 };
 
 int main(){
