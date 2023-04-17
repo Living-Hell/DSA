@@ -36,6 +36,26 @@ class BST{
         return false;
     }
 
+    // Function to delete a node from BST
+    Node* deleteNode(Node* root, int key) {
+        if(!root) return NULL;
+
+        if(key > root->data) root->right = deleteNode(root->right, key);
+        else if(key < root->data) root->left =  deleteNode(root->left,key);
+        else{
+            if(root->left == NULL) return root->right;
+            else if(root->right == NULL) return root->left;
+            
+            Node* temp = root->right;
+            while(temp->left != NULL) temp = temp -> left;
+            root->data = temp->data;
+            
+            root->right = deleteNode(root->right, root->data);
+            
+        }
+        return root;
+    }
+
 };
 
 int main(){
