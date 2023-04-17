@@ -56,6 +56,20 @@ class BST{
         return root;
     }
 
+    // Function to find the maximum element in the given BST.
+    int findMax(Node *root){
+        if(!root) return -1;
+        while(root->right) root = root->right;
+        return root->data;
+    }
+
+    // Function to find the minimum element in the given BST.
+    int findMin(Node *root){
+        if(!root) return -1;
+        while(root->left) root = root->left;
+        return root->data;
+    }
+
 };
 
 int main(){
