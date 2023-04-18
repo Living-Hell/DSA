@@ -10,10 +10,11 @@ class BST{
         int data;
         struct Node* left;
         struct Node* right;
+        struct Node* next;
         
         Node(int x){
             data = x;
-            left = right = NULL;
+            left = right = next = NULL;
         }
     };
 
@@ -107,6 +108,18 @@ class BST{
     }
     bool isBST(Node* root) {
         return IsBST(root,INT_MIN,INT_MAX);
+    }
+
+    //Function to populate next pointer for all nodes. 
+    //The next pointer for every node should be set to point to inorder successor.
+    Node* prev=NULL;
+    void populateNext(Node *root){
+        if(!root) return;
+        populateNext(root->left);
+        if(prev)
+            prev->next = root;
+        prev = root;
+        populateNext(root->right);
     }
 
 };
