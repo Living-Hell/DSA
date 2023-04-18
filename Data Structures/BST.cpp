@@ -74,13 +74,13 @@ class BST{
     void findPreSuc(Node* root, Node*& pre, Node*& suc, int key){
         if(!root) return;
         
-        if(key>root->key){
-            if(pre==NULL || pre->key<root->key )
+        if(key>root->data){
+            if(pre==NULL || pre->data<root->data )
                 pre = root;
             findPreSuc(root->right,pre,suc,key);
         }
-        else if(key<root->key){
-            if(suc == NULL || suc->key>root->key)
+        else if(key<root->data){
+            if(suc == NULL || suc->data>root->data)
                 suc = root;
             findPreSuc(root->left,pre,suc,key);
         }
@@ -95,6 +95,18 @@ class BST{
                 while(suc->left) suc = suc->left;
             }
         }
+    }
+
+    //Function to check whether a Binary Tree is BST or not.
+    bool IsBST(Node* root, int curr_min, int curr_max){
+        if(!root) return true;
+        return root->data > curr_min and root->data < curr_max
+        and IsBST(root->left,curr_min, root->data)
+        and IsBST(root->right, root->data, curr_max);
+        
+    }
+    bool isBST(Node* root) {
+        return IsBST(root,INT_MIN,INT_MAX);
     }
 
 };
