@@ -70,6 +70,33 @@ class BST{
         return root->data;
     }
 
+    // To find predecessor and successor of key in BST. It sets pre and suc as predecessor and successor.
+    void findPreSuc(Node* root, Node*& pre, Node*& suc, int key){
+        if(!root) return;
+        
+        if(key>root->key){
+            if(pre==NULL || pre->key<root->key )
+                pre = root;
+            findPreSuc(root->right,pre,suc,key);
+        }
+        else if(key<root->key){
+            if(suc == NULL || suc->key>root->key)
+                suc = root;
+            findPreSuc(root->left,pre,suc,key);
+        }
+        
+        else{
+            if(root->left){
+                pre = root->left;
+                while(pre->right) pre = pre->right;
+            }
+            if(root->right){
+                suc = root->right;
+                while(suc->left) suc = suc->left;
+            }
+        }
+    }
+
 };
 
 int main(){
