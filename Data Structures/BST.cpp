@@ -133,6 +133,19 @@ class BST{
     return lca2Nodes(root,min(n1,n2),max(n1,n2));
     }
 
+    //Function to Construct Binary Search Tree from Preorder Traversal
+    int ind = 0; 
+    Node* solve(vector<int>& pre, int bound) {
+        if(ind>=pre.size() or pre[ind] > bound) return NULL;
+        Node* root = new Node(pre[ind++]);
+        root->left = solve(pre,root->data);
+        root->right = solve(pre,bound);
+        return root; 
+    }
+    Node* bstFromPreorder(vector<int>& preorder) {
+        return solve(preorder,INT_MAX);
+    }
+
 };
 
 int main(){
