@@ -146,6 +146,41 @@ class BST{
         return solve(preorder,INT_MAX);
     }
 
+    // The given root is the root of the Binary Tree. Return the root of the generated BST
+    void inorder(Node *root, vector<int> &v){
+        if(!root) return;
+        
+        inorder(root->left,v);
+        v.push_back(root->data);
+        inorder(root->right,v);
+    }
+    Node *VtoBST(Node* root, vector<int> v, int i){
+        if(i>= v.size()) return root;
+        Node *temp = new Node(v[i]);
+        if(root->data > v[i]){
+            root->left = temp;
+            VtoBST(root->left, v, i+1);
+        }
+        else{
+            root->right = temp;
+            VtoBST(root->right, v, i+1);
+        }
+        return root;
+    }
+    // void VtoBST(Node* root, vector<int> v, int &i){
+    //     if(!root) return;
+    //     VtoBST(root->left,v,i);
+    //     root->data = v[i++];
+    //     VtoBST(root->right,v,i);
+    // }
+    Node *binaryTreeToBST (Node *root){
+        vector<int> v;
+        inorder(root,v);
+        sort(v.begin(),v.end());
+        Node *ans = new Node(v[0]);
+        return VtoBST(ans,v,1);
+    }
+
 };
 
 int main(){
