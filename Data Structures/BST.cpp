@@ -181,6 +181,27 @@ class BST{
         return VtoBST(ans,v,1);
     }
 
+    //Given a Binary Search Tree, modify the given BST such that it is balanced and has minimum possible height.
+    void inorder(Node* root, vector<int> &v){
+        if(root==NULL) return;
+        inorder(root->left,v);
+        v.push_back(root->data);
+        inorder(root->right,v);
+    }
+    Node* BBST(vector<int> io, int st, int end){
+        if(st > end) return NULL;
+        int mid = (st+end)/2; 
+        Node* ans = new Node(io[mid]);
+        ans->left = BBST(io, st, mid-1);
+        ans->right = BBST(io, mid+1, end);
+        return ans;
+    }
+    Node* buildBalancedTree(Node* root){
+        vector<int> v;
+        inorder(root,v);
+        return BBST(v, 0, v.size()-1);
+    }
+
 };
 
 int main(){
