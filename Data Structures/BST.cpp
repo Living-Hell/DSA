@@ -202,6 +202,32 @@ class BST{
         return BBST(v, 0, v.size()-1);
     }
 
+    //Given two BSTs, return elements of both BSTs in sorted form.
+    vector<int> merge2BST(Node *root1, Node *root2){
+       vector<int> io1, io2;
+       inorder(root1,io1);
+       inorder(root2,io2);
+       int i1=0, i2=0;
+       vector<int> ans;
+       while(i1 < io1.size() and i2 < io2.size()){
+           if(io1[i1] <= io2[i2]){
+               ans.push_back(io1[i1]);
+               i1++;
+           }
+           else{
+               ans.push_back(io2[i2]);
+               i2++;
+           }
+       }
+       if(i2>=io2.size()){
+           for(int i=i1; i<io1.size(); i++) ans.push_back(io1[i]);
+       }
+       else{
+           for(int i=i2; i<io2.size(); i++) ans.push_back(io2[i]);
+       }
+       return ans;
+    }
+
 };
 
 int main(){
