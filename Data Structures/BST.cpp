@@ -235,26 +235,25 @@ class BST{
         mergeUtil(root->left,st);
     }
     vector<int> mergeBST(Node *root1, Node *root2){
-       stack<Node*> st1, st2;
-       mergeUtil(root1,st1);
-       mergeUtil(root2,st2);
-       vector<int> ans;
+        stack<Node*> st1, st2;
+        mergeUtil(root1,st1);
+        mergeUtil(root2,st2);
+        vector<int> ans;
        
-      while(!st1.empty() and !st2.empty()){
-          Node* top1 = st1.top(); Node* top2 = st2.top();
-          if(top1->data > top2->data){
-              ans.push_back(top2->data);
-              st2.pop();
-              mergeUtil(top2->right,st2);
-          }
-          else{
-              ans.push_back(top1->data);
-              st1.pop();
-              mergeUtil(top1->right,st1);
-          }
-      }
-       
-      if(st1.empty()){
+        while(!st1.empty() and !st2.empty()){
+            Node* top1 = st1.top(); Node* top2 = st2.top();
+            if(top1->data > top2->data){
+                ans.push_back(top2->data);
+                st2.pop();
+                mergeUtil(top2->right,st2);
+            }
+            else{
+                ans.push_back(top1->data);
+                st1.pop();
+                mergeUtil(top1->right,st1);
+            }
+        }       
+        if(st1.empty()){
             while(!st2.empty()){
                 Node* top = st2.top();
                 ans.push_back(top->data);
@@ -271,6 +270,31 @@ class BST{
             }
         }
         return ans;
+    }
+
+    // return the Kth largest element in the given BST rooted at 'root'
+    int kthLargest(Node *root, int k){
+        if(!root) return -1;
+        stack<Node*> st;
+        while(root){
+            st.push(root);
+            root = root->right;
+        }
+        
+        while(!st.empty()){
+            Node* top = st.top();
+            st.pop();
+            k--;
+            if(k==0) return top->data;
+            top = top->left;
+            if(top){
+                while(top){
+                    st.push(top);
+                    top = top->right;
+                }
+            }
+        }
+        return -1;
     }
 
 };
