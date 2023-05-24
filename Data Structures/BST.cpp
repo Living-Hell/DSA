@@ -228,6 +228,51 @@ class BST{
        return ans;
     }
 
+    //Merging two BSTs using stack 
+    void mergeUtil(Node *root, stack<Node*> &st){
+        if(!root) return;
+        st.push(root);
+        mergeUtil(root->left,st);
+    }
+    vector<int> mergeBST(Node *root1, Node *root2){
+       stack<Node*> st1, st2;
+       mergeUtil(root1,st1);
+       mergeUtil(root2,st2);
+       vector<int> ans;
+       
+      while(!st1.empty() and !st2.empty()){
+          Node* top1 = st1.top(); Node* top2 = st2.top();
+          if(top1->data > top2->data){
+              ans.push_back(top2->data);
+              st2.pop();
+              mergeUtil(top2->right,st2);
+          }
+          else{
+              ans.push_back(top1->data);
+              st1.pop();
+              mergeUtil(top1->right,st1);
+          }
+      }
+       
+      if(st1.empty()){
+            while(!st2.empty()){
+                Node* top = st2.top();
+                ans.push_back(top->data);
+                st2.pop();
+                mergeUtil(top->right,st2);
+            }
+        }
+        else{
+            while(!st1.empty()){
+                Node* top = st1.top();
+                ans.push_back(top->data);
+                st1.pop();
+                mergeUtil(top->right,st1);
+            }
+        }
+        return ans;
+    }
+
 };
 
 int main(){
