@@ -297,6 +297,20 @@ class BST{
         return -1;
     }
 
+    // Return the Kth smallest element in the given BST
+    void kthsmallest(Node* root, int k, int &cnt, int &ans){
+        if(!root) return;
+        kthsmallest(root->left,k,cnt,ans);
+        cnt++;
+        if(k == cnt) ans = root->data;
+        kthsmallest(root->right,k,cnt,ans);
+    }
+    int KthSmallestElement(Node *root, int k) {
+        int cnt=0, ans=-1;
+        kthsmallest(root,k,cnt,ans);
+        return ans;
+    }
+
 };
 
 int main(){
