@@ -363,6 +363,19 @@ class BST{
         return median;
     }
 
+    //Function to count number of nodes in BST that lie in the given range.
+    void getcount(Node *root, int l, int h, int &ans){
+        if(!root) return;
+        getcount(root->left,l,h,ans);
+        if(root->data >= l and root->data <= h) ans++;
+        getcount(root->right,l,h,ans);
+    }
+    int getCount(Node *root, int l, int h){
+      int ans = 0;
+      getcount(root,l,h,ans);
+      return ans;
+    }
+
 };
 
 int main(){
