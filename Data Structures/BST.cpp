@@ -334,6 +334,35 @@ class BST{
         return pairs;
     }
 
+    //Given a Binary Search Tree of size N, find the Median of its Node values.
+    int nodeCount=0, currCount=0; float median=0;
+    void inorder(Node* root){
+        if(!root) return;
+        inorder(root->left);
+        nodeCount++;
+        inorder(root->right);
+    }
+    void searchNth(Node* root, int n){
+        if(!root) return;
+        searchNth(root->left, n);
+        currCount++;
+        if(currCount == n){
+            if(median == 0) median = root->data;
+            else median = (median + root->data)/2;
+        }
+        searchNth(root->right,n);
+    }
+    float findMedian(Node *root){
+        inorder(root);
+        if(nodeCount%2==1) searchNth(root,nodeCount/2 +1);
+        else{
+            searchNth(root,nodeCount/2);
+            currCount=0;
+            searchNth(root,nodeCount/2+1);
+        }
+        return median;
+    }
+
 };
 
 int main(){

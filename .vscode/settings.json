@@ -11,6 +11,7 @@
         "regex": "cpp",
         "utility": "cpp",
         "valarray": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "chrono": "cpp"
     }
 }
