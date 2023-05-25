@@ -311,6 +311,29 @@ class BST{
         return ans;
     }
 
+    //Function to return the count of all pairs from both the BSTs whose sum is equal to x.
+    int pairs=0;
+    void countInorder(Node* root, Node* root2, int x){
+        if(!root) return;
+        countInorder(root->left, root2, x);
+        searchPairs(root2,x,x-root->data);
+        countInorder(root->right, root2, x);
+    }
+    void searchPairs(Node* root, int x, int val){
+        if(!root) return;
+        if(root->data == val) pairs++;
+        else if(root->data > val){
+            searchPairs(root->left, x, val);
+        }
+        else if(root->data < val){
+            searchPairs(root->right,x,val);
+        }
+    }
+    int countPairs(Node* root1, Node* root2, int x){
+        countInorder(root1,root2,x);
+        return pairs;
+    }
+
 };
 
 int main(){
