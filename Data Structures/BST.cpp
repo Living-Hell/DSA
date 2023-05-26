@@ -376,6 +376,19 @@ class BST{
       return ans;
     }
 
+    //Function that constructs BST from its preorder traversal.
+    int pre_ind = 0; 
+    Node* BSTFromPreorder(int pre[], int size, int bound) {
+        if(pre_ind >= size or pre[pre_ind] > bound) return NULL;
+        Node* root = new Node(pre_ind++);
+        root->left = BSTFromPreorder(pre,size,root->data);
+        root->right = BSTFromPreorder(pre,size,bound);
+        return root; 
+    }
+    Node* post_order(int pre[], int size){
+        return BSTFromPreorder(pre,size,INT_MAX);
+    }
+
 };
 
 int main(){
