@@ -389,6 +389,21 @@ class BST{
         return BSTFromPreorder(pre,size,INT_MAX);
     }
 
+    //Function to return true if the BST contains a dead end else returns false
+    bool isLeaf(Node* root){
+        return (root->left == NULL) and (root->right == NULL);
+    }
+    bool deadEnd(Node* root, int lbound, int ubound){
+        if(!root) return false;
+        if(isLeaf(root) and lbound == ubound) return true;
+        if(deadEnd(root->left, lbound, root->data-1)) return true;
+        if(deadEnd(root->right, root->data+1, ubound)) return true;
+        return false;
+    }
+    bool isDeadEnd(Node *root){
+        return deadEnd(root,1,INT_MAX);
+    }
+
 };
 
 int main(){
