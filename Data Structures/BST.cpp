@@ -404,6 +404,18 @@ class BST{
         return deadEnd(root,1,INT_MAX);
     }
 
+    //Given the root of a binary tree, flatten the tree into a "linked list"(node->right)
+    void flatten(Node *root){
+        if(!root) return;
+        Node* rt = root->right;
+        root->right = root->left;
+        root->left = NULL;
+        flatten(root->right);
+        while(root->right) root = root->right;
+        root->right = rt;
+        flatten(root->right);
+    }
+
 };
 
 int main(){
