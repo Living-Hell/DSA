@@ -1,6 +1,18 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+//Used in largestBst function
+class NodeValue{
+    public:
+    int size, minVal, maxVal;
+    
+    NodeValue(int sz, int mn, int mx){
+        this->size = sz;
+        this->minVal = mn;
+        this->maxVal = mx;
+    }
+};
+
 class BST{
     public:
 
@@ -416,7 +428,21 @@ class BST{
         flatten(root->right);
     }
 
+    // Return the size of the largest sub-tree which is also a BST
+    NodeValue largestBstHelper(Node* root){
+        if(!root) return {0,INT_MAX,INT_MIN};        
+        auto left = largestBstHelper(root->left);
+        auto right = largestBstHelper(root->right);        
+        if(root->data > left.maxVal and root->data < right.minVal)
+            return {left.size + right.size + 1, min(left.minVal,root->data), max(root->data,right.maxVal)};
+        return {max(left.size,right.size), INT_MIN, INT_MAX};
+    }    
+    int largestBst(Node *root){
+    	return largestBstHelper(root).size;
+    }
+
 };
+
 
 int main(){
     BST bst;
