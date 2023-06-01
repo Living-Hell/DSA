@@ -10,6 +10,7 @@ class TrieNode{
         isEndOfWord = false;
         for(int i=0; i<26; i++) children[i] = NULL;
     }
+    int child_count=0;
 };
 
 class Trie{
@@ -30,6 +31,7 @@ class Trie{
         else{
             child = root->children[ind];
         }
+        root->child_count++;
         insert(child,key.substr(1));
     }
 
@@ -44,6 +46,30 @@ class Trie{
         }
         child = root->children[ind];
         return search(child,key.substr(1));
+    }
+
+    //Given an array of words, find all shortest unique prefixes to represent each word in the given array.
+    void shortestPrefixes(TrieNode* root, string word, vector<string> &ans){
+        string temp = word.substr(0,1);
+        for(int i=0; i<word.size(); i++){
+            int ind = word[i] - 'a';
+            int count = root->children[ind]->child_count;
+            if(count>1)
+                temp = word.substr(0,i+2);
+            root = root->children[ind];
+        }
+        ans.push_back(temp);
+    }
+    vector<string> findPrefixes(string arr[], int n){
+        TrieNode* root = new TrieNode();
+        Trie trie;
+        for(int i=0; i<n; i++) 
+            trie.insert(root,arr[i]);
+        vector<string> ans;
+        for(int i=0; i<n; i++){
+            shortestPrefixes(root,arr[i],ans);
+        }
+        return ans;
     }
 
 };
