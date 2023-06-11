@@ -72,6 +72,23 @@ class Trie{
         return ans;
     }
 
+    //Given a string A and a dictionary of n words B, find out if A can be segmented into a space-separated sequence of dictionary words.
+    bool searchWordBreak(string s, TrieNode* root, Trie trie){
+        if(s.size()==0) return 1;
+        for(int i=1; i<=s.size(); i++){
+            if(trie.search(root,s.substr(0,i)) and searchWordBreak(s.substr(i),root,trie)){
+                return 1;
+            }
+        }
+        return 0;
+    }
+    int wordBreak(string A, vector<string> &B) {
+        TrieNode *root = new TrieNode();
+        Trie trie;
+        for(string word : B) trie.insert(root,word);
+        return searchWordBreak(A,root,trie);
+    }
+
 };
 
 int main(){

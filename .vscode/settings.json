@@ -12,6 +12,7 @@
         "utility": "cpp",
         "valarray": "cpp",
         "string": "cpp",
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "new": "cpp"
     }
 }
