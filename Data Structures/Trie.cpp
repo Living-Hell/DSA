@@ -89,6 +89,35 @@ class Trie{
         return searchWordBreak(A,root,trie);
     }
 
+    //Given an array of strings, return all groups of strings that are anagrams. 
+    //The groups must be created in order of their appearance in the original array. Look at the sample case for clarification.
+    vector<vector<string>> Anagrams(vector<string>& string_list) {
+        vector<string> temp = string_list;
+        TrieNode *root = new TrieNode();
+        Trie trie;
+        map<string,vector<int>> mp;
+        
+        for(int i=0; i<temp.size(); i++){
+            trie.insert(root,temp[i]);
+            sort(temp[i].begin(), temp[i].end());
+        }
+        
+        for(int i=0; i<string_list.size(); i++){
+            mp[temp[i]].push_back(i);
+        }
+        
+        vector<vector<string>> ans;
+        for(auto i: mp){
+            vector<string> t;
+            for(int j=0; j<i.second.size(); j++){
+                if(trie.search(root,string_list[i.second[j]]))
+                    t.push_back(string_list[i.second[j]]);
+            }
+            ans.push_back(t);
+        }
+        return ans;
+    }
+
 };
 
 int main(){
