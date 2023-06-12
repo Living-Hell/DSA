@@ -12,6 +12,19 @@ class BitManipulation{
     //Given an array A containing 2*N+2 positive numbers, out of which 2*N numbers exist in 
     //pairs whereas the other two number occur exactly once and are distinct. Find the other two numbers. 
     //Return in increasing order.
+    vector<int> singleNumber(vector<int> nums) {
+        int xorall=0;
+        for(int num:nums) xorall ^= num;
+        xorall = xorall & ~(xorall-1);
+        int set1=0, set2=0;
+        for(int num:nums){
+            if(xorall&num) set1^=num;
+            else set2^=num;
+        }
+        if(set1>set2) swap(set1,set2);
+        return {set1,set2};
+    }
+    //Method-2
     vector<int> singleNumber(vector<int> nums){
         sort(nums.begin(),nums.end());
         vector<int> ans;
