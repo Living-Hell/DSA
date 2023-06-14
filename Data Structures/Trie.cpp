@@ -118,6 +118,56 @@ class Trie{
         return ans;
     }
 
+    //Given a list of contacts contact[] of length n where each contact is a string which exist in a phone directory 
+    //and a query string s. The task is to implement a search query for the phone directory. Run a search 
+    //query for each prefix p of the query string s (i.e. from  index 1 to |s|) that prints all the distinct
+    // contacts which have the same prefix as p in lexicographical increasing order.
+    void allContact(TrieNode *root, vector<string> &v, string s){
+        if(root->isEndOfWord){
+            v.push_back(s);
+        }
+        for(int i=0; i<26; i++){
+            if(root->children[i] != NULL){
+                s+= ('a' + i);//cout<<s<<" ";
+                allContact(root->children[i],v,s);
+                s.pop_back();
+            }
+        }
+    }
+    void searchContact(TrieNode *root, string s, vector<string> &v){
+        int n = s.size();
+        bool flag = 1;
+        for(int i=0; i<n; i++){
+            int ind = s[i]-'a';
+            if(root->children[ind] != NULL) root = root->children[ind];
+            else{
+                flag = 0;
+                break;
+            }
+        }
+        if(flag){
+            allContact(root,v,s);
+        }
+    }
+    vector<vector<string>> displayContacts(int n, string contact[], string s){
+        Trie trie;
+        TrieNode *root = new TrieNode();
+        for(int i=0; i<n; i++) trie.insert(root,contact[i]);
+        vector<vector<string>> ans;
+        for(int i=1; i<=s.size(); i++){
+            string word = s.substr(0,i);
+            vector<string> temp;
+            searchContact(root,word,temp);
+            if(temp.empty()) ans.push_back({"0"});
+            else{ 
+                sort(temp.begin(),temp.end());
+                ans.push_back(temp);
+                
+            }
+        }
+        return ans;
+    }
+
 };
 
 int main(){
