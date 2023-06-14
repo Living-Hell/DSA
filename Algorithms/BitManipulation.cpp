@@ -50,6 +50,18 @@ class BitManipulation{
         return ans;
     }
 
+    //Function to return sum of count of set bits in the integers from 1 to n.
+    int countSetBits(int n){
+        if(n==0) return 0;
+        int mx2pwr = 0;
+        while(1 << mx2pwr <= n) mx2pwr++;
+        mx2pwr--;
+        int tillMx2Pr = (1 << (mx2pwr-1))*mx2pwr;
+        int leftMostSet = n - (1<<mx2pwr) + 1;
+        int ans = tillMx2Pr + leftMostSet + countSetBits(n-(1<<mx2pwr));
+        return ans;
+    }
+
 };
 
 int main(){
