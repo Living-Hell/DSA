@@ -62,6 +62,16 @@ class BitManipulation{
         return ans;
     }
 
+    //Given a number N having only one ‘1’ and all other ’0’s in its binary representation, find position of the only set bit. 
+    //If there are 0 or more than 1 set bit the answer should be -1. 
+    int findPosition(int N) {
+        int pwrOf2=0;
+        while(1<<pwrOf2 <= N) pwrOf2++;
+        pwrOf2--;
+        if((1<<pwrOf2) == N) return pwrOf2+1;
+        else return -1;
+    }
+
 };
 
 int main(){
