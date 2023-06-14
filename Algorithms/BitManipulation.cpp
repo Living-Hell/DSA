@@ -77,6 +77,16 @@ class BitManipulation{
         return (n!=0) and (n&(n-1)) == 0;
     }
 
+    //Given two numbers X and Y, and a range [L, R] where 1 <= L <= R <= 31. Find the set bits of Y 
+    //in range [L, R] and set these bits in X also. Return this modified X.
+    int setSetBit(int x, int y, int l, int r){
+        for(int i=r; i>=l; i--){
+            if(1<<(i-1) & y)
+                x = x | 1<<(i-1);
+        }
+        return x;
+    }
+
 };
 
 int main(){
