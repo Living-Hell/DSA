@@ -87,6 +87,25 @@ class BitManipulation{
         return x;
     }
 
+    //Given two integers dividend and divisor. Find the quotient after dividing dividend by divisor 
+    //without using multiplication, division and mod operator.
+    long long divide(long long dvd, long long dsr){
+        int sign = (dvd<0) ^ (dsr<0) ? -1 : 1;
+        dvd = abs(dvd);
+        dsr = abs(dsr);
+        int ans=0;
+        while(dvd >= dsr){
+            for(int i=0; i<32; i++){
+                if(dsr * (1<<i) > dvd){
+                    dvd -= dsr * (1<<(i-1));
+                    ans += (1<<(i-1));
+                    break;
+                }
+            }
+        }
+        return sign*ans;
+    }
+
 };
 
 int main(){
