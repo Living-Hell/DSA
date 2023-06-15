@@ -106,6 +106,24 @@ class BitManipulation{
         return sign*ans;
     }
 
+    //Given a string S, Find all the possible subsequences of the String in lexicographically-sorted order.
+    vector<string> AllPossibleStrings(string s){
+        int n = s.size();
+        vector<string> ans;
+        long long val = 1<<n;
+        for(long long i=1; i<=val; i++){
+            string s1;
+            for(int j=0; j<n; j++){
+                if(i&(1<<j))
+                    s1.push_back(s[j]);
+            }
+            ans.push_back(s1);
+        }
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+
+
 };
 
 int main(){
