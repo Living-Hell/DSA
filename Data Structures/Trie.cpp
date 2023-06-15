@@ -168,6 +168,50 @@ class Trie{
         return ans;
     }
 
+    //Given a binary matrix your task is to find all unique rows of the given matrix in the order of their appearance in the matrix. 
+    struct rowNode{
+        int data;
+        rowNode *child[2];
+        bool isEnd;
+        rowNode(int val){
+            data = val;
+            child[0] = child[1] = NULL;
+            isEnd = false;
+        }
+    };
+    void insertRow(rowNode *root, int *arr, int col){
+        for(int i=0; i<col; i++){
+            int ind = arr[i];
+            if(root->child[ind] == NULL){
+                root->child[ind] = new rowNode(ind);
+            }
+            root = root->child[ind];
+        }
+        root->isEnd = true;
+    }
+    bool rowPresent(rowNode *root, int *arr, int col){
+        for(int i=0; i<col; i++){
+            int ind = arr[i];
+            if(root->child[ind] == NULL){
+                return false;
+            }
+            root = root->child[ind];
+        }
+        return root->isEnd;
+    }
+    vector<vector<int>> uniqueRow(int M[1000][1000],int row,int col){
+        rowNode *root = new rowNode('\0');
+        vector<vector<int>> ans;
+        for(int i=0; i<row; i++){
+            if(!rowPresent(root,M[i],col)){
+                insertRow(root,M[i],col);
+                vector<int> temp(M[i], M[i]+col);
+                ans.push_back(temp);
+            }
+        }
+        return ans;
+    }
+
 };
 
 int main(){
