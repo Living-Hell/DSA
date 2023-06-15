@@ -25,7 +25,7 @@ class BitManipulation{
         return {set1,set2};
     }
     //Method-2
-    vector<int> singleNumber(vector<int> nums){
+    vector<int> SingleNumber(vector<int> nums){
         sort(nums.begin(),nums.end());
         vector<int> ans;
         int n = nums.size();
@@ -123,11 +123,25 @@ class BitManipulation{
         return ans;
     }
 
+    //Given an integer n, calculate the square of a number without using *, / and pow()
+    int square(int n){
+        n = abs(n);
+        int ans=0, ind=0, temp = n;
+        while(temp>0){
+            if(temp&1){
+                ans += n<<ind;
+            }
+            temp = temp>>1;
+            ind++;
+        }
+        return ans;
+    }
+
 
 };
 
 int main(){
     BitManipulation bitsm;
-
+    cout<<bitsm.square(16);
     return 0;
 }
