@@ -52,8 +52,12 @@ class Stack{
         return curr;
     }
     //Recursive solution
-    Node* reverseListRec(Node *node){
-        
+    Node* reverseListRec(Node *head){
+        if(head == NULL || head->next == NULL) return head;
+        Node* newHead = reverseListRec(head->next);
+        head->next->next = head;
+        head->next = NULL;
+        return newHead;
     }
 
 };
