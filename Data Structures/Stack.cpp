@@ -39,8 +39,18 @@ class Stack{
         }
         return rev->next;        
     }
-
-    //Function to reverse a given linked list of n nodes
+    //Iterative2 - Using 3 pointers
+    Node* reverseListItr2(Node *head){
+        Node* prev = NULL; Node* curr = head; Node* next = head->next;
+        while(next){
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+            next = next->next;
+        }
+        curr->next = prev;
+        return curr;
+    }
     //Recursive solution
     Node* reverseListRec(Node *node){
         
