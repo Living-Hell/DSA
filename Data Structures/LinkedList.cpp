@@ -10,7 +10,7 @@ struct Node{
     }
 };
 
-class Stack{
+class LinkedList{
     public:
     //Function to print the linked list
     void printList(Node *node){
@@ -91,10 +91,34 @@ class Stack{
         return ans->next;
     }
 
+    //Function to remove a loop in the linked list.
+    void removeLoop(Node* head){
+        Node* slow = head;
+        Node* fast = head;
+        while(fast and fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow == fast) break;
+        }
+        if(slow != fast) return;
+        
+        slow = head;
+        if (slow == fast)
+            while (fast->next != slow)
+                fast = fast->next;
+        else{
+            while(slow->next != fast->next){
+                slow = slow->next;
+                fast = fast->next;
+            }
+        }
+        fast->next = NULL;
+    }
+
 };
 
 int main(){
-    Stack st;
+    LinkedList ll;
     Node *head = NULL;
     Node *temp = NULL;
     int n;
@@ -112,8 +136,8 @@ int main(){
         }
     }
 
-    st.printList(head);
-    Node *rev = st.reverseListItr(head);
-    st.printList(rev);
+    ll.printList(head);
+    Node *rev = ll.reverseListItr(head);
+    ll.printList(rev);
     return 0;
 }
