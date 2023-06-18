@@ -196,6 +196,60 @@ class LinkedList{
         return head;
     }
 
+    //Function to add two numbers represented by linked list.
+    Node* addTwoLists(Node* first, Node* second){
+        Node* t1 = first; Node* t2 = second;
+        stack<Node*> st1, st2;
+        while(t1){
+            st1.push(t1);
+            t1 = t1->next;
+        }
+        while(t2){
+            st2.push(t2);
+            t2 = t2->next;
+        }
+        int carry=0;
+        while(!st1.empty() and !st2.empty()){
+            Node* top1 = st1.top(); st1.pop();
+            Node* top2 = st2.top(); st2.pop();
+            int sum = top1->data + top2->data + carry;
+            if(sum>9){
+                carry = 1;
+                sum %= 10;
+            }
+            else carry=0;
+            top1->data = sum; top2->data = sum;
+        }
+        if(carry){
+            if(st1.empty() and st2.empty()){
+                Node* t = new Node(1);
+                    t->next = first;
+                    return t;
+            }
+            if(st1.empty()){
+                swap(st1,st2);
+                swap(first,second);
+            }
+            Node* top = st1.top(); st1.pop();
+            if(top->data<9) top->data++;
+            else{
+                top->data = 0;
+                while(!st1.empty() and st1.top()->data == 9){
+                    st1.top()->data = 0;
+                    st1.pop();
+                }
+                if(st1.empty()){
+                    Node* t = new Node(1);
+                    t->next = first;
+                    return t;
+                }
+                else st1.top()->data++;
+            }
+            return first;
+        }
+        return st1.empty() ? second : first;
+    }
+
 };
 
 int main(){
