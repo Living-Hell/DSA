@@ -134,10 +134,24 @@ class LinkedList{
     }
 
     //Function to remove duplicates from sorted linked list.
-    Node *removeDuplicates(Node *head){
+    Node *removeDuplicatesSorted(Node *head){
         Node* temp = head; Node* curr = head;   
         while(temp){
             while(temp and temp->data == curr->data) temp = temp->next;
+            curr->next = temp;
+            curr = curr->next;
+        }
+        return head;
+    }
+
+    //Function to remove duplicates from unsorted linked list.
+    Node *removeDuplicatesUnsorted( Node *head) {
+        set<int> st;
+        Node* temp = head; Node* curr = head;
+        while(temp){
+            st.insert(curr->data);
+            while(temp and st.find(temp->data) != st.end()) 
+                temp = temp->next;
             curr->next = temp;
             curr = curr->next;
         }
