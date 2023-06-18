@@ -72,6 +72,25 @@ class Stack{
         return false;
     }
 
+    //Given a linked list of size N. The task is to reverse every k nodes in the linked list.
+    Node *reverse(Node *head, int k){ 
+        stack<int> st;
+        Node* temp = new Node(0); Node* ans = temp;
+        while(head!= NULL){
+            for(int i=0; i<k and head!= NULL; i++){
+                st.push(head->data);
+                head = head->next;
+            }
+            while(!st.empty()){
+                int top = st.top(); st.pop(); 
+                Node* t = new Node(top); 
+                temp->next = t;
+                temp = temp->next;
+            }
+        }
+        return ans->next;
+    }
+
 };
 
 int main(){
