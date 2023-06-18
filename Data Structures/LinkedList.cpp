@@ -158,6 +158,17 @@ class LinkedList{
         return head;
     }
 
+    //Function to move the last element to the front of the Linked List and return the list.
+    Node *moveToFront(Node *head){
+        if(!head->next) return head;
+        Node* temp = head;
+        while(temp->next->next != NULL) temp = temp->next;
+        Node* st = new Node(temp->next->data);
+        st->next = head;
+        temp->next = NULL;
+        return st;
+    }
+
 };
 
 int main(){
