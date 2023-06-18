@@ -133,6 +133,17 @@ class LinkedList{
         return fast->data;
     }
 
+    //Function to remove duplicates from sorted linked list.
+    Node *removeDuplicates(Node *head){
+        Node* temp = head; Node* curr = head;   
+        while(temp){
+            while(temp and temp->data == curr->data) temp = temp->next;
+            curr->next = temp;
+            curr = curr->next;
+        }
+        return head;
+    }
+
 };
 
 int main(){
