@@ -169,6 +169,33 @@ class LinkedList{
         return st;
     }
 
+    //Function to add 1 to a number N represented in Linked list such that each node corrsponds to a digit of the number
+    Node* addOne(Node *head){
+        stack<Node*> st;
+        Node* temp = head;
+        while(temp){
+            st.push(temp);
+            temp = temp->next;
+        }
+        Node* top = st.top();
+        st.pop();
+        if(top->data <9) top->data++;
+        else{
+            top->data = 0;
+            while(!st.empty() and st.top()->data == 9){
+                st.top()->data = 0;
+                st.pop();
+            }
+            if(st.empty()){
+                Node* t = new Node(1);
+                t->next = head;
+                return t;
+            }
+            st.top()->data++;
+        }
+        return head;
+    }
+
 };
 
 int main(){
