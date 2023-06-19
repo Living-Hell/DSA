@@ -260,6 +260,25 @@ class LinkedList{
         return slow;
     }
 
+    //Given two linked lists sorted in increasing order, create a new linked list representing the intersection of the two linked lists.
+    Node* findIntersection(Node* head1, Node* head2){
+        Node* t1 = head1; Node* t2 = head2;
+        Node* ans = new Node(0); Node* temp = ans;
+        while(t1 != NULL and t2 != NULL){
+            if(t1->data == t2->data){
+                Node* t = new Node(t1->data);
+                temp->next = t;
+                temp = temp->next;
+                t1 = t1->next;
+                t2 = t2->next;
+            }
+            else if(t1->data > t2->data) 
+                t2 = t2->next;
+            else t1 = t1->next;
+        }
+        return ans->next;
+    }
+
 };
 
 int main(){
