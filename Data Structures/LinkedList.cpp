@@ -299,6 +299,16 @@ class LinkedList{
         return slow->data;
     }
 
+    /* Should return true if linked list is circular, else false */
+    bool isCircular(Node *head){
+        Node* temp = head;
+        while(temp){
+            temp = temp->next;
+            if(temp == head) return 1;
+        }
+        return 0;
+    }
+
 };
 
 int main(){
