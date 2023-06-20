@@ -279,6 +279,26 @@ class LinkedList{
         return ans->next;
     }
 
+    //Function to find intersection point in Y shaped Linked Lists.
+    int intersectPoint(Node* head1, Node* head2){
+        Node* temp = head2;
+        while(temp->next) temp = temp->next;
+        temp->next = head2;
+        Node* slow = head1; Node* fast = head1;
+        while(fast and fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+            if(slow == fast) break;
+        }
+        if(slow != fast) return -1;
+        slow = head1;
+        while(fast != slow and slow){
+            fast = fast->next;
+            slow = slow->next;
+        }
+        return slow->data;
+    }
+
 };
 
 int main(){
