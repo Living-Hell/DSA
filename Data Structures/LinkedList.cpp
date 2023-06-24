@@ -308,6 +308,27 @@ class LinkedList{
         }
         return 0;
     }
+    
+    //Function to check whether the list is palindrome.
+    bool isPalindrome(Node *head){
+        int n=0;
+        Node *temp = head;
+        while(temp){
+            n++;
+            temp = temp->next;
+        }
+        n = n/2;
+        temp = head;
+        while(n--) temp = temp->next;
+        Node* rev = reverseListRec(temp);
+        while(rev != head and rev and head){
+            if(rev->data != head->data)
+                return 0;
+            rev = rev->next;
+            head = head->next;
+        }
+        return 1;
+    }
 
 };
 
