@@ -136,8 +136,6 @@ class BitManipulation{
         }
         return ans;
     }
-
-
 };
 
 int main(){

@@ -363,6 +363,22 @@ class LinkedList{
         return ans->next;
     }
 
+    //Function to sort the given linked list using Merge Sort.
+    Node* mergeSort(Node* head) {
+        if(!head or !head->next) return head;
+        Node* slow = head; Node* fast = head->next;
+        while(fast and fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        Node* first = head;
+        Node* second = slow->next;
+        slow->next = NULL;
+        first = mergeSort(first);
+        second = mergeSort(second);
+        return sortedMerge(first,second);
+    }
+
 };
 
 int main(){
