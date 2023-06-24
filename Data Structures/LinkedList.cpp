@@ -342,6 +342,27 @@ class LinkedList{
         temp->next = *head2_ref;
     }
 
+    //Function to merge two sorted linked list.
+    Node* sortedMerge(Node* head1, Node* head2)  {  
+        Node* ans = new Node(0);
+        Node* temp = ans;
+        while(head1 and head2){
+            if(head1->data <= head2->data){
+                temp->next = head1;
+                head1 = head1->next;
+                temp = temp->next;
+            }
+            else{
+                temp->next = head2;
+                head2 = head2->next;
+                temp = temp->next;
+            }
+        }
+        if(!head1) temp->next = head2;
+        else temp->next = head1;
+        return ans->next;
+    }
+
 };
 
 int main(){
