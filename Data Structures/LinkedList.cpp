@@ -464,6 +464,39 @@ class LinkedList{
         return ans;
     }
 
+    //Given a sorted linked list of distinct nodes (no two nodes have the same data) and an integer X. 
+    //Count distinct triplets in the list that sum up to given integer X.
+    int countTriplets(Node* head, int x) { 
+        Node* temp = head;
+        Node* rev = new Node(0); Node* r = rev;
+        while(temp){
+            Node* t = new Node(temp->data);
+            r->next = t;
+            r = r->next;
+            temp = temp->next;
+        }
+        rev = reverseListRec(rev->next);
+        int ans=0;
+        while(head->next){
+            int val = x - head->data;
+            Node* temp = head->next;
+            Node* revt = rev;
+            while(temp->data < revt->data){
+                if(temp->data + revt->data == val){
+                    ans++;
+                    temp = temp->next;
+                    revt = revt->next;
+                }
+                else if(temp->data + revt->data < val)
+                    temp = temp->next;
+                else
+                    revt = revt->next;
+            }
+            head = head->next;
+        }
+        return ans;
+    } 
+
 };
 
 int main(){
