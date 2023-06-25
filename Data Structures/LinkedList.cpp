@@ -383,17 +383,41 @@ class LinkedList{
 
     //Given a doubly linked list of n elements. The task is to reverse the doubly linked list.
     Node* reverseDLL(Node * head){
-    Node* curr = head; Node* temp = head->next; 
-    while(temp){
-        if(curr == head) curr->next = NULL;
-        curr->prev = temp;
-        temp->prev = temp->next;
-        temp->next = curr;
-        curr = temp;
-        temp = temp->prev;
+        Node* curr = head; Node* temp = head->next; 
+        while(temp){
+            if(curr == head) curr->next = NULL;
+            curr->prev = temp;
+            temp->prev = temp->next;
+            temp->next = curr;
+            curr = temp;
+            temp = temp->prev;
+        }
+        return curr;
     }
-    return curr;
-}
+
+    //Function to Sort the given Linked List using quicksort
+    void quicksort(Node* head, Node* tail){
+        if(!head or !tail or head == tail) return;
+        Node* pivot = head;
+        Node* curr = head; Node* next = curr->next;
+        while(next != tail->next){
+            if(next->data < pivot->data){
+                swap(curr->next->data, next->data);
+                curr = curr->next;
+            }
+            next = next->next;
+        }
+        swap(pivot->data,curr->data);
+        quicksort(head,curr);
+        quicksort(curr->next,tail);
+    }
+    void quickSort(struct Node **headRef) {
+        Node* head = *headRef;
+        if(!head or !head->next) return;
+        Node* tail = head;
+        while(tail->next) tail = tail->next;
+        quicksort(head,tail);
+    }
 
 };
 
