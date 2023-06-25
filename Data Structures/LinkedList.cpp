@@ -4,9 +4,11 @@ using namespace std;
 struct Node{
     int data;
     Node* next;
+    Node* prev;
     Node(int x){
         data = x;
         next = NULL;
+        prev = NULL;
     }
 };
 
@@ -378,6 +380,20 @@ class LinkedList{
         second = mergeSort(second);
         return sortedMerge(first,second);
     }
+
+    //Given a doubly linked list of n elements. The task is to reverse the doubly linked list.
+    Node* reverseDLL(Node * head){
+    Node* curr = head; Node* temp = head->next; 
+    while(temp){
+        if(curr == head) curr->next = NULL;
+        curr->prev = temp;
+        temp->prev = temp->next;
+        temp->next = curr;
+        curr = temp;
+        temp = temp->prev;
+    }
+    return curr;
+}
 
 };
 
