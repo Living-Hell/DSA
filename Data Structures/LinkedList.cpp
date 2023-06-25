@@ -419,6 +419,33 @@ class LinkedList{
         quickSortHelper(head,tail);
     }
 
+    /* Function to delete a given node from the list */
+    void deleteNode(struct Node **Head, int key){
+        Node* head = *Head;
+        Node* temp = head->next;
+        while(temp){
+            if(temp->next->data == key){
+                temp->next = temp->next->next;
+                break;
+            }
+            temp = temp->next;
+        }
+    }
+    /* Function to reverse the linked list */
+    void reverse(struct Node** Head){
+        Node* head = *Head;
+        Node* curr = head;
+        Node* nxt = head->next;
+        while(nxt != head){
+            Node* temp = nxt->next;
+            nxt->next = curr;
+            curr = nxt;
+            nxt = temp;
+        }
+        nxt->next = curr;
+        *Head = curr;
+    }
+
 };
 
 int main(){
