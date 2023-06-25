@@ -497,6 +497,18 @@ class LinkedList{
         return ans;
     } 
 
+    //Function to rotate a linked list.
+    Node* rotate(Node* head, int k){
+        Node* temp = head;
+        while(temp->next) temp = temp->next;
+        temp->next = head;
+        temp = head;
+        while(--k) temp = temp->next;
+        head = temp->next;
+        temp->next = NULL;
+        return head;
+    }
+
 };
 
 int main(){
