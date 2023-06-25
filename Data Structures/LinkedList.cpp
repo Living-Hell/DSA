@@ -396,7 +396,7 @@ class LinkedList{
     }
 
     //Function to Sort the given Linked List using quicksort
-    void quicksort(Node* head, Node* tail){
+    void quickSortHelper(Node* head, Node* tail){
         if(!head or !tail or head == tail) return;
         Node* pivot = head;
         Node* curr = head; Node* next = curr->next;
@@ -408,15 +408,15 @@ class LinkedList{
             next = next->next;
         }
         swap(pivot->data,curr->data);
-        quicksort(head,curr);
-        quicksort(curr->next,tail);
+        quickSortHelper(head,curr);
+        quickSortHelper(curr->next,tail);
     }
     void quickSort(struct Node **headRef) {
         Node* head = *headRef;
         if(!head or !head->next) return;
         Node* tail = head;
         while(tail->next) tail = tail->next;
-        quicksort(head,tail);
+        quickSortHelper(head,tail);
     }
 
 };
