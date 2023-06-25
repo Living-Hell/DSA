@@ -446,6 +446,24 @@ class LinkedList{
         *Head = curr;
     }
 
+    //Given a sorted doubly linked list of positive distinct elements, the task is to find pairs in a 
+    //doubly-linked list whose sum is equal to given value target.
+    vector<pair<int, int>> findPairsWithGivenSum(Node *head, int target){
+        vector<pair<int, int>> ans;
+        Node* end = head;
+        while(end->next) end = end->next;
+        while(head->data < end->data){
+            if(head->data + end->data == target){ 
+                ans.push_back({head->data , end->data});
+                head = head->next;
+                end = end->prev;
+            }
+            else if(head->data + end->data < target) head = head->next;
+            else end = end-> prev;
+        }
+        return ans;
+    }
+
 };
 
 int main(){
