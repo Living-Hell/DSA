@@ -5,10 +5,12 @@ struct Node{
     int data;
     Node* next;
     Node* prev;
+    Node* bottom;
     Node(int x){
         data = x;
         next = NULL;
         prev = NULL;
+        bottom = NULL;
     }
 };
 
@@ -507,6 +509,34 @@ class LinkedList{
         head = temp->next;
         temp->next = NULL;
         return head;
+    }
+
+    /*  Function which returns the  root of the flattened linked list. */
+    Node* sortedMergeFlatten(Node* head1, Node* head2)  {  
+        Node* ans = new Node(0);
+        Node* temp = ans;
+        while(head1 and head2){
+            if(head1->data <= head2->data){
+                temp->bottom = head1;
+                head1 = head1->bottom;
+                temp = temp->bottom;
+            }
+            else{
+                temp->bottom = head2;
+                head2 = head2->bottom;
+                temp = temp->bottom;
+            }
+        }
+        if(!head1) temp->bottom = head2;
+        else temp->bottom = head1;
+        return ans->bottom;
+    }
+    Node *flatten(Node *root){
+        if(!root or !root->next) return root;
+        Node* temp = root;
+        Node* merger = flatten(temp->next);
+        temp = sortedMerge(temp,merger);
+        return temp;
     }
 
 };
