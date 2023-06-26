@@ -639,6 +639,25 @@ class LinkedList{
         return ans;
     }
 
+    //Given a singly linked list, remove all the nodes which have a greater value on their right side.
+    int mx = INT_MIN;
+    void computeHelper(Node *head, Node* prev){
+        if(!head) return;
+        if(!head->next){
+            mx = max(mx,head->data);
+            return;
+        }
+        computeHelper(head->next, head);
+        if(head->data<mx) prev->next = head ? head->next : NULL;
+        else mx = max(mx,head->data);
+    }
+    Node *compute(Node *head){
+        Node* ans = new Node(-1);
+        ans->next = head;
+        computeHelper(head,ans);
+        return ans->next;
+    }
+
 };
 
 int main(){
