@@ -621,7 +621,23 @@ class LinkedList{
         return ans->next;
     }
 
-
+    /*The method multiplies two  linked lists l1 and l2and returns their product*/
+    long long  multiplyTwoLists (Node* l1, Node* l2){
+        long long num1=0, num2=0, ans=1;
+        long long mod = 1000000007;
+        while(l1){
+            num1 = num1*10 + l1->data;
+            num1 %= mod;
+            l1 = l1->next;
+        }
+        while(l2){
+            num2 = num2*10 + l2->data;
+            num2 %= mod;
+            l2 = l2->next;
+        }
+        ans = (num1*num2)%mod;
+        return ans;
+    }
 
 };
 
