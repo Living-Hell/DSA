@@ -539,6 +539,36 @@ class LinkedList{
         return temp;
     }
 
+    //Function to sort a linked list of 0s, 1s and 2s.
+    Node* segregate(Node *head) {
+        Node* z = new Node(-1);
+        Node* o = new Node(-1);
+        Node* t = new Node(-1);
+        Node* tz = z;
+        Node* to = o;
+        Node* tt = t;
+        while(head){
+            if(head->data == 0){
+                tz->next = head;
+                tz = tz->next;
+            }
+            else if(head->data == 1){
+                to->next = head;
+                to = to->next;
+            }
+            else{
+                tt->next = head;
+                tt = tt->next;
+            }
+            head = head->next;
+        }
+        if(o->next) tz->next = o->next;
+        else tz->next = t->next;
+        to->next = t->next;
+        tt->next = NULL;
+        return z->next;
+    }
+
 };
 
 int main(){
