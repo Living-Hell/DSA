@@ -598,6 +598,29 @@ class LinkedList{
         return ans;
     }
 
+    //Function to merge K sorted linked list.
+    Node * mergeKLists(Node *arr[], int k){
+        Node* ans = new Node(-1);
+        Node* copy = ans;
+        bool valid=1;
+        while(valid){
+            Node* min = new Node(INT_MAX);
+            int ind=0;
+            for(int i=0; i<k; i++){
+                if(arr[i] and arr[i]->data<min->data){
+                    min = arr[i];
+                    ind = i;
+                }
+            }
+            copy->next = min;
+            copy = copy->next;
+            arr[ind] = arr[ind]->next;
+            valid=0;
+            for(int i=0; i<k; i++) if(arr[i]!=NULL) valid=1;
+        }
+        return ans->next;
+    }
+
 
 
 };
