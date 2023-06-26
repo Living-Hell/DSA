@@ -569,6 +569,37 @@ class LinkedList{
         return z->next;
     }
 
+    //You are given a special linked list with N nodes where each node has a next pointer pointing to its 
+    //next node. You are also given M random pointers, where you will be given M number of pairs denoting 
+    //two nodes a and b  i.e. a->arb = b (arb is pointer to random node).
+    Node *copyList(Node *head){
+        Node* temp = head;
+        while(temp){
+            Node* t = new Node(temp->data);
+            t->next = temp->next;
+            temp->next = t;
+            temp = temp->next->next;
+        }
+        temp = head;
+        while(temp){
+            temp->next->arb = temp->arb == NULL ? NULL : temp->arb->next;
+            temp = temp->next->next;
+        }
+        
+        Node* ans = head->next;
+        Node* cpy = ans;
+        temp = head;
+        while(temp){
+            temp->next = temp->next->next;
+            cpy->next = cpy->next ? cpy->next->next : NULL;
+            cpy = cpy->next;
+            temp = temp->next;
+        }
+        return ans;
+    }
+
+
+
 };
 
 int main(){
