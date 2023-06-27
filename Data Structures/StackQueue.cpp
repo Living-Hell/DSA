@@ -40,6 +40,34 @@ public:
     }
 };
 
+class StackQueue{
+private:   
+    stack<int> s1;
+    stack<int> s2;
+public:
+    //Function to push an element in queue by using 2 stacks.
+    void  push(int x){
+        s1.push(x);
+    }
+    //Function to pop an element from queue by using 2 stacks.
+    int pop(){
+        while(!s1.empty()){
+            int top = s1.top();
+            s1.pop();
+            s2.push(top);
+        } 
+        if(s2.empty()) 
+            return -1;
+        int data = s2.top();
+        s2.pop();
+        while(!s2.empty()){
+            int top = s2.top(); s2.pop();
+            s1.push(top);
+        }
+        return data;            
+    }
+};
+
 struct StackNode{
     int data;
     StackNode *next;
@@ -111,8 +139,10 @@ public:
             front = front->next;
             return data;
     }
-};
 
+    //
+
+};
 
 
 int main(){
