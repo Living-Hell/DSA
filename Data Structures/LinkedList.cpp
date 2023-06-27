@@ -682,6 +682,22 @@ class LinkedList{
         return even->next;
     }
 
+    //Function to find the data of nth node from the end of a linked list.
+    int getNthFromLast(Node *head, int n){
+        int count=0;
+        Node* temp = head;
+        while(temp){
+            temp = temp->next;
+            count++;
+        }
+        if(count<n) return -1;
+        n = count-n+1;
+        while(--n){ 
+            head = head->next;
+        }
+        return head->data;
+    }
+
 };
 
 int main(){
