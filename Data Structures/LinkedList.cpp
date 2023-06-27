@@ -698,6 +698,29 @@ class LinkedList{
         return head->data;
     }
 
+    //Given an input stream A of n characters consisting only of lower case alphabets. While reading 
+    //characters from the stream, you have to tell which character has appeared only once in the stream 
+    //upto that point. If there are many characters that have appeared only once, you have to tell which 
+    //one of them was the first one to appear. If there is no such character then append '#' to the answer.
+    string FirstNonRepeating(string a){
+        list<char> ll;
+        int n = a.size();
+        int al[26] = {0};
+        string ans = ""; 
+        for(int i=0; i<n; i++){
+            al[a[i]-'a']++;
+            if(al[a[i]-'a'] > 1)
+                ll.remove(a[i]);
+            else if(al[a[i]-'a'] == 1)
+                ll.push_back(a[i]);
+            if(ll.empty())
+                ans += "#";
+            else
+                ans += ll.front();
+        }
+        return ans;
+    }
+
 };
 
 int main(){
