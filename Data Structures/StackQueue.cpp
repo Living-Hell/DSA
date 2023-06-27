@@ -79,6 +79,39 @@ class Stack{
 
 };
 
+struct QueueNode{
+    int data;
+    QueueNode *next;
+    QueueNode(int a){
+        data = a;
+        next = NULL;
+    }
+};
+class Queue{
+private:
+    QueueNode *front;
+    QueueNode *rear;
+public:
+    Queue(){
+        front = rear = NULL;
+    }
+    //Function to push an element into the queue.
+    void push(int x){
+            QueueNode* node = new QueueNode(x);
+            if(!front) front = rear = node;
+            else{
+                rear->next = node;
+                rear = node;
+            }
+    }
+    //Function to pop front element from the queue.
+    int pop(){
+            if(!front) return -1;
+            int data = front->data;
+            front = front->next;
+            return data;
+    }
+};
 
 
 
