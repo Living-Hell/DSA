@@ -20,6 +20,26 @@ public:
 	}
 };
 
+//Queue Implementation using array
+class ArrQueue{
+private:
+    int front, rear;
+    int arr[100005];
+public:   
+    ArrQueue(){
+        front=0;
+        rear=0;
+    }
+    //Function to push an element x in a queue.
+    void push(int x){
+            arr[front++] = x;
+    }
+    //Function to pop an element from queue and return that element.
+    int pop(){
+            return (front == rear) ? -1 : arr[rear++];      
+    }
+};
+
 struct StackNode{
     int data;
     StackNode *next;
@@ -28,7 +48,6 @@ struct StackNode{
         next = NULL;
     }
 };
-
 //Implementation of Stack using Linked list
 class Stack{
     private:
@@ -55,7 +74,13 @@ class Stack{
             return ret;
         }
     }
+
+    //
+
 };
+
+
+
 
 int main(){
 
