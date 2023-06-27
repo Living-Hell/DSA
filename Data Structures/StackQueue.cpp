@@ -169,9 +169,26 @@ public:
             front = front->next;
             return data;
     }
+};
 
-    //
-
+class StackQueue{
+    public:
+    //Function to delete middle element of a stack.
+    void deleteMid(stack<int>&s, int sizeOfStack){
+        stack<int> st;
+        int mid = sizeOfStack/2;
+        while(mid--){
+            int top = s.top();
+            s.pop();
+            st.push(top);
+        }
+        s.pop();
+        while(!st.empty()){
+            int top = st.top();
+            st.pop();
+            s.push(top);
+        }
+    }
 };
 
 
