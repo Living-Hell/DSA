@@ -658,6 +658,30 @@ class LinkedList{
         return ans->next;
     }
 
+    //Given a link list of size N, modify the list such that all the even numbers appear before all the odd 
+    //numbers in the modified list. The order of appearance of numbers within each segregation should be same as that in the original list.
+    Node* divide(int N, Node *head){
+        Node* odd = new Node(-1);
+        Node* copyo = odd;
+        Node* even = new Node(-1);
+        Node* copye = even;
+        Node* temp = head;
+        while(temp){
+            if(temp->data%2 == 0){
+                copye->next = temp;
+                copye = copye->next;
+            }
+            else{
+                copyo->next = temp;
+                copyo = copyo->next;
+            }
+            temp = temp->next;
+        }
+        copye->next  = odd->next;
+        copyo->next = NULL;
+        return even->next;
+    }
+
 };
 
 int main(){
