@@ -189,6 +189,36 @@ class StackQueue{
             s.push(top);
         }
     }
+
+    //Function to check if brackets are balanced or not.
+    bool ispar(string x){
+        stack<char> st;
+        for(int i=0; i<x.size(); i++){
+            if(x[i] == '[' or x[i] == '(' or x[i] == '{'){
+                st.push(x[i]);
+            }
+            else{
+                if(st.empty()) 
+                    return 0;
+                else if(x[i] == ']'){
+                    if(st.top() == '[') st.pop();
+                    else return 0;
+                }
+                else if(x[i] == ')'){
+                    if(st.top() == '(') st.pop();
+                    else return 0;
+                }
+                else if(x[i] == '}'){
+                    if(st.top() == '{') st.pop();
+                    else return 0;
+                }
+            }
+        }
+        return st.empty();
+    }
+
+    
+
 };
 
 
