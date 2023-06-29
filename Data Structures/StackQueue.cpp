@@ -273,7 +273,7 @@ class StackQueue{
         return arr;
     }
 
-    //Function to find if there is a celebrity in the party or not.
+    //Function to find if there is a celebrity in the party or not. ToC=O(N2) SC=O(1)
     int celebrity(vector<vector<int> >& M, int n) {
         int ans = -1;
         for(int j=0; j<n; j++){
@@ -294,6 +294,27 @@ class StackQueue{
             }
         }
         return ans;
+    }
+    //Function to find if there is a celebrity in the party or not.ToC=O(N) SC=O(N)
+    int fasterCelebrity(vector<vector<int> >& M, int n) {
+        stack<int> st;
+        for(int i=0; i<n; i++) st.push(i);
+        while(st.size()>1){
+            int t1 = st.top(); st.pop();
+            int t2 = st.top(); st.pop();
+            if(M[t1][t2] == 0 and M[t2][t1] == 1) st.push(t1);
+            if(M[t2][t1] == 0 and M[t1][t2] == 1) st.push(t2);
+        }
+        if(!st.empty()){
+            int top = st.top();
+            for(int i=0; i<n; i++){
+                if(i!= top and (M[i][top] == 0 or M[top][i] == 1)){
+                    st.pop();
+                    break;
+                }
+            }
+        }
+        return st.empty() ? -1 : st.top();
     }
 
 };
