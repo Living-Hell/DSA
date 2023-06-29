@@ -229,6 +229,50 @@ class StackQueue{
         return S;
     }
 
+    //Design a data-structure SpecialStack that supports all the stack operations like push(), pop(), isEmpty(), isFull() 
+    //and an additional operation getMin() which should return minimum element from the SpecialStack. 
+    void push(stack<int>& s, int a){
+        s.push(a);
+    }
+    bool isFull(stack<int>& s,int n){
+        return s.size() == n;
+    }
+    bool isEmpty(stack<int>& s){
+        return s.empty();
+    }
+    int pop(stack<int>& s){
+        if(s.empty()) return -1;
+        int top = s.top();
+        s.pop();
+        return top;
+    }
+    int helper(stack<int>s){
+        int mn = INT_MAX;
+        while(!s.empty()){
+            mn = min(s.top(),mn);
+            s.pop();
+        }
+        return mn;
+    }
+    int getMin(stack<int>& s){
+        return helper(s);
+    }
+
+    //Function to find the next greater element for each element of the array.
+    vector<long long> nextLargerElement(vector<long long> arr, int n){
+        stack<long long> st;
+        st.push(arr[n-1]);
+        arr[n-1] = -1;
+        for(int i=n-2; i>=0; i--){
+            while(!st.empty() and st.top() <= arr[i]) st.pop();
+            long long top = arr[i];
+            if(st.empty()) arr[i] = -1;
+            else arr[i] = st.top();
+            st.push(top);
+        }
+        return arr;
+    }
+
 };
 
 
