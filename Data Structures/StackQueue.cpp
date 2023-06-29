@@ -273,6 +273,29 @@ class StackQueue{
         return arr;
     }
 
+    //Function to find if there is a celebrity in the party or not.
+    int celebrity(vector<vector<int> >& M, int n) {
+        int ans = -1;
+        for(int j=0; j<n; j++){
+            bool knows = 1;
+            for(int i=0; i<n; i++)
+                if(i!=j and M[i][j] == 0) 
+                    knows = 0;
+            if(knows){ 
+                ans = j;
+                break;
+            }
+        }
+        if(ans == -1) return ans;
+        for(int i=0; i<n; i++){
+            if(M[ans][i] == 1){
+                ans = -1;
+                break;
+            }
+        }
+        return ans;
+    }
+
 };
 
 
