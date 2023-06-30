@@ -435,6 +435,22 @@ public:
         }
         return st.top();
     }
+
+    // You are given a stack St of N integers and an element X. You have to insert X at the bottom of the given stack.
+    // Without using other data structures
+    stack<int> insertAtBottom(stack<int> &st, int x)
+    {
+        if (st.empty())
+            st.push(x);
+        else
+        {
+            int top = st.top();
+            st.pop();
+            insertAtBottom(st, x);
+            st.push(top);
+        }
+        return st;
+    }
 };
 
 int main()
