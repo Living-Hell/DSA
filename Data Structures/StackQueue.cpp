@@ -451,6 +451,17 @@ public:
         }
         return st;
     }
+
+    // Function to reverse the stack using recursion.
+    void Reverse(stack<int> &st)
+    {
+        if (st.empty())
+            return;
+        int top = st.top();
+        st.pop();
+        Reverse(st);
+        insertAtBottom(st, top);
+    }
 };
 
 int main()
