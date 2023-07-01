@@ -524,6 +524,30 @@ public:
         }
         return ans;
     }
+
+    // Given a string S consisting only of opening and closing parenthesis 'ie '('  and ')', find out
+    // the length of the longest valid(well-formed) parentheses substring.
+    int findMaxLen(string s)
+    {
+        stack<int> st;
+        int n = s.size();
+        int ans = 0;
+        st.push(-1);
+        for (int i = 0; i < n; i++)
+        {
+            if (s[i] == '(')
+                st.push(i);
+            else
+            {
+                st.pop();
+                if (!st.empty())
+                    ans = max(ans, i - st.top());
+                else
+                    st.push(i);
+            }
+        }
+        return ans;
+    }
 };
 
 int main()
