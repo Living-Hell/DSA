@@ -485,6 +485,45 @@ public:
         sort(st);
         insertAtBottom(st, top);
     }
+
+    // Function to find largest rectangular area possible in a given histogram.
+    long long getMaxArea(long long arr[], int n)
+    {
+        stack<long long> st;
+        vector<long long> left(n, 0), right(n, 0);
+        st.push(0);
+        left[0] = -1;
+        for (int i = 1; i < n; i++)
+        {
+            while (!st.empty() and arr[st.top()] >= arr[i])
+                st.pop();
+            if (st.empty())
+                left[i] = -1;
+            else
+                left[i] = st.top();
+            st.push(i);
+        }
+        st = stack<long long>();
+        st.push(n - 1);
+        right[n - 1] = n;
+        for (int i = n - 2; i >= 0; i--)
+        {
+            while (!st.empty() and arr[st.top()] >= arr[i])
+                st.pop();
+            if (st.empty())
+                right[i] = n;
+            else
+                right[i] = st.top();
+            st.push(i);
+        }
+        long long ans = INT_MIN;
+        for (int i = 0; i < n; i++)
+        {
+            long long val = arr[i] * (right[i] - left[i] - 1);
+            ans = max(ans, val);
+        }
+        return ans;
+    }
 };
 
 int main()
