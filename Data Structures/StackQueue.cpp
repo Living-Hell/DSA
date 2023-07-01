@@ -462,6 +462,29 @@ public:
         Reverse(st);
         insertAtBottom(st, top);
     }
+
+    /* The below method sorts the stack s you are required to complete the below method using recursion*/
+    void insertSorted(stack<int> &st, int x)
+    {
+        if (st.empty() or st.top() <= x)
+            st.push(x);
+        else
+        {
+            int top = st.top();
+            st.pop();
+            insertAtBottom(st, x);
+            st.push(top);
+        }
+    }
+    void sort(stack<int> &st)
+    {
+        if (st.empty())
+            return;
+        int top = st.top();
+        st.pop();
+        sort(st);
+        insertAtBottom(st, top);
+    }
 };
 
 int main()
