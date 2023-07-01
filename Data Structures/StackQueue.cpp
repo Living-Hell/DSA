@@ -548,6 +548,27 @@ public:
         }
         return ans;
     }
+
+    // Given a string of balanced expression, find if it contains a redundant parenthesis or not .
+    // A set of parenthesis are redundant if the same sub - expression is surrounded by unnecessary or multiple brackets.
+    int checkRedundancy(string s)
+    {
+        stack<int> st;
+        for (char c : s)
+        {
+            if (c == '(' or c == '+' or c == '-' or c == '*' or c == '/')
+                st.push(c);
+            else if (c == ')')
+            {
+                if (!st.empty() and st.top() == '(')
+                    return 1;
+                while (st.top() != '(')
+                    st.pop();
+                st.pop();
+            }
+        }
+        return 0;
+    }
 };
 
 int main()
