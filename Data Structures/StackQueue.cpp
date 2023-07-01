@@ -604,6 +604,28 @@ public:
         }
         return 0;
     }
+
+    // Function to check if array B is a stack permutation of the array A or not.
+    int isStackPermutation(int n, vector<int> &A, vector<int> &B)
+    {
+        stack<int> st;
+        int ind = 0;
+        for (int i = 0; i < n; i++)
+        {
+            st.push(A[i]);
+            if (A[i] == B[ind])
+            {
+                st.pop();
+                ind++;
+            }
+            while (!st.empty() and st.top() == B[ind])
+            {
+                st.pop();
+                ind++;
+            }
+        }
+        return ind == n;
+    }
 };
 
 int main()
