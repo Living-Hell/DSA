@@ -683,6 +683,34 @@ public:
         }
         return ans;
     }
+
+    // Function to find starting point where the truck can start to get through
+    // the complete circle without exhausting its petrol in between.
+    // The structure of petrolPump is
+    struct petrolPump
+    {
+        int petrol;
+        int distance;
+    };
+    int tour(petrolPump p[], int n)
+    {
+        vector<int> diff(n);
+        for (int i = 0; i < n; i++)
+            diff[i] = p[i].petrol - p[i].distance;
+        int start = 0;
+        int deficit = 0, balance = 0;
+        for (int i = 0; i < n; i++)
+        {
+            balance += diff[i];
+            if (balance < 0)
+            {
+                deficit += balance;
+                balance = 0;
+                start = i + 1;
+            }
+        }
+        return balance + deficit >= 0 ? start : -1;
+    }
 };
 
 int main()
