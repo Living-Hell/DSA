@@ -649,6 +649,40 @@ public:
         }
         return ans;
     }
+
+    // Function to reverse the Queue.
+    queue<int> rev(queue<int> &q)
+    {
+        if (q.empty())
+            return q;
+        int front = q.front();
+        q.pop();
+        rev(q);
+        q.push(front);
+        return q;
+    }
+
+    // Function to rearrange the elements by interleaving the first half of the queue with the second half of the queue.
+    vector<int> rearrangeQueue(queue<int> &q)
+    {
+        vector<int> ans;
+        queue<int> q1;
+        int sz = q.size(), i = 0;
+        while (i < sz / 2)
+        {
+            q1.push(q.front());
+            q.pop();
+            i++;
+        }
+        while (!q.empty() and !q1.empty())
+        {
+            ans.push_back(q1.front());
+            q1.pop();
+            ans.push_back(q.front());
+            q.pop();
+        }
+        return ans;
+    }
 };
 
 int main()
