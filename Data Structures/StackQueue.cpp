@@ -712,26 +712,23 @@ public:
         return balance + deficit >= 0 ? start : -1;
     }
 
-    //Function to find maximum of each subarray of size k.
-    vector <int> max_of_subarrays(int *arr, int n, int k){
+    // Function to find maximum of each subarray of size k.
+    vector<int> max_of_subarrays(int *arr, int n, int k)
+    {
         vector<int> ans;
         deque<int> dq;
-        for(int i=0; i<k; i++){
-            if(!dq.empty() and arr[dq.front()] < arr[i]) 
-                while(!dq.empty() and arr[dq.front()] < arr[i]) 
-                        dq.pop_front();
-            dq.push_front(i);
-        }
-        ans.push_back(arr[dq.back()]);
-        for(int i=k; i<n; i++){
-            if(!dq.empty() and i-k == dq.back()) 
+        for (int i = 0; i < n; i++)
+        {
+            if (!dq.empty() and i - k == dq.back())
                 dq.pop_back();
-            if(!dq.empty() and arr[dq.front()] < arr[i]){ 
-                while(!dq.empty() and arr[dq.front()] < arr[i]) 
+            if (!dq.empty() and arr[dq.front()] < arr[i])
+            {
+                while (!dq.empty() and arr[dq.front()] < arr[i])
                     dq.pop_front();
             }
             dq.push_front(i);
-            ans.push_back(arr[dq.back()]);
+            if (i >= k - 1)
+                ans.push_back(arr[dq.back()]);
         }
         return ans;
     }
