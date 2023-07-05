@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+typedef long long int ll;
 
 // Stack Implementation using array
 class ArrStack
@@ -776,6 +777,29 @@ public:
             int top = pq.top();
             pq.pop();
             ans += top * top;
+        }
+        return ans;
+    }
+
+    // Given an array A[] of size N and a positive integer K, find the first negative integer for each
+    // and every window(contiguous subarray) of size K.
+    vector<long long> printFirstNegativeInteger(ll a[], ll n, ll k)
+    {
+        queue<ll> q;
+        vector<ll> ans;
+        for (int i = 0; i < n; i++)
+        {
+            if (a[i] < 0)
+                q.push(i);
+            if (!q.empty() and q.front() <= i - k)
+                q.pop();
+            if (i >= k - 1)
+            {
+                if (!q.empty())
+                    ans.push_back(a[q.front()]);
+                else
+                    ans.push_back(0);
+            }
         }
         return ans;
     }
