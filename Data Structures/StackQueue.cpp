@@ -732,6 +732,53 @@ public:
         }
         return ans;
     }
+
+    // Given a string s of lowercase alphabets and a number k, the task is to print the minimum value of the
+    // string after removal of k characters. The value of a string is defined as the sum of squares of the count of each distinct character.
+    int minValue(string s, int k)
+    {
+        int a[27] = {0};
+        unordered_map<int, int> mp;
+        for (int i = 0; i < s.size(); i++)
+        {
+            mp[s[i] - 'a' + 1]++;
+        }
+
+        priority_queue<int> pq;
+        for (auto i : mp)
+            pq.push(i.second);
+
+        while (!pq.empty())
+        {
+            if (k == 0)
+                break;
+            int top = pq.top();
+            pq.pop();
+            if (top > pq.top())
+            {
+                while (k > 0 and top > pq.top())
+                {
+                    top--;
+                    k--;
+                }
+            }
+            else
+            {
+                top--;
+                k--;
+            }
+            pq.push(top);
+        }
+
+        int ans = 0;
+        while (!pq.empty())
+        {
+            int top = pq.top();
+            pq.pop();
+            ans += top * top;
+        }
+        return ans;
+    }
 };
 
 int main()
