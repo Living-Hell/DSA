@@ -56,6 +56,75 @@ public:
         }
         return {count, accumulate(ans.begin(), ans.end(), 0)};
     }
+
+    // Function to build the Huffman tree print all the huffman codes in preorder traversal of the tree.
+    struct HuffmanNode
+    {
+        long long freq;
+        char c;
+        HuffmanNode *left;
+        HuffmanNode *right;
+        HuffmanNode(char ch, int f)
+        {
+            freq = f;
+            c = ch;
+            left = NULL;
+            right = NULL;
+        }
+        HuffmanNode(int f)
+        {
+            c = '#';
+            freq = f;
+            left = NULL;
+            right = NULL;
+        }
+    };
+    struct compare
+    {
+        bool operator()(HuffmanNode *left, HuffmanNode *right)
+        {
+            return (left->freq > right->freq);
+        }
+    };
+    void preorder(HuffmanNode *root, vector<string> &ans, string s)
+    {
+        if (!root)
+            return;
+        if (!root->left and !root->right)
+        {
+            ans.push_back(s);
+            return;
+        }
+        if (root->left)
+            preorder(root->left, ans, s + "0");
+        if (root->right)
+            preorder(root->right, ans, s + "1");
+    }
+    vector<string> huffmanCodes(string s, vector<int> f, int n)
+    {
+        priority_queue<HuffmanNode *, vector<HuffmanNode *>, compare> pq;
+        for (int i = 0; i < n; i++)
+        {
+            HuffmanNode *node = new HuffmanNode(s[i], f[i]);
+            pq.push(node);
+        }
+        while (pq.size() > 1)
+        {
+            HuffmanNode *left = pq.top();
+            pq.pop();
+            HuffmanNode *right = pq.top();
+            pq.pop();
+            HuffmanNode *combo = new HuffmanNode(left->freq + right->freq);
+            combo->left = left;
+            combo->right = right;
+            pq.push(combo);
+        }
+        HuffmanNode *root = pq.top();
+        pq.pop();
+        vector<string> ans;
+        preorder(root, ans, "");
+        return ans;
+    }
 };
 
 int main()
