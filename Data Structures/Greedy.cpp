@@ -27,6 +27,35 @@ public:
         }
         return ans;
     }
+
+    // Function to find the maximum profit and the number of jobs done.
+    struct Job
+    {
+        int id;     // Job Id
+        int dead;   // Deadline of job
+        int profit; // Profit if job is over before or on deadline
+    };
+    vector<int> JobScheduling(Job arr[], int n)
+    {
+        vector<int> ans(n, 0);
+        int count = 0;
+        sort(arr, arr + n, [](Job a, Job b)
+             { return a.profit > b.profit; });
+        for (int i = 0; i < n; i++)
+        {
+            int ded = arr[i].dead, prof = arr[i].profit;
+            for (int j = ded - 1; j >= 0; j--)
+            {
+                if (ans[j] == 0)
+                {
+                    ans[j] = prof;
+                    count++;
+                    break;
+                }
+            }
+        }
+        return {count, accumulate(ans.begin(), ans.end(), 0)};
+    }
 };
 
 int main()
