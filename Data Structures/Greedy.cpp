@@ -125,6 +125,46 @@ public:
         preorder(root, ans, "");
         return ans;
     }
+
+    // Function to form lexicographically smallest string by chosing two characters in the string and
+    // replacing all the occurences of the first and second character.
+    string chooseandswap(string s)
+    {
+        int n = s.size();
+        vector<int> a(26, -1);
+        for (int i = 0; i < n; i++)
+        {
+            if (a[s[i] - 'a'] == -1)
+                a[s[i] - 'a'] = i;
+        }
+        char st = '#', rep;
+        for (int i = 0; i < n; i++)
+        {
+            bool flag = 0;
+            for (int j = 0; j < s[i] - 'a'; j++)
+            {
+                if (a[j] > i)
+                {
+                    rep = s[i];
+                    st = 'a' + j;
+                    flag = 1;
+                    break;
+                }
+            }
+            if (flag)
+                break;
+        }
+        if (st == '#')
+            return s;
+        for (int i = 0; i < s.size(); i++)
+        {
+            if (s[i] == rep)
+                s[i] = st;
+            else if (s[i] == st)
+                s[i] = rep;
+        }
+        return s;
+    }
 };
 
 int main()
