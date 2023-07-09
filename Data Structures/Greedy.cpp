@@ -165,6 +165,27 @@ public:
         }
         return s;
     }
+
+    // Function to find the minimum number of coins and/or notes needed to make the change for Rs N.
+    vector<int> minPartition(int n)
+    {
+        vector<int> v = {2000, 500, 200, 100, 50, 20, 10, 5, 2, 1};
+        int i = 0;
+        vector<int> ans;
+        while (n > 0)
+        {
+            if (n >= v[i])
+            {
+                while (n >= v[i])
+                {
+                    n -= v[i];
+                    ans.push_back(v[i]);
+                }
+            }
+            i++;
+        }
+        return ans;
+    }
 };
 
 int main()
