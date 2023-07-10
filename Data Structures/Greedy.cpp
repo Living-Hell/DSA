@@ -186,6 +186,26 @@ public:
         }
         return ans;
     }
+
+    //Function to get the maximum total value in the knapsack.
+    double fractionalKnapsack(int w, Item arr[], int n){
+        sort(arr,arr+n, [](Item a, Item b){ return (float)a.value/(float)a.weight > (float)b.value/(float)b.weight;});
+        double ans = 0;
+        int i=0;
+        while(i<n and w>0){
+            if(w>arr[i].weight){
+                ans += arr[i].value;
+                w-= arr[i].weight;
+            }
+            else{
+                float ratio = (float)w/(float)arr[i].weight;
+                ans+= ratio*arr[i].value;
+                w-= ratio*arr[i].weight;
+            }
+            i++;
+        }
+        return ans;
+    }
 };
 
 int main()
