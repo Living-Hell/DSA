@@ -187,22 +187,57 @@ public:
         return ans;
     }
 
-    //Function to get the maximum total value in the knapsack.
-    double fractionalKnapsack(int w, Item arr[], int n){
-        sort(arr,arr+n, [](Item a, Item b){ return (float)a.value/(float)a.weight > (float)b.value/(float)b.weight;});
+    // Function to get the maximum total value in the knapsack.
+    struct Item
+    {
+        int value;
+        int weight;
+    };
+    double fractionalKnapsack(int w, Item arr[], int n)
+    {
+        sort(arr, arr + n, [](Item a, Item b)
+             { return (float)a.value / (float)a.weight > (float)b.value / (float)b.weight; });
         double ans = 0;
-        int i=0;
-        while(i<n and w>0){
-            if(w>arr[i].weight){
+        int i = 0;
+        while (i < n and w > 0)
+        {
+            if (w > arr[i].weight)
+            {
                 ans += arr[i].value;
-                w-= arr[i].weight;
+                w -= arr[i].weight;
             }
-            else{
-                float ratio = (float)w/(float)arr[i].weight;
-                ans+= ratio*arr[i].value;
-                w-= ratio*arr[i].weight;
+            else
+            {
+                float ratio = (float)w / (float)arr[i].weight;
+                ans += ratio * arr[i].value;
+                w -= ratio * arr[i].weight;
             }
             i++;
+        }
+        return ans;
+    }
+
+    // Function to find the minimum number of platforms required at the
+    // railway station such that no train waits.
+    int findPlatform(int arr[], int dep[], int n)
+    {
+        sort(arr, arr + n);
+        sort(dep, dep + n);
+        int count = 0, ans = 0;
+        int i = 0, j = 0;
+        while (i < n and j < n)
+        {
+            if (arr[i] <= dep[j])
+            {
+                i++;
+                count++;
+                ans = max(ans, count);
+            }
+            else
+            {
+                j++;
+                count--;
+            }
         }
         return ans;
     }
