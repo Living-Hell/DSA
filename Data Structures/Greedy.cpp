@@ -281,6 +281,42 @@ public:
         }
         return {mn, mx};
     }
+
+    // Function to find out the maximum number of stocks a customer can buy with k money(initially).
+    //  There is a rule that a customer can buy at most i stock on the ith day.
+    int buyMaximumProducts(int n, int k, int price[])
+    {
+        vector<pair<int, int>> vp;
+        for (int i = 0; i < n; i++)
+        {
+            vp.push_back({price[i], i + 1});
+        }
+        sort(vp.begin(), vp.end(),
+             [](pair<int, int> a, pair<int, int> b)
+             {
+                 if (a.first == b.first)
+                     return a.second < b.second;
+                 return a.first < b.first;
+             });
+        int ans = 0;
+        int i = 0;
+        while (i < n and k > 0)
+        {
+            int stocks = vp[i].second, price = vp[i].first;
+            if (stocks * price <= k)
+            {
+                ans += stocks;
+                k -= stocks * price;
+            }
+            else
+            {
+                ans += k / price;
+                k = 0;
+            }
+            i++;
+        }
+        return ans;
+    }
 };
 
 int main()
