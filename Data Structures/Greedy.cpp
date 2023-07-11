@@ -266,6 +266,21 @@ public:
         }
         return ans;
     }
+
+    // Function to find what is the minimum amount of money you have to spend to buy all the N different
+    // candies. You buy one candy and get K other candies for free.
+    vector<int> candyStore(int candies[], int n, int k)
+    {
+        sort(candies, candies + n);
+        int mn = 0, mx = 0;
+        int to_buy = ceil((float)n / (float)(k + 1));
+        for (int i = 0; i < to_buy; i++)
+        {
+            mn += candies[i];
+            mx += candies[n - i - 1];
+        }
+        return {mn, mx};
+    }
 };
 
 int main()
