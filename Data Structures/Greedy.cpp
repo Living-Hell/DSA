@@ -5,6 +5,8 @@ class Greedy
 {
 private:
     /* data */
+    long long int mod = 1e9 + 7;
+
 public:
     /* Function*/
     // Function to find the maximum number of meetings that can be performed in a meeting room.
@@ -412,7 +414,6 @@ public:
     {
         if (n == 1)
             return a[0];
-        long long int mod = 1e9 + 7;
         long long int ans = 1, temp = 1, countneg = 0, countz = 0, maxneg = -11;
         for (int i = 0; i < n; i++)
         {
