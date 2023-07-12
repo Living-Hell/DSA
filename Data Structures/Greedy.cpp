@@ -360,6 +360,20 @@ public:
         }
         return ans;
     }
+
+    // Find the minimum number of days on which you need to buy food from the shop so that she can survive
+    // the next S days, or determine that it isn’t possible to survive.
+    int minimumDays(int s, int n, int m)
+    {
+        if (m > n)
+            return -1;
+        int tot = s * m, days = tot / n, rem = tot % n;
+        if (s > 6 and 6 * n < 7 * m)
+        {
+            return -1;
+        }
+        return rem == 0 ? days : days + 1;
+    }
 };
 
 int main()
