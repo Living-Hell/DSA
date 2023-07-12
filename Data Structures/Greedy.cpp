@@ -374,6 +374,37 @@ public:
         }
         return rem == 0 ? days : days + 1;
     }
+
+    // The task is to find the maximum number of meetings that can be accommodated in the meeting room.
+    // You can accommodate a meeting if the start time of the meeting is strictly greater than the finish time of the previous meeting.
+    // If two meetings can be chosen for the same slot then choose meeting with smaller index in the given array.
+    vector<int> maxMeetings(int n, vector<int> &s, vector<int> &f)
+    {
+        vector<pair<pair<int, int>, int>> v;
+        for (int i = 0; i < n; i++)
+        {
+            v.push_back({{s[i], f[i]}, i + 1});
+        }
+        sort(v.begin(), v.end(), [](pair<pair<int, int>, int> a, pair<pair<int, int>, int> b)
+             {
+                if(a.first.second == b.first.second) 
+                    return a.second < b.second;
+                return a.first.second < b.first.second; });
+
+        vector<int> ans;
+        int finTime = -1;
+
+        for (auto i : v)
+        {
+            if (i.first.first > finTime)
+            {
+                ans.push_back(i.second);
+                finTime = i.first.second;
+            }
+        }
+        sort(ans.begin(), ans.end());
+        return ans;
+    }
 };
 
 int main()
