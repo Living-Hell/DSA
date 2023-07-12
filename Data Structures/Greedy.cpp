@@ -317,6 +317,49 @@ public:
         }
         return ans;
     }
+
+    // Function to break this board into M * N squares such that cost of breaking is minimum.
+    // The cutting cost for each edge will be given for the board in two arrays X[] and Y[].
+    int minimumCostOfBreaking(vector<int> x, vector<int> y, int m, int n)
+    {
+        sort(x.begin(), x.end(), greater<int>());
+        sort(y.begin(), y.end(), greater<int>());
+        int countx = 1, county = 1, ans = 0, i = 0, j = 0;
+        while (i < m - 1 and j < n - 1)
+        {
+            if (x[i] >= y[j])
+            {
+                ans += county * x[i];
+                countx++;
+                i++;
+            }
+            else
+            {
+                ans += countx * y[j];
+                county++;
+                j++;
+            }
+        }
+        if (j < n - 1 and i == m - 1)
+        {
+            while (j < n - 1)
+            {
+                ans += countx * y[j];
+                county++;
+                j++;
+            }
+        }
+        else if (i < m - 1 and j == n - 1)
+        {
+            while (i < m - 1)
+            {
+                ans += county * x[i];
+                countx++;
+                i++;
+            }
+        }
+        return ans;
+    }
 };
 
 int main()
