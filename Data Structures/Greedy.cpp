@@ -436,6 +436,33 @@ public:
         ans = max(ans % mod, temp % mod);
         return ans;
     }
+
+    // Function to replace any array element either arr[i] by -arr[i] or -arr[i] by arr[i] exactly
+    // K number of times in such a way that after K operations, the sum of the array must be maximum.
+    long long int maximizeSum(long long int a[], int n, int k)
+    {
+        sort(a, a + n);
+        for (int i = 0; i < n and k > 0; i++)
+        {
+            if (a[i] < 0)
+            {
+                a[i] *= -1;
+                k--;
+            }
+            else
+                break;
+        }
+
+        if (k > 0 and k % 2 == 1)
+        {
+            sort(a, a + n);
+            a[0] *= -1;
+        }
+
+        long long int ans = 0;
+        ans += accumulate(a, a + n, 0);
+        return ans;
+    }
 };
 
 int main()
