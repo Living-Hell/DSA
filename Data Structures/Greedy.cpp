@@ -405,6 +405,36 @@ public:
         sort(ans.begin(), ans.end());
         return ans;
     }
+
+    // Given an array A[]. The task is to find the maximum product possible with the subset of elements
+    // present in the array. The maximum product can be a single element also.
+    long long int findMaxProduct(vector<int> &a, int n)
+    {
+        if (n == 1)
+            return a[0];
+        long long int mod = 1e9 + 7;
+        long long int ans = 1, temp = 1, countneg = 0, countz = 0, maxneg = -11;
+        for (int i = 0; i < n; i++)
+        {
+            if (a[i] != 0)
+            {
+                if (a[i] < 0)
+                {
+                    maxneg = max(maxneg, (long long int)a[i]);
+                    countneg++;
+                }
+                temp = (temp * a[i]) % mod;
+            }
+            else
+                countz++;
+        }
+        if (countz == n or (countneg == 1 and countz == n - 1))
+            return 0;
+        if (countneg % 2 == 1)
+            temp /= maxneg;
+        ans = max(ans % mod, temp % mod);
+        return ans;
+    }
 };
 
 int main()
