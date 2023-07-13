@@ -550,6 +550,24 @@ public:
         }
         return pfault;
     }
+
+    // Function to choose the minimum number of elements such that their sum should be greater than the sum of the rest of the elements of the array.
+    int minSubset(vector<int> &arr, int n)
+    {
+        sort(arr.begin(), arr.end());
+        long long int ssum = 0, esum = 0;
+        for (int i : arr)
+            ssum += i;
+        int i;
+        for (i = n - 1; i >= 0; i--)
+        {
+            ssum -= arr[i];
+            esum += arr[i];
+            if (ssum < esum)
+                break;
+        }
+        return n - i;
+    }
 };
 
 int main()
