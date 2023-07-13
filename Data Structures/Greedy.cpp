@@ -493,6 +493,17 @@ public:
             ans += abs(v[i] - v[i + 1]);
         return ans;
     }
+
+    // Function  to pair each element of array A to an element in array B, such that the sum of the absolute differences of all the pairs is minimum.
+    long long findMinSum(vector<int> &a, vector<int> &b, int n)
+    {
+        sort(a.begin(), a.end());
+        sort(b.begin(), b.end());
+        long long ans = 0;
+        for (int i = 0; i < n; i++)
+            ans += abs(a[i] - b[i]);
+        return ans;
+    }
 };
 
 int main()
