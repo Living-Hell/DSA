@@ -516,6 +516,40 @@ public:
             bt[i] += bt[i - 1];
         return bt[n - 2] / n;
     }
+
+    // Given a sequence of pages in an array pages[] of length N and memory capacity C, find the number
+    // of page faults using Least Recently Used (LRU) Algorithm.
+    int pageFaults(int n, int c, int pages[])
+    {
+        int pfault = 0;
+        deque<int> dq;
+        for (int ind = 0; ind < n; ind++)
+        {
+            int i = pages[ind];
+            if (dq.empty())
+            {
+                dq.push_back(i);
+                pfault++;
+            }
+            else
+            {
+                auto it = find(dq.begin(), dq.end(), i);
+                if (it == dq.end())
+                {
+                    if (dq.size() == c)
+                        dq.pop_front();
+                    dq.push_back(i);
+                    pfault++;
+                }
+                else
+                {
+                    dq.erase(it);
+                    dq.push_back(i);
+                }
+            }
+        }
+        return pfault;
+    }
 };
 
 int main()
