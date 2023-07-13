@@ -463,6 +463,16 @@ public:
         ans += accumulate(a, a + n, 0);
         return ans;
     }
+
+    // Function to write a program to find the maximum value of ∑arr[i] * i, where i = 0, 1, 2, ., n 1.
+    int Maximize(int a[], int n)
+    {
+        long long int mod = 1e9 + 7, ans = 0;
+        sort(a, a + n);
+        for (long long int i = 0; i < n; i++)
+            ans += a[i] * i;
+        return ans % mod;
+    }
 };
 
 int main()
