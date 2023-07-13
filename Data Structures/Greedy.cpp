@@ -504,6 +504,18 @@ public:
             ans += abs(a[i] - b[i]);
         return ans;
     }
+
+    // Calculate the average waiting time of all the processes and return the nearest integer which is smaller or equal to the output.
+    long long shortestJobFirst(vector<int> &bt)
+    {
+        int n = bt.size();
+        sort(bt.begin(), bt.end());
+        for (int i = 1; i < n; i++)
+            bt[i] += bt[i - 1];
+        for (int i = 1; i < n; i++)
+            bt[i] += bt[i - 1];
+        return bt[n - 2] / n;
+    }
 };
 
 int main()
