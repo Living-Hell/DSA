@@ -473,6 +473,26 @@ public:
             ans += a[i] * i;
         return ans % mod;
     }
+
+    // Function to find maximum sum of the absolute difference between consecutive elements with rearrangement of array elements allowed
+    long long int maxSum(int arr[], int n)
+    {
+        sort(arr, arr + n);
+        long long int ans = 0;
+        vector<int> v;
+        int st = 0, end = n - 1;
+        for (int i = 0; i < n; i++)
+        {
+            if (i & 1)
+                v.push_back(arr[end--]);
+            else
+                v.push_back(arr[st++]);
+        }
+        v.push_back(v[0]);
+        for (int i = 0; i < n; i++)
+            ans += abs(v[i] - v[i + 1]);
+        return ans;
+    }
 };
 
 int main()
