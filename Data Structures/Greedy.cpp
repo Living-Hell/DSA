@@ -568,6 +568,33 @@ public:
         }
         return n - i;
     }
+
+    // Function to find a more efficient way for the construction of this network of pipes. Minimize the diameter of pipes wherever possible.
+    vector<vector<int>> waterConnection(int n, int p, vector<int> a, vector<int> b, vector<int> d)
+    {
+        map<int, pair<int, int>> mp;
+        for (int i = 0; i < p; i++)
+            mp[a[i]] = {b[i], d[i]};
+        for (auto i : mp)
+        {
+            int h2 = i.second.first, h1 = i.first, dia = i.second.second;
+            while (mp.find(h2) != mp.end())
+            {
+                int h3 = mp[h2].first;
+                dia = min(dia, mp[h2].second);
+                mp.erase(h2);
+                h2 = h3;
+            }
+            if (mp.find(h1) != mp.end())
+            {
+                mp[h1] = {h2, dia};
+            }
+        }
+        vector<vector<int>> ans;
+        for (auto i : mp)
+            ans.push_back({i.first, i.second.first, i.second.second});
+        return ans;
+    }
 };
 
 int main()
