@@ -595,6 +595,16 @@ public:
             ans.push_back({i.first, i.second.first, i.second.second});
         return ans;
     }
+
+    // Function to distribute chocolate packets among M students such that the difference between maximum and minimum number of chocolates given to a student is minimum.
+    long long findMinDiff(vector<long long> a, long long n, long long m)
+    {
+        sort(a.begin(), a.end());
+        long long ans = INT_MAX;
+        for (int i = m - 1; i < n; i++)
+            ans = min(ans, a[i] - a[i - m + 1]);
+        return ans;
+    }
 };
 
 int main()
