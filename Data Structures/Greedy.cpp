@@ -605,6 +605,25 @@ public:
             ans = min(ans, a[i] - a[i - m + 1]);
         return ans;
     }
+
+    // Function to select K (K<= N) ATM servers  in such a way that the maximum distance of a city from the ATM Server is minimized.
+    int selectKcities(int n, int k, vector<vector<int>> &mat)
+    {
+        int ans = 1e9;
+        for (int i = 0; i < n; i++)
+        {
+            vector<int> dist(n, 1e9);
+            int temp = i;
+            for (int l = 0; l < k; l++)
+            {
+                for (int j = 0; j < n; j++)
+                    dist[j] = min(dist[j], mat[temp][j]);
+                temp = max_element(dist.begin(), dist.end()) - dist.begin();
+            }
+            ans = min(ans, dist[temp]);
+        }
+        return ans;
+    }
 };
 
 int main()
