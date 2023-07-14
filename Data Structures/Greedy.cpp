@@ -644,6 +644,41 @@ public:
         }
         return tcost;
     }
+
+    // Function to find the smallest number with given sum of digits as S and number of digits as D.
+    string smallestNumber(int sum, int d)
+    {
+        if (sum > d * 9)
+            return "-1";
+        string ans = "";
+        while (d > 1 and sum > 9)
+        {
+            ans = "9" + ans;
+            d--;
+            sum -= 9;
+        }
+        if (d == 2 and sum == 9)
+        {
+            ans = "18" + ans;
+            return ans;
+        }
+        else
+        {
+            if (d > 1)
+            {
+                ans = to_string(sum - 1) + ans;
+                d--;
+                sum = 1;
+            }
+            while (d > 1)
+            {
+                ans = "0" + ans;
+                d--;
+            }
+            ans = to_string(sum) + ans;
+        }
+        return ans;
+    }
 };
 
 int main()
