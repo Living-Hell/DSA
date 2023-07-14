@@ -679,6 +679,40 @@ public:
         }
         return ans;
     }
+
+    // Find the possible equal maximum sum of the stacks with the removal of top elements allowed.
+    int maxEqualSum(int n1, int n2, int n3, vector<int> &s1, vector<int> &s2, vector<int> &s3)
+    {
+        int sum1, sum2, sum3;
+        sum1 = accumulate(s1.begin(), s1.end(), 0);
+        sum2 = accumulate(s2.begin(), s2.end(), 0);
+        sum3 = accumulate(s3.begin(), s3.end(), 0);
+        int i1 = 0, i2 = 0, i3 = 0;
+        while (i1 < n1 and i2 < n2 and i3 < n3)
+        {
+            int mn = min(sum1, min(sum2, sum3));
+            while (i1 < n1 and sum1 > mn)
+            {
+                sum1 -= s1[i1];
+                i1++;
+            }
+            while (i2 < n2 and sum2 > mn)
+            {
+                sum2 -= s2[i2];
+                i2++;
+            }
+            while (i3 < n3 and sum3 > mn)
+            {
+                sum3 -= s3[i3];
+                i3++;
+            }
+            if (sum1 == sum2 and sum2 == sum3)
+                break;
+        }
+        if (sum1 == sum2 and sum2 == sum3)
+            return sum1;
+        return 0;
+    }
 };
 
 int main()
