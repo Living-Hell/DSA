@@ -29,6 +29,39 @@ public:
         pathFinder(m, n, ans, "", 0, 0, vis);
         return ans;
     }
+
+    // Given an integer n, find all distinct solutions to the n-queens puzzle.
+    void nQueenHelper(int n, vector<vector<int>> &ans, vector<int> &temp, int col, vector<bool> ld, vector<bool> rd, vector<bool> r)
+    {
+        if (col >= n)
+        {
+            ans.push_back(temp);
+            return;
+        }
+        for (int row = 0; row < n; row++)
+        {
+            if (r[row] == 0 and rd[row + col] == 0 and ld[n - 1 + col - row] == 0)
+            {
+                temp.push_back(row + 1);
+                rd[row + col] = 1;
+                ld[n - 1 + col - row] = 1;
+                r[row] = 1;
+                nQueenHelper(n, ans, temp, col + 1, ld, rd, r);
+                temp.pop_back();
+                rd[row + col] = 0;
+                ld[n - 1 + col - row] = 0;
+                r[row] = 0;
+            }
+        }
+    }
+    vector<vector<int>> nQueen(int n)
+    {
+        vector<vector<int>> ans;
+        vector<bool> r(n, 0), ld(2 * n, 0), rd(2 * n, 0);
+        vector<int> temp;
+        nQueenHelper(n, ans, temp, 0, ld, rd, r);
+        return ans;
+    }
 };
 
 int main()
