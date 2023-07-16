@@ -62,6 +62,46 @@ public:
         nQueenHelper(n, ans, temp, 0, ld, rd, r);
         return ans;
     }
+
+    // Function to find a solved Sudoku.
+    bool isSafe(int grid[N][N], int i, int j, int k)
+    {
+        for (int a = 0; a < 9; a++)
+        {
+            if (grid[i][a] == k)
+                return 0;
+            if (grid[a][j] == k)
+                return 0;
+            if (grid[(i / 3) * 3 + a / 3][(j / 3) * 3 + a % 3] == k)
+                return 0;
+        }
+        return 1;
+    }
+    bool SolveSudoku(int grid[N][N])
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                if (grid[i][j] == 0)
+                {
+                    for (int k = 1; k <= 9; k++)
+                    {
+                        if (isSafe(grid, i, j, k))
+                        {
+                            grid[i][j] = k;
+                            if (SolveSudoku(grid))
+                                return 1;
+                            else
+                                grid[i][j] = 0;
+                        }
+                    }
+                    return 0;
+                }
+            }
+        }
+        return 1;
+    }
 };
 
 int main()
