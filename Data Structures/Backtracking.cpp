@@ -64,7 +64,7 @@ public:
     }
 
     // Function to find a solved Sudoku.
-    bool isSafe(int grid[N][N], int i, int j, int k)
+    bool isSafe(int grid[9][9], int i, int j, int k)
     {
         for (int a = 0; a < 9; a++)
         {
@@ -77,7 +77,7 @@ public:
         }
         return 1;
     }
-    bool SolveSudoku(int grid[N][N])
+    bool SolveSudoku(int grid[9][9])
     {
         for (int i = 0; i < 9; i++)
         {
@@ -101,6 +101,33 @@ public:
             }
         }
         return 1;
+    }
+
+    // Given a string s and a dictionary of words dict of length n, add spaces in s to construct a sentence where
+    // each word is a valid dictionary word. Each dictionary word can be used more than once.
+    void wordBreaker(int n, string s, unordered_set<string> st, string t, vector<string> &ans)
+    {
+        if (s.size() == 0)
+        {
+            t.pop_back();
+            ans.push_back(t);
+            return;
+        }
+        for (int i = 0; i < s.size(); i++)
+        {
+            string sb = s.substr(0, i + 1);
+            if (st.find(sb) != st.end())
+            {
+                wordBreaker(n, s.substr(i + 1), st, t + sb + " ", ans);
+            }
+        }
+    }
+    vector<string> wordBreak(int n, vector<string> &dict, string s)
+    {
+        unordered_set<string> st(dict.begin(), dict.end());
+        vector<string> ans;
+        wordBreaker(n, s, st, "", ans);
+        return ans;
     }
 };
 
