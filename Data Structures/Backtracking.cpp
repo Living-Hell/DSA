@@ -195,6 +195,28 @@ public:
                 ret.push_back(i);
         return ret;
     }
+
+    // Given an array arr[] of size N, check if it can be partitioned into two parts such that the sum of elements in both parts is the same.
+    bool partitionEqually(int n, int arr[], int ind, int sum)
+    {
+        if (ind == n)
+        {
+            if (sum == 0)
+                return 1;
+            return 0;
+        }
+        if (arr[ind] <= sum)
+            return partitionEqually(n, arr, ind + 1, sum - arr[ind]) or partitionEqually(n, arr, ind + 1, sum);
+        else
+            return partitionEqually(n, arr, ind + 1, sum);
+    }
+    int equalPartition(int n, int arr[])
+    {
+        int tsum = accumulate(arr, arr + n, 0);
+        if (tsum % 2)
+            return 0;
+        return partitionEqually(n, arr, 0, tsum / 2);
+    }
 };
 
 int main()
