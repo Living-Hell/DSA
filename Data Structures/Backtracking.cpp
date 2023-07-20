@@ -284,6 +284,36 @@ public:
         palindromicPerms(s, {}, ans);
         return ans;
     }
+
+    // Function to return a list of indexes denoting the required combinations whose sum is equal to given number.
+    void sumCombination(vector<int> a, int sum, vector<int> temp, vector<vector<int>> &ans, int ind)
+    {
+        if (sum == 0)
+        {
+            ans.push_back(temp);
+            return;
+        }
+        if (sum < 0 or ind >= a.size())
+            return;
+
+        if (a[ind] <= sum)
+        {
+            temp.push_back(a[ind]);
+            sumCombination(a, sum - a[ind], temp, ans, ind);
+            temp.pop_back();
+        }
+        int j = ind;
+        while (a[j] == a[ind])
+            j++;
+        sumCombination(a, sum, temp, ans, j);
+    }
+    vector<vector<int>> combinationSum(vector<int> &a, int b)
+    {
+        sort(a.begin(), a.end());
+        vector<vector<int>> ans;
+        sumCombination(a, b, {}, ans, 0);
+        return ans;
+    }
 };
 
 int main()
