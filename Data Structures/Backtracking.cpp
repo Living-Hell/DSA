@@ -310,6 +310,59 @@ public:
         }
         return -1;
     }
+
+    // Given a path in the form of a rectangular matrix having few landmines arbitrarily placed (marked as 0), calculate length of the shortest safe route possible
+    // from any cell in the first column to any cell in the last column of the matrix. We have to avoid landmines and their four adjacent cells (left, right, above and below)
+    // as they are also unsafe. We are allowed to move to only adjacent cells which are not landmines. i.e. the route cannot contains any diagonal moves.
+    bool isSafe(vector<vector<int>> &mat, vector<vector<bool>> &vis, int i, int j, int n, int m)
+    {
+        if (i < 0 or i >= n or j < 0 or j >= m or vis[i][j] or !mat[i][j])
+            return 0;
+        if (i - 1 >= 0 and !mat[i - 1][j])
+            return 0;
+        if (j - 1 >= 0 and !mat[i][j - 1])
+            return 0;
+        if (i + 1 < n and !mat[i + 1][j])
+            return 0;
+        if (j + 1 < m and !mat[i][j + 1])
+            return 0;
+        return 1;
+    }
+    int findShortestPath(vector<vector<int>> &mat)
+    {
+        int n = mat.size(), m = mat[0].size();
+        queue<pair<pair<int, int>, int>> q;
+        vector<pair<int, int>> moves = {{0, 1}, {-1, 0}, {0, -1}, {1, 0}};
+        vector<vector<bool>> vis(n, vector<bool>(m, 0));
+
+        for (int i = 0; i < n; i++)
+        {
+            if (isSafe(mat, vis, i, 0, n, m))
+            {
+                q.push({{i, 0}, 1});
+                vis[i][0] = 1;
+            }
+        }
+
+        while (!q.empty())
+        {
+            auto top = q.front();
+            q.pop();
+            int x = top.first.first, y = top.first.second, cur = top.second; // cout<<x<<" "<<y<<" "<<cur<<endl;
+            if (y == m - 1)
+                return cur;
+            for (auto p : moves)
+            {
+                int i = x + p.first, j = y + p.second;
+                if (isSafe(mat, vis, i, j, n, m))
+                { // cout<<i<<" "<<j<<endl;
+                    vis[i][j] = 1;
+                    q.push({{i, j}, cur + 1});
+                }
+            }
+        }
+        return -1;
+    }
 };
 
 int main()
