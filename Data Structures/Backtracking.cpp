@@ -217,11 +217,78 @@ public:
             return 0;
         return partitionEqually(n, arr, 0, tsum / 2);
     }
+
+    //
+    int minStepToReachTarget(vector<int> KnightPos, vector<int> TargetPos, int n)
+    {
+        if (KnightPos[0] == TargetPos[0] && KnightPos[1] == TargetPos[1])
+            return 0;
+
+        vector<pair<int, int>> dir = {{-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}, {-2, -1}, {-2, 1}};
+        queue<vector<int>> q;
+        vector<vector<bool>> vis(n + 1, vector<bool>(n + 1, 0));
+
+        q.push({KnightPos[0], KnightPos[1], 0});
+        vis[KnightPos[0]][KnightPos[1]] = 1;
+
+        while (!q.empty())
+        {
+            auto top = q.front();
+            q.pop();
+            int x = top[0], y = top[1], cur = top[2];
+            if (x == TargetPos[0] and y == TargetPos[1])
+                return cur;
+            for (auto p : dir)
+            {
+                int i = p.first + x, j = p.second + y;
+                if (i > 0 and i <= n and j > 0 and j <= n and !vis[i][j])
+                {
+                    vis[i][j] = 1;
+                    q.push({i, j, cur + 1});
+                }
+            }
+        }
+        return -1;
+    }
+
+    // Given a String S, Find all possible Palindromic partitions of the given String.
+    bool isPalindrome(string S)
+    {
+        for (int i = 0; i < S.length() / 2; i++)
+        {
+            if (S[i] != S[S.length() - i - 1])
+                return 0;
+        }
+        return 1;
+    }
+    void palindromicPerms(string s, vector<string> temp, vector<vector<string>> &ans)
+    {
+        if (s.size() == 0)
+        {
+            ans.push_back(temp);
+        }
+        for (int i = 0; i < s.size(); i++)
+        {
+            string t = s.substr(0, i + 1);
+            if (isPalindrome(t))
+            {
+                temp.push_back(t);
+                palindromicPerms(s.substr(i + 1), temp, ans);
+                temp.pop_back();
+            }
+        }
+    }
+    vector<vector<string>> allPalindromicPerms(string s)
+    {
+        vector<vector<string>> ans;
+        palindromicPerms(s, {}, ans);
+        return ans;
+    }
 };
 
 int main()
 {
     Backtracking backtracking;
-
+    cout << backtracking.minStepToReachTarget({4, 5}, {1, 1}, 6);
     return 0;
 }
