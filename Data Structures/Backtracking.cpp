@@ -218,39 +218,6 @@ public:
         return partitionEqually(n, arr, 0, tsum / 2);
     }
 
-    //
-    int minStepToReachTarget(vector<int> KnightPos, vector<int> TargetPos, int n)
-    {
-        if (KnightPos[0] == TargetPos[0] && KnightPos[1] == TargetPos[1])
-            return 0;
-
-        vector<pair<int, int>> dir = {{-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}, {-2, -1}, {-2, 1}};
-        queue<vector<int>> q;
-        vector<vector<bool>> vis(n + 1, vector<bool>(n + 1, 0));
-
-        q.push({KnightPos[0], KnightPos[1], 0});
-        vis[KnightPos[0]][KnightPos[1]] = 1;
-
-        while (!q.empty())
-        {
-            auto top = q.front();
-            q.pop();
-            int x = top[0], y = top[1], cur = top[2];
-            if (x == TargetPos[0] and y == TargetPos[1])
-                return cur;
-            for (auto p : dir)
-            {
-                int i = p.first + x, j = p.second + y;
-                if (i > 0 and i <= n and j > 0 and j <= n and !vis[i][j])
-                {
-                    vis[i][j] = 1;
-                    q.push({i, j, cur + 1});
-                }
-            }
-        }
-        return -1;
-    }
-
     // Given a String S, Find all possible Palindromic partitions of the given String.
     bool isPalindrome(string S)
     {
@@ -314,11 +281,40 @@ public:
         sumCombination(a, b, {}, ans, 0);
         return ans;
     }
+
+    // Given a square chessboard, the initial position of Knight and position of a target.
+    // Find out the minimum steps a Knight will take to reach the target position.
+    int minStepToReachTarget(vector<int> KnightPos, vector<int> TargetPos, int n)
+    {
+        vector<pair<int, int>> dir = {{-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}, {-2, -1}, {-2, 1}};
+        queue<pair<pair<int, int>, int>> q;
+        q.push({{KnightPos[0], KnightPos[1]}, 0});
+        vector<vector<bool>> vis(n + 1, vector<bool>(n + 1, 0));
+        vis[KnightPos[0]][KnightPos[1]] = 1;
+        while (!q.empty())
+        {
+            auto top = q.front();
+            q.pop();
+            int x = top.first.first, y = top.first.second, curr = top.second;
+            if (x == TargetPos[0] && y == TargetPos[1])
+                return curr;
+            for (auto p : dir)
+            {
+                int i = x + p.first, j = y + p.second;
+                if (i > 0 and i <= n and j > 0 and j <= n and !vis[i][j])
+                {
+                    vis[i][j] = 1;
+                    q.push({{i, j}, curr + 1});
+                }
+            }
+        }
+        return -1;
+    }
 };
 
 int main()
 {
     Backtracking backtracking;
-    cout << backtracking.minStepToReachTarget({4, 5}, {1, 1}, 6);
+    // cout << backtracking.minStepToReachTarget({4, 5}, {1, 1}, 6);
     return 0;
 }
