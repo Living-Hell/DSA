@@ -363,6 +363,32 @@ public:
         }
         return -1;
     }
+
+    // Function to find the largest number after k swaps.
+    string maxNum = "";
+    void maximumNumFinder(string &str, int k, int ind)
+    {
+        if (k == 0 or ind >= str.size())
+        {
+            maxNum = max(str, maxNum);
+            return;
+        }
+        for (int i = ind + 1; i < str.size(); i++)
+        {
+            if (str[i] > str[ind])
+            {
+                swap(str[ind], str[i]);
+                maximumNumFinder(str, k - 1, ind + 1);
+                swap(str[ind], str[i]);
+            }
+        }
+        maximumNumFinder(str, k, ind + 1);
+    }
+    string findMaximumNum(string str, int k)
+    {
+        maximumNumFinder(str, k, 0);
+        return maxNum;
+    }
 };
 
 int main()
