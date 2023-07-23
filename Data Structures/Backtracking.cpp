@@ -507,6 +507,40 @@ public:
             return dpNOP[m][n];
         return dpNOP[m][n] = (numberOfPaths(m - 1, n) + numberOfPaths(m, n - 1)) % mod;
     }
+
+    // Given two integers N and K, find the kth permutation sequence of first N natural numbers.
+    int factorial(int n)
+    {
+        int res = 1, i;
+        for (i = 2; i <= n; i++)
+            res *= i;
+        return res;
+    }
+    string kthPermutation(int n, int k)
+    {
+        string s = "", ans = "";
+        for (int i = 1; i <= n; i++)
+            s += to_string(i);
+        int i = 0;
+        while (k > 0 and i < s.size())
+        {
+            if (k > factorial(s.size() - 1))
+            {
+                k -= factorial(s.size() - 1);
+                i++;
+            }
+            else
+            {
+                ans += s[i];
+                s.erase(i, 1);
+                i = 0;
+            }
+        }
+        ans += s[i];
+        s.erase(i, 1);
+        ans += s;
+        return ans;
+    }
 };
 
 int main()
