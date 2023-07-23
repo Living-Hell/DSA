@@ -389,6 +389,39 @@ public:
         maximumNumFinder(str, k, 0);
         return maxNum;
     }
+
+    // Function to print all unique permutations of the given string in lexicographically sorted order.
+    void permutationFinder(string s, string cur, set<string> &ans, vector<bool> &vis)
+    {
+        if (cur.size() > s.size())
+            return;
+        if (cur.size() == s.size())
+        {
+            ans.insert(cur);
+            return;
+        }
+        for (int i = 0; i < s.size(); i++)
+        {
+            if (!vis[i])
+            {
+                cur.push_back(s[i]);
+                vis[i] = 1;
+                permutationFinder(s, cur, ans, vis);
+                cur.pop_back();
+                vis[i] = 0;
+            }
+        }
+    }
+    vector<string> find_permutation(string s)
+    {
+        set<string> temp;
+        vector<string> ans;
+        vector<bool> vis(s.size() + 1, 0);
+        permutationFinder(s, "", temp, vis);
+        for (string s : temp)
+            ans.push_back(s);
+        return ans;
+    }
 };
 
 int main()
