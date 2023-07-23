@@ -422,6 +422,50 @@ public:
             ans.push_back(s);
         return ans;
     }
+
+    // Given an N x M matrix, with a few hurdles(denoted by 0) arbitrarily placed, calculate the length of the longest possible route possible
+    // from source(xs,ys) to a destination(xd,yd) within the matrix. The route cannot contain any diagonal moves and a location once visited in a particular path cannot be visited again.
+    void longestPathDetector(vector<vector<int>> &mat, int xs, int ys, int xd, int yd, int &ans, int curr, int n, int m)
+    {
+        if (mat[xs][ys] == 0)
+            return;
+        if (xs == xd and ys == yd)
+        {
+            ans = max(ans, curr);
+            return;
+        }
+        if (xs - 1 >= 0)
+        {
+            mat[xs][ys] = 0;
+            longestPathDetector(mat, xs - 1, ys, xd, yd, ans, curr + 1, n, m);
+            mat[xs][ys] = 1;
+        }
+        if (xs + 1 < n)
+        {
+            mat[xs][ys] = 0;
+            longestPathDetector(mat, xs + 1, ys, xd, yd, ans, curr + 1, n, m);
+            mat[xs][ys] = 1;
+        }
+        if (ys - 1 >= 0)
+        {
+            mat[xs][ys] = 0;
+            longestPathDetector(mat, xs, ys - 1, xd, yd, ans, curr + 1, n, m);
+            mat[xs][ys] = 1;
+        }
+        if (ys + 1 < m)
+        {
+            mat[xs][ys] = 0;
+            longestPathDetector(mat, xs, ys + 1, xd, yd, ans, curr + 1, n, m);
+            mat[xs][ys] = 1;
+        }
+    }
+    int longestPath(vector<vector<int>> mat, int xs, int ys, int xd, int yd)
+    {
+        int n = mat.size(), m = mat[0].size();
+        int ans = -1;
+        longestPathDetector(mat, xs, ys, xd, yd, ans, 0, n, m);
+        return ans;
+    }
 };
 
 int main()
