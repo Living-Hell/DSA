@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+vector<vector<long long int>> dpNOP(101, vector<long long int>(101, -1));
 class Backtracking
 {
 private:
@@ -493,6 +493,19 @@ public:
         vector<vector<int>> ans;
         possiblePathFinder(n, m, grid, 0, 0, {grid[0][0]}, ans);
         return ans;
+    }
+
+    // count all the possible paths from top left to bottom right of a m X n matrix with the constraints that from each cell you can either move only to right or down.
+    long long int mod = 1e9 + 7;
+    long long int numberOfPaths(int m, int n)
+    {
+        if (m == 0 or n == 0)
+            return 0;
+        if (m == 1 and n == 1)
+            return 1;
+        if (dpNOP[m][n] != -1)
+            return dpNOP[m][n];
+        return dpNOP[m][n] = (numberOfPaths(m - 1, n) + numberOfPaths(m, n - 1)) % mod;
     }
 };
 
