@@ -541,6 +541,38 @@ public:
         ans += s;
         return ans;
     }
+
+    // Function to check if the array a[ ] could be divided into K non-empty subsets with equal sum of elements.
+    bool possibilityOfKPartition(int a[], int n, int k, int sum, int curr, vector<int> &vis)
+    {
+        if (k == 1)
+            return 1;
+        if (curr == sum)
+        {
+            return possibilityOfKPartition(a, n, k - 1, sum, 0, vis);
+        }
+        if (curr > sum)
+            return 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (!vis[i])
+            {
+                vis[i] = 1;
+                if (possibilityOfKPartition(a, n, k, sum, curr + a[i], vis))
+                    return 1;
+                vis[i] = 0;
+            }
+        }
+        return 0;
+    }
+    bool isKPartitionPossible(int a[], int n, int k)
+    {
+        int tsum = accumulate(a, a + n, 0);
+        vector<int> vis(n, 0);
+        if (k > n or tsum % k != 0)
+            return 0;
+        return possibilityOfKPartition(a, n, k, tsum / k, 0, vis);
+    }
 };
 
 int main()
