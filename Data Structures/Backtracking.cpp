@@ -466,6 +466,34 @@ public:
         longestPathDetector(mat, xs, ys, xd, yd, ans, 0, n, m);
         return ans;
     }
+
+    // Find All possible paths from top left to bottom right.From each cell you can either move only to right or down.
+    void possiblePathFinder(int n, int m, vector<vector<int>> &grid, int x, int y, vector<int> curr, vector<vector<int>> &ans)
+    {
+        if (x == n - 1 and y == m - 1)
+        {
+            ans.push_back(curr);
+            return;
+        }
+        if (x + 1 < n)
+        {
+            curr.push_back(grid[x + 1][y]);
+            possiblePathFinder(n, m, grid, x + 1, y, curr, ans);
+            curr.pop_back();
+        }
+        if (y + 1 < m)
+        {
+            curr.push_back(grid[x][y + 1]);
+            possiblePathFinder(n, m, grid, x, y + 1, curr, ans);
+            curr.pop_back();
+        }
+    }
+    vector<vector<int>> findAllPossiblePaths(int n, int m, vector<vector<int>> &grid)
+    {
+        vector<vector<int>> ans;
+        possiblePathFinder(n, m, grid, 0, 0, {grid[0][0]}, ans);
+        return ans;
+    }
 };
 
 int main()
