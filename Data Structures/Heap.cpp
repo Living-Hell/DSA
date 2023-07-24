@@ -38,6 +38,17 @@ public:
         }
         return ans;
     }
+
+    // Function to check if the given array represents a Binary Max Heap.
+    bool isMaxHeap(int a[], int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            if (a[i] > a[(i - 1) / 2])
+                return 0;
+        }
+        return 1;
+    }
 };
 
 int main()
