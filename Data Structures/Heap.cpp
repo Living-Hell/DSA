@@ -58,20 +58,20 @@ public:
     // Heapify function to maintain heap property.
     void heapify(int arr[], int n, int i)
     {
-        int largest = i;
+        int smallest = i;
         int lc = 2 * i + 1, rc = 2 * i + 2;
-        if (lc < n and arr[lc] > arr[largest])
+        if (lc < n and arr[lc] > arr[smallest])
         {
-            largest = lc;
+            smallest = lc;
         }
-        if (rc < n and arr[rc] > arr[largest])
+        if (rc < n and arr[rc] > arr[smallest])
         {
-            largest = rc;
+            smallest = rc;
         }
-        if (largest != i)
+        if (smallest != i)
         {
-            swap(arr[i], arr[largest]);
-            heapify(arr, n, largest);
+            swap(arr[smallest], arr[i]);
+            heapify(arr, n, smallest);
         }
     }
 
@@ -80,6 +80,17 @@ public:
     {
         for (int i = n / 2; i >= 0; i--)
             heapify(arr, n, i);
+    }
+
+    // Function to sort an array using Heap Sort.
+    void heapSort(int arr[], int n)
+    {
+        buildHeap(arr, n);
+        for (int i = n - 1; i >= 0; i--)
+        {
+            swap(arr[i], arr[0]);
+            heapify(arr, i, 0);
+        }
     }
 
     void print()
@@ -176,9 +187,9 @@ int main()
     // heap.print();
     // heap.deletee();
     // heap.print();
-    int a[8] = {5, 4, 9, 6, 8, 41, 2, 52};
-    heap.buildHeap(a, 8);
-    for (int i = 0; i < 8; i++)
-        cout << a[i] << " ";
+    // int a[8] = {5, 4, 9, 6, 8, 41, 2, 52};
+    // heap.heapSort(a, 8);
+    // for (int i = 0; i < 8; i++)
+    //     cout << a[i] << " ";
     return 0;
 }
