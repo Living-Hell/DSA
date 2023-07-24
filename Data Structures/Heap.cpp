@@ -56,7 +56,7 @@ public:
     }
 
     // Heapify function to maintain heap property.
-    void heapify(int arr[], int n, int i)
+    void heapify(vector<int> &arr, int n, int i)
     {
         int smallest = i;
         int lc = 2 * i + 1, rc = 2 * i + 2;
@@ -76,14 +76,14 @@ public:
     }
 
     // Function to build a Heap from array.
-    void buildHeap(int arr[], int n)
+    void buildHeap(vector<int> &arr, int n)
     {
         for (int i = n / 2; i >= 0; i--)
             heapify(arr, n, i);
     }
 
     // Function to sort an array using Heap Sort.
-    void heapSort(int arr[], int n)
+    void heapSort(vector<int> &arr, int n)
     {
         buildHeap(arr, n);
         for (int i = n - 1; i >= 0; i--)
@@ -186,6 +186,19 @@ public:
                 pq.pop();
         }
         return pq.top();
+    }
+
+    // Given two binary max heaps as arrays, merge the given heaps to form a new max heap.
+    vector<int> mergeHeaps(vector<int> &a, vector<int> &b, int n, int m)
+    {
+        Heap heap;
+        vector<int> ans;
+        for (int i : a)
+            ans.push_back(i);
+        for (int i : b)
+            ans.push_back(i);
+        heap.buildHeap(ans, n + m);
+        return ans;
     }
 };
 
