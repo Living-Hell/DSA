@@ -4,6 +4,95 @@ using namespace std;
 class Heap
 {
 public:
+    int size;
+    int hp[100]; // Max size of heap = 100
+
+    Heap()
+    {
+        size = -1;
+    }
+    void insert(int x)
+    {
+        hp[++size] = x;
+        int ind = size;
+        while (ind > 0)
+        {
+            int par = (ind - 1) / 2;
+            if (hp[par] < hp[ind])
+            {
+
+                swap(hp[par], hp[ind]);
+                ind = par;
+            }
+            else
+                return;
+        }
+    }
+    void deletee()
+    {
+        if (size < 0)
+        {
+            cout << "Heap Underflow" << '\n';
+            return;
+        }
+        hp[0] = hp[size--];
+        int ind = 0;
+        while (ind < size)
+        {
+            int lc = (ind * 2) + 1, rc = (ind * 2) + 2;
+            if (lc < size and hp[lc] > hp[ind])
+            {
+                swap(hp[ind], hp[lc]);
+                ind = lc;
+            }
+            else if (rc < size and hp[rc] > hp[ind])
+            {
+                swap(hp[ind], hp[rc]);
+                ind = rc;
+            }
+            else
+                return;
+        }
+    }
+
+    // Heapify function to maintain heap property.
+    void heapify(int arr[], int n, int i)
+    {
+        int largest = i;
+        int lc = 2 * i + 1, rc = 2 * i + 2;
+        if (lc < n and arr[lc] > arr[largest])
+        {
+            largest = lc;
+        }
+        if (rc < n and arr[rc] > arr[largest])
+        {
+            largest = rc;
+        }
+        if (largest != i)
+        {
+            swap(arr[i], arr[largest]);
+            heapify(arr, n, largest);
+        }
+    }
+
+    // Function to build a Heap from array.
+    void buildHeap(int arr[], int n)
+    {
+        for (int i = n / 2; i >= 0; i--)
+            heapify(arr, n, i);
+    }
+
+    void print()
+    {
+        for (int i = 0; i <= size; i++)
+            cout << hp[i] << " ";
+        cout << endl;
+    }
+};
+
+class HeapFuncs
+{
+public:
     // Function to find K largest elements from the array in decreasing order.
     vector<int> kLargest(int arr[], int n, int k)
     {
@@ -49,10 +138,47 @@ public:
         }
         return 1;
     }
+
+    // Function to convert minHeap to maxHeap
+    void MinToMaxHeap(vector<int> &arr, int n, int i)
+    {
+        int largest = i;
+        int lc = 2 * i + 1, rc = 2 * i + 2;
+        if (lc < n and arr[lc] > arr[largest])
+        {
+            largest = lc;
+        }
+        if (rc < n and arr[rc] > arr[largest])
+        {
+            largest = rc;
+        }
+        if (largest != i)
+        {
+            swap(arr[i], arr[largest]);
+            MinToMaxHeap(arr, n, largest);
+        }
+    }
+    void convertMinToMaxHeap(vector<int> &arr, int n)
+    {
+        for (int i = n / 2; i >= 0; i--)
+            MinToMaxHeap(arr, n, i);
+    }
 };
 
 int main()
 {
     Heap heap;
+    // heap.insert(69);
+    // heap.insert(420);
+    // heap.insert(121);
+    // heap.insert(323);
+    // heap.insert(85);
+    // heap.print();
+    // heap.deletee();
+    // heap.print();
+    int a[8] = {5, 4, 9, 6, 8, 41, 2, 52};
+    heap.buildHeap(a, 8);
+    for (int i = 0; i < 8; i++)
+        cout << a[i] << " ";
     return 0;
 }
