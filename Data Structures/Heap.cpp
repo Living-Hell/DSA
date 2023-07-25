@@ -340,6 +340,47 @@ public:
         }
         return 1;
     }
+
+    // Find the minimum possible sum of two numbers formed using the elements of the array.
+    string minimumSum(int arr[], int n)
+    {
+        priority_queue<int, vector<int>, greater<int>> pq;
+        for (int i = 0; i < n; i++)
+            if (arr[i] > 0)
+                pq.push(arr[i]);
+        string a = "", b = "";
+        if (pq.size() == 0)
+            return "0";
+        while (pq.size() > 1)
+        {
+            int t1 = pq.top();
+            pq.pop();
+            int t2 = pq.top();
+            pq.pop();
+            a.push_back(t1 + '0');
+            b.push_back(t2 + '0');
+        }
+        if (!pq.empty())
+            a.push_back('0' + pq.top());
+        int sza = a.size(), szb = b.size(), sdiff = sza - szb;
+        int carry = 0;
+        for (int i = szb - 1; i >= 0; i--)
+        {
+            int ca = a[i + sdiff] - '0', cb = b[i] - '0';
+            int total = ca + cb + carry;
+            a[i + sdiff] = (total) % 10 + '0';
+            carry = 0;
+            carry = (total) / 10;
+        }
+        if (a.size() > b.size())
+            a[0] += carry;
+        else
+        {
+            if (carry)
+                a = to_string(carry) + a;
+        }
+        return a;
+    }
 };
 
 int main()
