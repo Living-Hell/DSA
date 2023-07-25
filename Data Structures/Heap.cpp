@@ -5,11 +5,15 @@ struct Node
 {
     int data;
     Node *next;
+    Node *right;
+    Node *left;
 
     Node(int x)
     {
         data = x;
         next = NULL;
+        left = NULL;
+        right = NULL;
     }
 };
 
@@ -275,6 +279,35 @@ public:
             tcost += cost;
         }
         return tcost;
+    }
+
+    // Convert a given BST into a Special Max Heap with the condition that all the values in the left subtree
+    // of a node should be less than all the values in the right subtree of the node
+    void heapify(Node *root)
+    {
+        Node *largest = root;
+        Node *lc = root->left;
+        Node *rc = root->right;
+        if (lc and lc->data > largest->data)
+            largest = lc;
+        if (rc and rc->data > largest->data)
+            largest = rc;
+        if (largest != root)
+            swap(largest->data, root->data);
+        if (lc and rc and lc->data > rc->data)
+            swap(lc->data, rc->data);
+        if (lc)
+            heapify(lc);
+        if (rc)
+            heapify(rc);
+    }
+    void convertToMaxHeapUtil(Node *root)
+    {
+        if (!root)
+            return;
+        convertToMaxHeapUtil(root->right);
+        convertToMaxHeapUtil(root->left);
+        heapify(root);
     }
 };
 
