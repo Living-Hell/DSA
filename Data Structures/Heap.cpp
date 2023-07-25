@@ -1,6 +1,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+struct Node
+{
+    int data;
+    Node *next;
+
+    Node(int x)
+    {
+        data = x;
+        next = NULL;
+    }
+};
+
 class Heap
 {
 public:
@@ -199,6 +211,30 @@ public:
             ans.push_back(i);
         heap.buildHeap(ans, n + m);
         return ans;
+    }
+
+    // Function to merge K sorted linked list.
+    Node *mergeKLists(Node *arr[], int k)
+    {
+        priority_queue<int, vector<int>, greater<int>> pq;
+        for (int i = 0; i < k; i++)
+        {
+            Node *temp = arr[i];
+            while (temp != NULL)
+            {
+                pq.push(temp->data);
+                temp = temp->next;
+            }
+        }
+        Node *ans = new Node(-1);
+        Node *temp = ans;
+        while (!pq.empty())
+        {
+            temp->next = new Node(pq.top());
+            pq.pop();
+            temp = temp->next;
+        }
+        return ans->next;
     }
 };
 
