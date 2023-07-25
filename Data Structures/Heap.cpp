@@ -236,6 +236,26 @@ public:
         }
         return ans->next;
     }
+
+    // Find the K-th largest sum of contiguous subarray within the array elements.
+    int kthLargest(vector<int> &arr, int n, int k)
+    {
+        priority_queue<int> pq;
+        for (int i = 0; i < n; i++)
+        {
+            int sum = 0;
+            for (int j = i; j < n; j++)
+            {
+                sum += arr[j];
+                pq.push(sum);
+            }
+        }
+        while (--k and !pq.empty())
+        {
+            pq.pop();
+        }
+        return pq.top();
+    }
 };
 
 int main()
