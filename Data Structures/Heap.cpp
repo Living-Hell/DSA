@@ -309,6 +309,37 @@ public:
         convertToMaxHeapUtil(root->left);
         heapify(root);
     }
+
+    // Function to check whether the given binary tree follows the max heap property or not.
+    bool isHeap(Node *tree)
+    {
+        vector<Node *> hp;
+        queue<Node *> q;
+        q.push(tree);
+        while (!q.empty())
+        {
+            Node *top = q.front();
+            hp.push_back(top);
+            q.pop();
+            if (top)
+                q.push(top->left);
+            if (top)
+                q.push(top->right);
+        }
+        int n = hp.size();
+        for (int i = n - 1; i >= 0; i--)
+        {
+            if (hp[i] != NULL and i > 0 and hp[i - 1] == NULL)
+                return 0;
+            if (i <= (n / 2) - 1)
+            {
+                int par = (i - 1) / 2;
+                if (hp[i]->data > hp[par]->data)
+                    return 0;
+            }
+        }
+        return 1;
+    }
 };
 
 int main()
