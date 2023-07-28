@@ -381,6 +381,85 @@ public:
         }
         return a;
     }
+
+    // Function to insert the numbers into a new stream and find the median of the stream formed by each insertion of X to the new stream.
+public:
+    priority_queue<int> maxh;
+    priority_queue<int, vector<int>, greater<int>> minh;
+    // Function to insert heap.
+    void insertHeap(int &x)
+    {
+        if (maxh.size() == 0 or maxh.top() >= x)
+            maxh.push(x);
+        else
+            minh.push(x);
+
+        balanceHeaps();
+    }
+
+    // Function to balance heaps.
+    void balanceHeaps()
+    {
+        if (abs(maxh.size() - minh.size()) > 1)
+        {
+            if (maxh.size() > minh.size())
+            {
+                minh.push(maxh.top());
+                maxh.pop();
+            }
+            else if (maxh.size() < minh.size())
+            {
+                maxh.push(minh.top());
+                minh.pop();
+            }
+        }
+    }
+
+    // Function to return Median.
+    double getMedian()
+    {
+        if (maxh.size() == minh.size())
+        {
+            return ((maxh.top() + minh.top()) / 2.0);
+        }
+        else
+            return maxh.top();
+    }
+
+    // To  find the smallest range that includes at least one element from each of the K lists.
+    pair<int, int> findSmallestRange(int arr[][N], int n, int k)
+    {
+        priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> pq;
+        int mn = INT_MAX, mx = INT_MIN, range = INT_MAX, high = 0, low = 0;
+        for (int i = 0; i < k; i++)
+        {
+            pq.push({arr[i][0], {i, 0}});
+            mx = max(mx, arr[i][0]);
+            mn = min(mn, arr[i][0]);
+        }
+
+        while (!pq.empty())
+        {
+            auto top = pq.top();
+            pq.pop();
+            int val = top.first, i = top.second.first, j = top.second.second;
+            if (range > (mx - val))
+            {
+                mn = val;
+                low = mn;
+                high = mx;
+                range = mx - mn;
+            }
+            if (j == n - 1)
+            {
+                break;
+            }
+            if (mx < arr[i][j + 1])
+                mx = arr[i][j + 1];
+            pq.push({arr[i][j + 1], {i, j + 1}});
+        }
+        return {low, high};
+    }
 };
 
 int main()
