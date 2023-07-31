@@ -1,18 +1,19 @@
 {
-    "files.associations": {
-        "iostream": "cpp",
-        "ostream": "cpp",
-        "*.tcc": "cpp",
-        "list": "cpp",
-        "random": "cpp",
-        "array": "cpp",
-        "bitset": "cpp",
-        "initializer_list": "cpp",
-        "regex": "cpp",
-        "utility": "cpp",
-        "valarray": "cpp",
-        "string": "cpp",
-        "chrono": "cpp",
-        "new": "cpp"
-    }
+  "files.associations": {
+    "iostream": "cpp",
+    "ostream": "cpp",
+    "*.tcc": "cpp",
+    "list": "cpp",
+    "random": "cpp",
+    "array": "cpp",
+    "bitset": "cpp",
+    "initializer_list": "cpp",
+    "regex": "cpp",
+    "utility": "cpp",
+    "valarray": "cpp",
+    "string": "cpp",
+    "chrono": "cpp",
+    "new": "cpp",
+    "limits": "cpp"
+  }
 }
