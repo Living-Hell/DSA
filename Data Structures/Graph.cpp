@@ -1346,6 +1346,32 @@ public:
         minCash(transaction, amount);
         return transaction;
     }
+
+    //Function to find the minimum number of steps required to reach from (0,0) to (X, Y).
+    int shortestDistance(int n, int m, vector<vector<int>> a, int x, int y) {
+        if(!a[0][0]) return -1;
+        
+        queue<pair<int,pair<int,int>>> q;
+        vector<pair<int,int>> v = {{-1,0},{0,1},{0,-1},{1,0}};
+        vector<vector<bool>> vis(n,vector<bool>(m,0));
+        
+        q.push({0,{0,0}});
+        vis[0][0] = 1;
+        
+        while(!q.empty()){
+            auto top = q.front(); q.pop();
+            int moves = top.first, x1 = top.second.first, y1 = top.second.second;
+            if(x1==x and y1 == y) return moves;
+            for(auto p:v){
+                int i = x1 + p.first, j = y1+p.second;
+                if(i>=0 and i<n and j>=0 and j<m and a[i][j] and !vis[i][j]){
+                    q.push({moves+1,{i,j}});
+                    vis[i][j] = 1;
+                }
+            }
+        }
+        return -1;
+    }
 };
 
 int main()
