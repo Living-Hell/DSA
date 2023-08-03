@@ -1347,30 +1347,68 @@ public:
         return transaction;
     }
 
-    //Function to find the minimum number of steps required to reach from (0,0) to (X, Y).
-    int shortestDistance(int n, int m, vector<vector<int>> a, int x, int y) {
-        if(!a[0][0]) return -1;
-        
-        queue<pair<int,pair<int,int>>> q;
-        vector<pair<int,int>> v = {{-1,0},{0,1},{0,-1},{1,0}};
-        vector<vector<bool>> vis(n,vector<bool>(m,0));
-        
-        q.push({0,{0,0}});
+    // Function to find the minimum number of steps required to reach from (0,0) to (X, Y).
+    int shortestDistance(int n, int m, vector<vector<int>> a, int x, int y)
+    {
+        if (!a[0][0])
+            return -1;
+
+        queue<pair<int, pair<int, int>>> q;
+        vector<pair<int, int>> v = {{-1, 0}, {0, 1}, {0, -1}, {1, 0}};
+        vector<vector<bool>> vis(n, vector<bool>(m, 0));
+
+        q.push({0, {0, 0}});
         vis[0][0] = 1;
-        
-        while(!q.empty()){
-            auto top = q.front(); q.pop();
+
+        while (!q.empty())
+        {
+            auto top = q.front();
+            q.pop();
             int moves = top.first, x1 = top.second.first, y1 = top.second.second;
-            if(x1==x and y1 == y) return moves;
-            for(auto p:v){
-                int i = x1 + p.first, j = y1+p.second;
-                if(i>=0 and i<n and j>=0 and j<m and a[i][j] and !vis[i][j]){
-                    q.push({moves+1,{i,j}});
+            if (x1 == x and y1 == y)
+                return moves;
+            for (auto p : v)
+            {
+                int i = x1 + p.first, j = y1 + p.second;
+                if (i >= 0 and i < n and j >= 0 and j < m and a[i][j] and !vis[i][j])
+                {
+                    q.push({moves + 1, {i, j}});
                     vis[i][j] = 1;
                 }
             }
         }
         return -1;
+    }
+
+    // Function to Find the shortest path from src(0) vertex to all the vertices and if it is impossible to reach any vertex, then return -1 for that vertex
+    vector<int> shortestPath(int n, int m, vector<vector<int>> &edges)
+    {
+        vector<vector<pair<int, int>>> adj(n);
+        for (auto i : edges)
+        {
+            adj[i[0]].push_back({i[1], i[2]});
+        }
+        vector<int> dist(n, INT_MAX);
+        queue<int> q;
+        q.push(0);
+        dist[0] = 0;
+        while (!q.empty())
+        {
+            int top = q.front();
+            q.pop();
+            for (auto i : adj[top])
+            {
+                if (dist[top] + i.second < dist[i.first])
+                {
+                    dist[i.first] = dist[top] + i.second;
+                    q.push(i.first);
+                }
+            }
+        }
+        for (int i = 0; i < n; i++)
+            if (dist[i] == INT_MAX)
+                dist[i] = -1;
+        return dist;
     }
 };
 
