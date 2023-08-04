@@ -172,6 +172,14 @@ public:
         else
             return {-1};
     }
+
+    // Given an array of size n-1 containing distinct integers in the range of 1 to N. Find the missing element.
+    int missingNumber(vector<int> &array, int n)
+    {
+        int tsum = accumulate(array.begin(), array.end(), 0);
+        int sum = n * (n + 1) / 2;
+        return sum - tsum;
+    }
 };
 
 int main()
